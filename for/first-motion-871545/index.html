@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For First Motion</title>
+<meta name="description" content="10 named leads with copy, 3 sourced messages and the engine behind them, prepared for First Motion.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(60px,7vh,86px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+#hint{position:fixed;right:clamp(20px,6vw,88px);top:18px;z-index:30;
+  font:400 11px/1 var(--mono);color:var(--ink3);transition:opacity .5s}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:48px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #hint{display:none}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:44px 16px 86px}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(38px,4.6vh,58px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<div id="hint">&larr; &rarr; to move &middot; <b>I</b> for index</div>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="10 leads, 3 messages, the engine">
+  <div class="wrap">
+    <p class="kick"><b>For First Motion</b> <s>2026-10-29</s></p>
+    <h1 class="xl">Ten freshly funded B2B founders you could email today.</h1>
+    <p class="lede">Each email is built on one of 3 messages they'd pay to receive, proved on real accounts with every number sourced. After them: <strong>the engine that finds the next ten</strong>, my first two weeks,
+      and why I'm the person to run it.</p>
+    <div class="stats">
+      <div class="stat"><b class="a">10</b><span>named leads, with copy ready to send</span></div>
+      <div class="stat"><b>3</b><span>messages that passed: would they pay for this alone?</span></div>
+      <div class="stat"><b>8</b><span>ideas I threw out, with reasons</span></div>
+      <div class="stat"><b>12</b><span>public sources drawn on</span></div>
+    </div>
+    <p class="src">Kavish Lodha · koderkavish.github.io</p>
+  </div>
+</section>
+
+<section class="s" data-key="read" data-label="The read" data-sub="Who buys, and why public data works here">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The read</s></p>
+    <h2>Who First Motion sells to, and why their own data is the way in.</h2>
+    <div class="rows">
+      <div class="row"><em>What</em><p><b>First Motion sells</b>customer acquisition for B2B teams, built and run by founder Simas Zavistauskas: a free working session to find what limits pipeline, then a fixed-fee launch live in 14 days (Outbound Launch, Paid Acquisition Pilot, First Hire Sprint, GTM Systems Build), then a monthly Growth Partner retainer.</p></div>
+      <div class="row"><em>Who</em><p><b>The buyer</b>Founders of 5-50 person B2B companies who still close most deals themselves, typically just funded and before or alongside their first sales hire, with deal sizes of $5K and up. The founder signs; Simas sells to them directly.</p></div>
+      <div class="row"><em>Why</em><p><b>Public-data impact high, buyer complexity low</b>First Motion&#x27;s buyers are founders who announce their rounds, publish their customers and run their own domains, and their buyers leave records too (SEC filings, registries, DNS). One founder decides, so the message goes straight to the CEO, and a PVP about their own pipeline is the whole pitch.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 10 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The ten</s></p>
+    <h2>Ten leads, each with a signal, a source and copy ready to send.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Rebhav Bharadwaj<i>Dodge AI · $2.65M seed, Accel and Google co-led</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Emil Stefanutti<i>Gaia Dynamics · $7M seed led by Corazon</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Jun Liang Lee<i>Lightsage · $4M seed led by Nexus</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Isha Bhatnagar<i>Beltic · $7.3M seed led by Norwest</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Sunit Shah<i>Soteris · Out of stealth with $8M seed</i></span></button><button type="button" aria-pressed="false"><em>06</em><span>Nadav Cornberg<i>Eve Security · $4.5M extension for go-to-market</i></span></button><button type="button" aria-pressed="false"><em>07</em><span>Sajid Shariff<i>Dextr AI · $6.7M seed led by Elevation</i></span></button><button type="button" aria-pressed="false"><em>08</em><span>Christopher Brodowski<i>Solea · $10M seed for pest control software</i></span></button><button type="button" aria-pressed="false"><em>09</em><span>Dominic Toselli<i>Aron · $6M seed led by Storm Ventures</i></span></button><button type="button" aria-pressed="false"><em>10</em><span>Sai Gurrapu<i>Hypercubic · $5.3M seed led by CIV</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Rebhav Bharadwaj</h4>
+<p class="meta">Co-founder and CEO, Dodge AI<br>signal 2026-09-29</p>
+<div class="chips"><span class="chip">uses message 2</span><span class="chip">intent 5/5</span><span class="chip">fit 5/5</span></div>
+<p class="sig"><strong>Why now:</strong> Dodge AI closed a $2.65M seed on Sep 29, co-led by Accel and Google&#x27;s AI Futures Fund. Its demo link still goes straight to Rebhav&#x27;s own calendar, so he is the sales team.<br><strong>Fit:</strong> Enterprise ERP maintenance agents; the buyer is the SAP or enterprise-apps owner at large companies, and public filings name the moment that owner&#x27;s workload jumps.</p>
+<div class="msg"><header><span>Email · Five SAP go-lives in SEC filings</span><button type="button" data-copy>Copy</button></header><pre>PHINIA&#x27;s quarterly filing on Oct 29 says it went live on a new SAP system during the third quarter. Advantage Solutions told the SEC it finished its SAP rollout and is &quot;shifting internal focus toward optimization.&quot;
+
+The year after go-live is when fixes and change requests pile onto the team, the work Dodge&#x27;s agents take over.
+
+I pulled five public companies that reported an ERP go-live this year, each with the filing line and date. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Rebhav, PHINIA told the SEC on Oct 29 it went live on SAP in the third quarter, and Advantage Solutions says its SAP rollout is done and focus is shifting to optimization. I found five 2026 go-lives in filings, each a Dodge account. Happy to send the list.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How I&#x27;d work it: find who owns SAP support at each company, open with their own filing line, and let a weekly search of new 10-Qs keep adding accounts to your CRM with the quote attached. Want me to set up the first week?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Dodge AI closed $2.65 million in seed funding on 2026-09-29, co-led by Accel and the Google AI Futures Fund. <a href="https://siliconangle.com/2026/09/29/accel-and-google-back-startup-dodge-ais-ambitions-to-automate-enterprise-software-maintenance-with-ai-agents/" rel="noopener" target="_blank">siliconangle.com/2026/09/29/accel-and-google-back-startup-dodge-</a> · read 2026-10-29</li><li>[2] Rebhav Bharadwaj is Dodge AI&#x27;s co-founder and CEO; the site&#x27;s Get a Demo button links to his personal cal.com page. <a href="https://www.getdodge.ai/" rel="noopener" target="_blank">getdodge.ai/</a> · read 2026-10-29</li><li>[3] PHINIA&#x27;s 10-Q for the quarter ended 2026-09-30, filed 2026-10-29: it implemented a new SAP ERP system during the third quarter. <a href="https://www.sec.gov/Archives/edgar/data/1968915/000196891526000154/phin-20260930.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1968915/000196891526000154/phin-2026</a> · read 2026-10-29</li><li>[4] Advantage Solutions&#x27; 10-Q filed 2026-08-05: finished its large-scale SAP implementation and is shifting focus to optimization. <a href="https://www.sec.gov/Archives/edgar/data/1776661/000119312526334564/adv-20260630.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1776661/000119312526334564/adv-20260</a> · read 2026-10-29</li><li>[5] SEC EDGAR full-text search, 10-Qs filed 2026-07-15 to 2026-10-29 containing SAP + enterprise resource planning + implementation: 15 filings. Read each; five describe a go-live in 2026 (PHINIA, Advantage Solutions, Pilgrim&#x27;s Pride, Solventum, Spectrum Brands). <a href="https://efts.sec.gov/LATEST/search-index?q=%22SAP%22%20%22enterprise%20resource%20planning%22%20%22implementation%22&amp;forms=10-Q&amp;dateRange=custom&amp;startdt=2026-07-15&amp;enddt=2026-10-29" rel="noopener" target="_blank">efts.sec.gov/LATEST/search-index?q=%22SAP%22%20%22enterprise%20r</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Emil Stefanutti</h4>
+<p class="meta">Co-founder and CEO, Gaia Dynamics<br>signal 2026-09-16</p>
+<div class="chips"><span class="chip">uses message 2</span><span class="chip">intent 5/5</span><span class="chip">fit 5/5</span></div>
+<p class="sig"><strong>Why now:</strong> Gaia closed an oversubscribed $7M seed on Sep 16, and this month&#x27;s 10-Qs are full of importers booking IEEPA tariff refunds, the entry-level audit work Gaia automates.<br><strong>Fit:</strong> AI trade compliance (classification, tariff calculation, customs-entry audits) for importers; the buyer is the trade compliance or customs lead at mid-size importers.</p>
+<div class="msg"><header><span>Email · Importers booking tariff refunds now</span><button type="button" data-copy>Copy</button></header><pre>Dorman Products booked $98.1 million in IEEPA tariff refunds this year, per its Oct 27 quarterly filing, and Hayward says it may be eligible for more. They&#x27;re two of 52 companies whose filings this month discuss IEEPA refunds alongside their suppliers.
+
+Refund claims start with the entry-level audit Gaia runs.
+
+I pulled all 52 with the filing line. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Emil, 52 companies&#x27; 10-Qs this month discuss IEEPA tariff refunds alongside suppliers. Dorman alone booked $98.1M. Each refund starts with the entry-level audit Gaia runs. Happy to send the list with filing lines.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How it gets worked: rank the list by import exposure from each filing, reach the trade compliance lead with their own refund line, and refresh it as November 10-Qs land. Want the ranked version?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Gaia Dynamics announced an oversubscribed $7 million seed led by Corazon Capital on 2026-09-16; Emil Stefanutti is co-founder and CEO. <a href="https://www.gaiadynamics.ai/seed-round" rel="noopener" target="_blank">gaiadynamics.ai/seed-round</a> · read 2026-10-29</li><li>[2] Dorman Products&#x27; 10-Q filed 2026-10-27: refunds of previously paid IEEPA tariffs totaling $98.1 million in the nine months ended 2026-09-26. <a href="https://www.sec.gov/Archives/edgar/data/868780/000086878026000053/dorm-20260926.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/868780/000086878026000053/dorm-20260</a> · read 2026-10-29</li><li>[3] Hayward Holdings&#x27; 10-Q filed 2026-10-28: has received, and may be eligible for additional, IEEPA tariff refunds. <a href="https://www.sec.gov/Archives/edgar/data/1834622/000183462226000055/hayw-20260926.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1834622/000183462226000055/hayw-2026</a> · read 2026-10-29</li><li>[4] SEC EDGAR full-text search, 10-Qs filed 2026-10-01 to 2026-10-29 containing IEEPA + refunds + suppliers: 53 filings from 52 companies. <a href="https://efts.sec.gov/LATEST/search-index?q=%22IEEPA%22%20%22refunds%22%20%22suppliers%22&amp;forms=10-Q&amp;dateRange=custom&amp;startdt=2026-10-01&amp;enddt=2026-10-29" rel="noopener" target="_blank">efts.sec.gov/LATEST/search-index?q=%22IEEPA%22%20%22refunds%22%2</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Jun Liang Lee</h4>
+<p class="meta">Co-founder and CEO, Lightsage<br>signal 2026-09-08</p>
+<div class="chips"><span class="chip">uses message 1</span><span class="chip">intent 5/5</span><span class="chip">fit 5/5</span></div>
+<p class="sig"><strong>Why now:</strong> Lightsage raised a $4M seed led by Nexus Venture Partners on Sep 8 to sell agent-led growth to API-first companies, a category it is defining, so the buyers aren&#x27;t on any list yet.<br><strong>Fit:</strong> Sells to software companies whose products agents integrate with; a company that just shipped an official MCP server is that buyer at the moment of need.</p>
+<div class="msg"><header><span>Email · Ten new MCP servers to test</span><button type="button" data-copy>Copy</button></header><pre>Upwork, Browserless and BugHerd each put their first official MCP server into the MCP registry this month. BugHerd&#x27;s arrived after a community-built one had sat there since January.
+
+A team that just shipped a server doesn&#x27;t know yet whether Claude Code or Cursor can finish a task with it. That&#x27;s exactly the run Lightsage does.
+
+I pulled ten companies whose first official server went live in October, with dates and server names. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Jun Liang, ten software companies published their first official MCP server to the registry in October, Upwork, Browserless and BugHerd among them. None of them knows yet whether agents can use it. I have the list with dates if useful.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How the list gets worked: each company gets one email with its own server name and the result of one Lightsage run on a real task, so the opener is what broke. New servers land daily, so it refills itself. Should I run the first five?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Lightsage raised $4 million in seed funding led by Nexus Venture Partners, reported Sep 8, 2026; Jun Liang Lee is co-founder and CEO. <a href="https://siliconangle.com/2026/09/08/lightsage-gets-4m-in-funding-to-help-software-makers-sell-directly-to-autonomous-ai-agents/" rel="noopener" target="_blank">siliconangle.com/2026/09/08/lightsage-gets-4m-in-funding-to-help</a> · read 2026-10-29</li><li>[2] Official MCP Registry: Upwork&#x27;s first server under its own domain namespace, com.upwork.mcp/upwork-mcp, was published 2026-10-06. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com.upwork" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com</a> · read 2026-10-29</li><li>[3] Official MCP Registry: io.browserless/mcp first published 2026-10-16. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=io.browserless" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=io.</a> · read 2026-10-29</li><li>[4] Official MCP Registry: com.bugherd/mcp first published 2026-10-27. A community-built server for BugHerd (io.github.Berckan/bugherd-mcp) was published 2026-01-13. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=bugherd" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=bug</a> · read 2026-10-29</li><li>[5] Official MCP Registry, searched per company with no date filter: ten software companies whose first server under their own domain namespace was published in October 2026: Upwork, twitterapi.io, OpenVidu (Oct 6), Softhills (Oct 11), MariaDB (Oct 12), Rippit (Oct 13), Browserless, Logo.dev (Oct 16), BugHerd, Autodesk APS (Oct 27). <a href="https://registry.modelcontextprotocol.io/v0/servers?updated_since=2026-10-01T00:00:00Z&amp;limit=100" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?updated_since=2026-1</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Isha Bhatnagar</h4>
+<p class="meta">Co-founder and CEO, Beltic<br>signal 2026-10-01</p>
+<div class="chips"><span class="chip">uses message 1</span><span class="chip">intent 5/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Beltic came out of stealth with a $7.3M seed led by Norwest (reported Oct 1), and companies are opening their products to agents in public, dated registry entries.<br><strong>Fit:</strong> Know Your Agent verification for businesses that accept agent traffic; a company that just let agents act on users&#x27; accounts through an official MCP server is the buyer.</p>
+<div class="msg"><header><span>Email · Upwork now lets agents act</span><button type="button" data-copy>Copy</button></header><pre>Upwork published an official MCP server on Oct 6 that lets AI agents connect to Upwork and act on a user&#x27;s behalf. Browserless and BugHerd shipped theirs this month too.
+
+Every company that opens its product to agents now has to decide which agents to trust, which is Beltic&#x27;s Know Your Agent check.
+
+I pulled ten companies whose first official MCP server went live in October, with dates. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Isha, Upwork shipped an official MCP server on Oct 6 that lets agents act on users&#x27; accounts, one of ten companies whose first official server went live in October. Each now has an agent-trust question. Happy to send the list.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How I&#x27;d work it: lead with the companies whose servers let agents take actions, like Upwork, since they carry the most risk, and open each email with their own server&#x27;s description. Want the list ranked that way?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Beltic raised $7.3 million in seed funding led by Norwest (TheSaaSNews, updated October 1, 2026); Isha Bhatnagar is CEO and co-founder. <a href="https://www.thesaasnews.com/news/beltic-raises-7-3m-seed/" rel="noopener" target="_blank">thesaasnews.com/news/beltic-raises-7-3m-seed/</a> · read 2026-10-29</li><li>[2] Official MCP Registry: Upwork&#x27;s first server under its own domain namespace, com.upwork.mcp/upwork-mcp, was published 2026-10-06. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com.upwork" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com</a> · read 2026-10-29</li><li>[3] Official MCP Registry, searched per company with no date filter: ten software companies whose first server under their own domain namespace was published in October 2026: Upwork, twitterapi.io, OpenVidu (Oct 6), Softhills (Oct 11), MariaDB (Oct 12), Rippit (Oct 13), Browserless, Logo.dev (Oct 16), BugHerd, Autodesk APS (Oct 27). <a href="https://registry.modelcontextprotocol.io/v0/servers?updated_since=2026-10-01T00:00:00Z&amp;limit=100" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?updated_since=2026-1</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Sunit Shah</h4>
+<p class="meta">Founder and CEO, Soteris<br>signal 2026-09-22</p>
+<div class="chips"><span class="chip">uses message 3</span><span class="chip">intent 4/5</span><span class="chip">fit 5/5</span></div>
+<p class="sig"><strong>Why now:</strong> Soteris came out of stealth on Sep 22 with a new AI profit product and $8M in seed funding, and credits its growth so far to founder-led sales, so outbound volume is about to rise.<br><strong>Fit:</strong> P&amp;C insurance pricing software sold by the founder to carriers and MGAs; the first outbound push will run on soteris.co, whose SPF has one lookup left.</p>
+<div class="msg"><header><span>Email · Room for one more sender</span><button type="button" data-copy>Copy</button></header><pre>Your soteris.co SPF record already uses 9 of the 10 DNS lookups email allows. Most sending tools need two or more, so the next one you add likely pushes its mail into an SPF error. With DMARC at reject, anything also missing a DKIM signature gets bounced.
+
+HubSpot alone uses 4 of the 9, across two entries.
+
+I mapped each include, its lookups and what can go. Want the table?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Sunit, congrats on the launch. Before the outbound push: soteris.co&#x27;s SPF uses 9 of the 10 lookups email allows, HubSpot alone 4, and DMARC is at reject. One more sending tool likely breaks it. I mapped each include if useful.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>The fix takes an afternoon: drop includes for tools you no longer send from, move bulk senders like Mailchimp or SES to a subdomain, and keep the main domain to Google and HubSpot. Want me to draft the new record?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Soteris came out of stealth with a new AI profit product and disclosed over $8m in seed funding (2026-09-22); it attributes its growth to founder-led sales. <a href="https://fintech.global/2026/09/22/soteris-raises-8m-seed-to-fix-hidden-pc-profit-leaks/" rel="noopener" target="_blank">fintech.global/2026/09/22/soteris-raises-8m-seed-to-fix-hidden-p</a> · read 2026-10-29</li><li>[2] Sunit Shah is named as Soteris&#x27;s founder and CEO. <a href="https://coverager.com/auto-insurance-startup-soteris-raises-8-million/" rel="noopener" target="_blank">coverager.com/auto-insurance-startup-soteris-raises-8-million/</a> · read 2026-10-29</li><li>[3] soteris.co TXT (Google Public DNS): SPF = include:_spf.hubspot.com include:send.zcsend.net include:_spf.google.com include:amazonses.com include:servers.mcsv.net include:244112484.spf08.hubspotemail.net ~all. MX is Google Workspace. <a href="https://dns.google/resolve?type=TXT&amp;name=soteris.co" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=soteris.co</a> · read 2026-10-29</li><li>[4] Resolving each include: _spf.hubspot.com includes sendgrid.net, which includes ab.sendgrid.net (3 lookups); send.zcsend.net includes zcsend.net (2); _spf.google.com, amazonses.com, servers.mcsv.net and the account-specific HubSpot include use 1 each. Total: 9 of the 10 allowed. HubSpot&#x27;s two entries use 4 of the 9. <a href="https://dns.google/resolve?type=TXT&amp;name=_spf.hubspot.com" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=_spf.hubspot.com</a> · read 2026-10-29</li><li>[5] RFC 7208 section 4.6.4: include, a, mx, ptr, exists and redirect count toward a limit of 10 DNS lookups per SPF evaluation; exceeding it returns permerror. <a href="https://www.rfc-editor.org/rfc/rfc7208#section-4.6.4" rel="noopener" target="_blank">rfc-editor.org/rfc/rfc7208#section-4.6.4</a> · read 2026-10-29</li><li>[6] _dmarc.soteris.co: p=reject. <a href="https://dns.google/resolve?type=TXT&amp;name=_dmarc.soteris.co" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=_dmarc.soteris.co</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Nadav Cornberg</h4>
+<p class="meta">Co-founder and CEO, Eve Security<br>signal 2026-09-15</p>
+<div class="chips"><span class="chip">uses message 3</span><span class="chip">intent 5/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Eve Security raised a $4.5M seed extension on Sep 15 that will primarily fund go-to-market, after starting formal sales only in January.<br><strong>Fit:</strong> Runtime security for AI agents sold to enterprise security teams; a security brand about to scale outbound should have its own DMARC fully enforced.</p>
+<div class="msg"><header><span>Email · Your DMARC, quarantine to full</span><button type="button" data-copy>Copy</button></header><pre>eve.security&#x27;s DMARC is set to quarantine, but with pct=25, so receivers apply it to a quarter of the mail that fails. The other three in four get only the receiver&#x27;s normal filtering.
+
+Reports already land in your own mailbox, so full enforcement is one edit once they&#x27;re clean.
+
+I put the current record and the next two steps in a short note. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Nadav, congrats on the extension. Before the GTM push: eve.security&#x27;s DMARC is quarantine at pct=25, so three in four failing messages get only normal filtering. Reports already come to you, so it&#x27;s one edit. Happy to send the steps.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>The order I&#x27;d use: read a week of the aggregate reports you already receive, confirm every legitimate sender passes, then raise pct to 100 and later move to reject. Want me to read the reports with you?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Eve Security raised $4.5 million, led by Run Ventures (Pulse 2.0, 2026-09-15); funds will primarily support go-to-market; formal go-to-market began January 2026. Nadav Cornberg is co-founder and CEO. <a href="https://pulse2.com/eve-security-4-5-million-funding/" rel="noopener" target="_blank">pulse2.com/eve-security-4-5-million-funding/</a> · read 2026-10-29</li><li>[2] _dmarc.eve.security: p=quarantine; pct=25; reports to an eve.security address. Per RFC 7489, pct runs 0-100 and pct=100 applies the policy to all failing mail. <a href="https://dns.google/resolve?type=TXT&amp;name=_dmarc.eve.security" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=_dmarc.eve.security</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Sajid Shariff</h4>
+<p class="meta">Founder and CEO, Dextr AI<br>signal 2026-09-29</p>
+<div class="chips"><span class="chip">uses message 2</span><span class="chip">intent 4/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Dextr AI announced a $6.7M seed led by Elevation Capital on Sep 29 to scale AI agents that take reservation calls for franchised hotels.<br><strong>Fit:</strong> Agents for reservations, guest messaging and back office at franchised hotels; small owners of several branded hotels are the fastest buyers.</p>
+<div class="msg"><header><span>Email · Five franchised hotels, one owner</span><button type="button" data-copy>Copy</button></header><pre>Procaccianti Hotel REIT owns five select-service hotels with 559 rooms, including a Hilton Garden Inn in Providence and a Hotel Indigo in Traverse City. Its latest quarterly filing names labor shortages as a risk to its results.
+
+An owner that size answers reservation calls with thin front desks, the calls Dextr&#x27;s agents take.
+
+I put the five hotels in a table with brand, city and rooms. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Sajid, Procaccianti Hotel REIT owns five branded select-service hotels (559 rooms) and names labor shortages as a risk in its latest 10-Q. A small multi-brand owner like that fits Dextr. Happy to send the hotel table.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How I&#x27;d work it: the same filings name the management company running each hotel, so the email goes to the operator who staffs the front desk, with its own hotels listed. Want me to find the operator here?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Dextr AI announced $6.7 million in seed funding led by Elevation Capital (PhocusWire, 2026-09-29); Sajid Shariff is founder and CEO. <a href="https://www.phocuswire.com/news/finance/dextr-ai-seed-funding" rel="noopener" target="_blank">phocuswire.com/news/finance/dextr-ai-seed-funding</a> · read 2026-10-29</li><li>[2] Procaccianti Hotel REIT&#x27;s 10-Q filed 2026-08-12: interests in five select-service hotels in four states with 559 rooms, including Hilton Garden Inn Providence and Hotel Indigo Traverse City; risk language names labor shortages. <a href="https://www.sec.gov/Archives/edgar/data/1692345/000110465926094721/tmb-20260630x10q.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1692345/000110465926094721/tmb-20260</a> · read 2026-10-29</li><li>[3] Dextr AI&#x27;s site shows its agents taking room-booking calls for hotels. <a href="https://www.dextr.ai/" rel="noopener" target="_blank">dextr.ai/</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Christopher Brodowski</h4>
+<p class="meta">Co-founder and CEO, Solea<br>signal 2026-09-25</p>
+<div class="chips"><span class="chip">uses message 3</span><span class="chip">intent 4/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Solea closed its seed on Sep 25, bringing total capital to $10M from Fifth Wall, Uncork and others, to sell AI-native software to pest control companies.<br><strong>Fit:</strong> Vertical SaaS for pest control operators; outbound to owners will run on solea.ai, whose records still carry a leftover sender.</p>
+<div class="msg"><header><span>Email · One cleanup before outbound scales</span><button type="button" data-copy>Copy</button></header><pre>Your solea.ai SPF record still authorizes IONOS&#x27;s EU mail servers next to Google Workspace, and DMARC is at p=none, which asks receivers to take no action on mail that fails.
+
+If you no longer send through IONOS, dropping it narrows who can pass as solea.ai, and moving DMARC toward enforcement protects the brand pest operators will see in their inbox.
+
+I wrote the record change and a safe path to enforcement. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Christopher, congrats on the seed. Small one before outbound scales: solea.ai&#x27;s SPF still lists IONOS EU servers next to Google, and DMARC is at p=none. I wrote the record change and a path to enforcement if useful.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>The safe order: add a reporting address to DMARC, watch two weeks of reports to confirm nothing legitimate sends from IONOS, then drop it and move to quarantine. Want me to set up the reporting?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Solea&#x27;s blog (2026-09-25, by co-founder and CEO Christopher Brodowski): closed its seed round, bringing total capital raised to $10M. <a href="https://www.solea.ai/blog/solea-raises-10m" rel="noopener" target="_blank">solea.ai/blog/solea-raises-10m</a> · read 2026-10-29</li><li>[2] solea.ai SPF includes Google and IONOS EU; DMARC is p=none. <a href="https://dns.google/resolve?type=TXT&amp;name=solea.ai" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=solea.ai</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Dominic Toselli</h4>
+<p class="meta">Founder and CEO, Aron<br>signal 2026-09-20</p>
+<div class="chips"><span class="chip">uses message 2</span><span class="chip">intent 4/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Aron launched with $8M across two rounds, the latest a $6M seed led by Storm Ventures (Sep 20), and tariff changes have procurement teams re-working supplier bids this quarter.<br><strong>Fit:</strong> AI agents for sourcing, supplier follow-ups and contract checks; the buyer runs procurement at a company with heavy non-US sourcing.</p>
+<div class="msg"><header><span>Email · Tariffs and alternative suppliers, this month</span><button type="button" data-copy>Copy</button></header><pre>Dorman Products&#x27; quarterly filing on Oct 27 says 77% of its purchases came from outside the US last year, and it names supplier diversification in its outlook. It&#x27;s one of 13 companies whose filings this month pair tariffs with alternative suppliers.
+
+Each of those procurement teams has supplier bids on the agenda, the work Aron&#x27;s agents take off their plate.
+
+I pulled the 13 with the filing line and date. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Dominic, 13 companies&#x27; 10-Qs this month pair tariffs with alternative suppliers. Dorman, for one, sources 77% of purchases outside the US and names supplier diversification in its outlook. I have the list with filing lines if useful.</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How I&#x27;d work it: sort the list by how much each company sources abroad, reach the head of procurement with their own filing line, and offer to run one live bid through Aron. Want the sorted list?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Aron launched with $8 million across two rounds; Storm Ventures led the $6 million seed, reported 2026-09-20; founder and CEO Dominic Toselli previously ran Worldwide Logistics Procurement at Apple. <a href="https://fundraiseinsider.com/blog/storm-ventures-leads-6m-seed-for-procurement-ai-startup-aron/" rel="noopener" target="_blank">fundraiseinsider.com/blog/storm-ventures-leads-6m-seed-for-procu</a> · read 2026-10-29</li><li>[2] Dorman Products&#x27; 10-Q filed 2026-10-27: in 2025, approximately 77% of product purchases were sourced from suppliers outside the US; forward-looking topics include supplier diversification. <a href="https://www.sec.gov/Archives/edgar/data/868780/000086878026000053/dorm-20260926.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/868780/000086878026000053/dorm-20260</a> · read 2026-10-29</li><li>[3] SEC EDGAR full-text search, 10-Qs filed 2026-10-01 to 2026-10-29 containing tariffs + alternative suppliers: 14 filings from 13 companies. <a href="https://efts.sec.gov/LATEST/search-index?q=%22tariffs%22%20%22alternative%20suppliers%22&amp;forms=10-Q&amp;dateRange=custom&amp;startdt=2026-10-01&amp;enddt=2026-10-29" rel="noopener" target="_blank">efts.sec.gov/LATEST/search-index?q=%22tariffs%22%20%22alternativ</a> · read 2026-10-29</li></ul>
+</article><article class="lead">
+<h4>Sai Gurrapu</h4>
+<p class="meta">Co-founder, Hypercubic<br>signal 2026-08-18</p>
+<div class="chips"><span class="chip">uses message 2</span><span class="chip">intent 4/5</span><span class="chip">fit 4/5</span></div>
+<p class="sig"><strong>Why now:</strong> Hypercubic raised a $5.3M seed led by CIV (Aug 18) to automate COBOL modernization, and public companies describe their mainframe plans in their own annual reports.<br><strong>Fit:</strong> Agents that map and translate legacy COBOL; the buyer owns the mainframe estate at a retailer, insurer or bank.</p>
+<div class="msg"><header><span>Email · Kroger&#x27;s mainframe plan, in writing</span><button type="button" data-copy>Copy</button></header><pre>Kroger&#x27;s latest annual report says it is modernizing &quot;mainframe, middleware and legacy systems&quot; across payroll, accounting and merchandising. Citizens Inc., a life insurer, calls its policy system &quot;mainframe-based, legacy-type&quot; and says it needs ongoing resources to maintain.
+
+Both told the SEC, in writing, about the code Hypercubic&#x27;s agents are built to untangle.
+
+I pulled the public companies whose filings this year describe mainframe modernization, with the line from each. Want the list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Sai, Kroger&#x27;s annual report says it&#x27;s modernizing mainframe and legacy systems across payroll and accounting, and Citizens Inc. calls its policy system mainframe-based and legacy. I pulled every filing this year that says so. Want it?</pre></div>
+<div class="msg"><header><span>Follow-up</span><button type="button" data-copy>Copy</button></header><pre>How I&#x27;d work it: drop the vendors from the list, find who runs the mainframe at each remaining company, and open with their own filing line. Want the cleaned list?</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Hypercubic raised $5.3 million in seed funding led by CIV (TheSaaSNews, 2026-08-18); founded by Sai Gurrapu and Aayush Narik. <a href="https://thesaasnews.com/news/hypercubic-inc-raises-5-3m-seed" rel="noopener" target="_blank">thesaasnews.com/news/hypercubic-inc-raises-5-3m-seed</a> · read 2026-10-29</li><li>[2] Kroger&#x27;s 10-K filed 2026-03-31: a multi-year project to modernize mainframe, middleware and legacy systems across customer service, merchandising, sourcing, payroll and accounting. <a href="https://www.sec.gov/Archives/edgar/data/56873/000110465926037723/kr-20260131x10k.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/56873/000110465926037723/kr-20260131</a> · read 2026-10-29</li><li>[3] Citizens, Inc.&#x27;s 10-K filed 2026-03-12: its primary policy administration system is mainframe-based and legacy, and needs ongoing resources to maintain. <a href="https://www.sec.gov/Archives/edgar/data/24090/000002409026000011/cia-20251231.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/24090/000002409026000011/cia-2025123</a> · read 2026-10-29</li><li>[4] SEC EDGAR full-text search, 10-Ks and 10-Qs filed in 2026 containing mainframe + modernization: 14 filings. <a href="https://efts.sec.gov/LATEST/search-index?q=%22mainframe%22%20%22modernization%22&amp;forms=10-K,10-Q&amp;dateRange=custom&amp;startdt=2026-01-01&amp;enddt=2026-10-29" rel="noopener" target="_blank">efts.sec.gov/LATEST/search-index?q=%22mainframe%22%20%22moderniz</a> · read 2026-10-29</li></ul>
+</article></div>
+    </div>
+    <p class="src">Ranked by intent, then fit. Every fact links to the public page it came from. Copy is written as
+      First Motion's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="m1" data-label="Message 1 · Lightsage" data-sub="The software companies that just shipped their first official MCP server">
+  <div class="wrap">
+    <p class="kick"><b>Message 1 of 3</b> <s>Run on a real account: Lightsage</s></p>
+    <h2>The software companies that just shipped their first official MCP server</h2>
+    <p class="lede">The official MCP Registry dates every server and ties company namespaces to a verified domain. In October, ten software companies, Upwork, Browserless and BugHerd among them, published their first official server. Each just opened its product to agents and doesn&#x27;t yet know how agents behave with it, which is the moment an agent-experience or agent-identity vendor matters.</p>
+    <div class="chips"><a class="chip" href="https://registry.modelcontextprotocol.io/v0/servers" rel="noopener" target="_blank">Official MCP Registry API</a><a class="chip" href="https://www.getdodge.ai/" rel="noopener" target="_blank">Prospects&#x27; own websites</a><a class="chip" href="https://siliconangle.com/" rel="noopener" target="_blank">Funding announcements (company blogs, SiliconANGLE, TheSaaSNews, Fundraise Insider, PhocusWire)</a></div>
+    <div class="mail"><div class="to">To: Founder and CEO, Lightsage · San Francisco, CA</div><div class="subj">Ten new MCP servers to test</div><p>Upwork, Browserless and BugHerd each put their first official MCP server into the MCP registry this month. BugHerd&#x27;s arrived after a community-built one had sat there since January.</p><p>A team that just shipped a server doesn&#x27;t know yet whether Claude Code or Cursor can finish a task with it. That&#x27;s exactly the run Lightsage does.</p><p>I pulled ten companies whose first official server went live in October, with dates and server names. Want the list?</p></div>
+    <div class="asset"><div class="asset-h"><span>Attached: First official MCP servers, October 2026 (official MCP Registry)</span><span>showing 5 of 10 · source [4]</span></div><table class="tbl"><tr><th>Company</th><th>Server</th><th>First published</th><th>What it does</th></tr><tr><td>Upwork</td><td>com.upwork.mcp/upwork-mcp</td><td>2026-10-06</td><td>The official Upwork MCP server, letting AI agents connect to Upwork an...</td></tr><tr><td>MariaDB</td><td>com.mariadb/mariadb-docs</td><td>2026-10-12</td><td>Search and read the official MariaDB documentation for every MariaDB p...</td></tr><tr><td>Browserless</td><td>io.browserless/mcp</td><td>2026-10-16</td><td>Official Browserless MCP server: browser automation, scraping, screens...</td></tr><tr><td>Logo.dev</td><td>dev.logo/mcp</td><td>2026-10-16</td><td>Find brands, logos and brandmarks, and manage brand subscriptions and ...</td></tr><tr><td>BugHerd</td><td>com.bugherd/mcp</td><td>2026-10-27</td><td>Official BugHerd MCP server. Sign in with OAuth, no API key needed.</td></tr></table><p class='asset-note'>Each company searched in the registry with no date filter; the earliest version under its own domain namespace is the date shown. Community servers under io.github.* don&#x27;t count.</p></div>
+    <h3 style="margin-top:22px">The sequence, if they don't reply</h3><div class="fus"><div class="fu"><b>Day 0</b><p>The email above.</p></div><div class="fu"><b>Day 3</b><p>How the list gets worked: each company gets one email with its own server name and the result of one Lightsage run on a real task, so the opener is what broke, not a pitch. New servers land in the registry daily, so the list refills itself. Should I run the first five?</p></div><div class="fu"><b>Day 7</b><p>A second cut: twitterapi.io and BugHerd had community-built servers in the registry before shipping their own. Those teams now compete with an unofficial server for the agent&#x27;s pick, which is your recommendation-share story. Want those split out?</p></div></div>
+    <div class="two">
+      <div class="pane"><h4>Why they'd reply</h4><p>It is a dated, verifiable list of companies that made a buying decision this month, found where nobody in sales is looking. The founder gets the first ten accounts and a refillable source, since new servers land in the registry daily.</p></div>
+      <div class="pane"><h4>Where First Motion comes in</h4><p>First Motion&#x27;s Outbound Launch turns the list into a signal-based target list and short sequences that open with the account&#x27;s own server name.</p></div>
+    </div>
+    <div class="scores"><span>independent value <b>5</b></span><span>specificity <b>5</b></span><span>pain <b>4</b></span><span>product fit <b>5</b></span><span>provable <b>5</b></span><span>actionable <b>5</b></span></div>
+    <h3 style="margin-top:22px">Where every fact comes from</h3><ul class="ev"><li>[1] Official MCP Registry: Upwork&#x27;s first server under its own domain namespace, com.upwork.mcp/upwork-mcp, was published 2026-10-06. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com.upwork" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=com.upwor</a> · read 2026-10-29</li><li>[2] Official MCP Registry: io.browserless/mcp first published 2026-10-16. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=io.browserless" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=io.browse</a> · read 2026-10-29</li><li>[3] Official MCP Registry: com.bugherd/mcp first published 2026-10-27. A community-built server for BugHerd (io.github.Berckan/bugherd-mcp) was published 2026-01-13. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=bugherd" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=bugherd</a> · read 2026-10-29</li><li>[4] Official MCP Registry, searched per company with no date filter: ten software companies whose first server under their own domain namespace was published in October 2026: Upwork, twitterapi.io, OpenVidu (Oct 6), Softhills (Oct 11), MariaDB (Oct 12), Rippit (Oct 13), Browserless, Logo.dev (Oct 16), BugHerd, Autodesk APS (Oct 27). <a href="https://registry.modelcontextprotocol.io/v0/servers?updated_since=2026-10-01T00:00:00Z&amp;limit=100" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?updated_since=2026-10-01T0</a> · read 2026-10-29</li><li>[5] Official MCP Registry: community servers for twitterapi.io (io.github.dorukardahan/twitterapi-io-mcp) date to 2025-12-05; the company&#x27;s own io.twitterapi/mcp-server arrived 2026-10-06. <a href="https://registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=twitterapi" rel="noopener" target="_blank">registry.modelcontextprotocol.io/v0/servers?limit=100&amp;search=twitterap</a> · read 2026-10-29</li><li>[6] Lightsage runs coding agents through a real integration and shows the step where it breaks. <a href="https://lightsage.com/" rel="noopener" target="_blank">lightsage.com/</a> · read 2026-10-29</li></ul>
+  </div>
+</section>
+
+<section class="s" data-key="m2" data-label="Message 2 · Dodge AI" data-sub="Public companies that told the SEC they just went live on a new ERP">
+  <div class="wrap">
+    <p class="kick"><b>Message 2 of 3</b> <s>Run on a real account: Dodge AI</s></p>
+    <h2>Public companies that told the SEC they just went live on a new ERP</h2>
+    <p class="lede">Quarterly filings must report changes to internal controls, so companies say in writing when a new ERP goes live. A full-text search of 10-Qs filed since July 15, read one by one, gives five 2026 go-lives: PHINIA (filed Oct 29), Advantage Solutions, Pilgrim&#x27;s Pride, Solventum and Spectrum Brands. The year after go-live is when maintenance work and change requests pile onto the team.</p>
+    <div class="chips"><a class="chip" href="https://efts.sec.gov/LATEST/search-index" rel="noopener" target="_blank">SEC EDGAR full-text search</a><a class="chip" href="https://www.sec.gov/Archives/edgar/data/" rel="noopener" target="_blank">SEC EDGAR filing documents</a><a class="chip" href="https://www.getdodge.ai/" rel="noopener" target="_blank">Prospects&#x27; own websites</a></div>
+    <div class="mail"><div class="to">To: Founder and CEO, Dodge AI · San Francisco, CA</div><div class="subj">Five SAP go-lives in SEC filings</div><p>PHINIA&#x27;s quarterly filing on Oct 29 says it went live on a new SAP system during the third quarter. Advantage Solutions told the SEC it finished its SAP rollout and is &quot;shifting internal focus toward optimization.&quot;</p><p>The year after go-live is when fixes and change requests pile onto the team, the work Dodge&#x27;s agents take over.</p><p>I pulled five public companies that reported an ERP go-live this year, each with the filing line and date. Want the list?</p></div>
+    <div class="asset"><div class="asset-h"><span>Attached: ERP go-lives reported to the SEC in 2026</span><span>showing 5 of 5 · source [6]</span></div><table class="tbl"><tr><th>Company</th><th>Filed</th><th>What the filing says</th></tr><tr><td>PHINIA</td><td>2026-10-29</td><td>Implemented a new SAP ERP during Q3 2026</td></tr><tr><td>Advantage Solutions</td><td>2026-08-05</td><td>Completed its large-scale SAP implementation; focus shifting to optimization</td></tr><tr><td>Spectrum Brands</td><td>2026-08-07</td><td>New ERP live in GPC international; multi-year move to SAP S/4 HANA</td></tr><tr><td>Pilgrim&#x27;s Pride</td><td>2026-07-30</td><td>Completed final phase of a multi-year ERP implementation in Q2 2026</td></tr><tr><td>Solventum</td><td>2026-08-05</td><td>Completed phase two of its new SAP ERP (Europe, China)</td></tr></table><p class='asset-note'>From a full-text search of 10-Qs filed since 2026-07-15, each filing read by hand. Filings that only mention SAP costs or plans were left out.</p></div>
+    <h3 style="margin-top:22px">The sequence, if they don't reply</h3><div class="fus"><div class="fu"><b>Day 0</b><p>The email above.</p></div><div class="fu"><b>Day 3</b><p>How I&#x27;d work the list: for each company, find who owns SAP support (usually a director of enterprise applications, not the CIO) and open with their own filing line. A weekly search of new 10-Qs keeps adding accounts, routed into your CRM with the quote attached. Want me to set up the first week?</p></div><div class="fu"><b>Day 7</b><p>One more angle: Spectrum Brands calls its SAP S/4 HANA move multi-year, and this quarter it only went live in one business. Companies mid-rollout know their next go-live date, so they&#x27;re a second list worth building. Should I add them?</p></div></div>
+    <div class="two">
+      <div class="pane"><h4>Why they'd reply</h4><p>An enterprise seller usually guesses at timing. Here the account states the event, its date and its scope in a filing the founder can quote. The same search, swapped to other phrases, finds mainframe modernization, tariff refunds or supplier changes for other founders.</p></div>
+      <div class="pane"><h4>Where First Motion comes in</h4><p>First Motion&#x27;s buyer research and signal workflow (the hourly funding workflow from its legal-tech case) can run this search weekly and route each new filing into the founder&#x27;s CRM with the line attached.</p></div>
+    </div>
+    <div class="scores"><span>independent value <b>5</b></span><span>specificity <b>5</b></span><span>pain <b>4</b></span><span>product fit <b>4</b></span><span>provable <b>5</b></span><span>actionable <b>4</b></span></div>
+    <h3 style="margin-top:22px">Where every fact comes from</h3><ul class="ev"><li>[1] PHINIA&#x27;s 10-Q for the quarter ended 2026-09-30, filed 2026-10-29: it implemented a new SAP ERP system during the third quarter. <a href="https://www.sec.gov/Archives/edgar/data/1968915/000196891526000154/phin-20260930.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1968915/000196891526000154/phin-20260930.h</a> · read 2026-10-29</li><li>[2] Advantage Solutions&#x27; 10-Q filed 2026-08-05: finished its large-scale SAP implementation and is shifting focus to optimization. <a href="https://www.sec.gov/Archives/edgar/data/1776661/000119312526334564/adv-20260630.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1776661/000119312526334564/adv-20260630.ht</a> · read 2026-10-29</li><li>[3] Pilgrim&#x27;s Pride&#x27;s 10-Q filed 2026-07-30: completed the final phase of a multi-year ERP implementation in Q2 2026; the same filing describes its SAP license and maintenance agreement with JBS USA. <a href="https://www.sec.gov/Archives/edgar/data/802481/000080248126000051/ppc-20260628.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/802481/000080248126000051/ppc-20260628.htm</a> · read 2026-10-29</li><li>[4] Solventum&#x27;s 10-Q filed 2026-08-05: completed the second phase of its new SAP ERP during the quarter ended 2026-03-31 (Europe and China). <a href="https://www.sec.gov/Archives/edgar/data/1964738/000196473826000047/solv-20260630.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/1964738/000196473826000047/solv-20260630.h</a> · read 2026-10-29</li><li>[5] Spectrum Brands&#x27; 10-Q filed 2026-08-07: multi-year move to SAP S/4 HANA; implemented the new ERP in its GPC international businesses in the quarter ended 2026-06-28. <a href="https://www.sec.gov/Archives/edgar/data/109177/000010917726000040/spb-20260628.htm" rel="noopener" target="_blank">sec.gov/Archives/edgar/data/109177/000010917726000040/spb-20260628.htm</a> · read 2026-10-29</li><li>[6] SEC EDGAR full-text search, 10-Qs filed 2026-07-15 to 2026-10-29 containing SAP + enterprise resource planning + implementation: 15 filings. Read each; five describe a go-live in 2026 (PHINIA, Advantage Solutions, Pilgrim&#x27;s Pride, Solventum, Spectrum Brands). <a href="https://efts.sec.gov/LATEST/search-index?q=%22SAP%22%20%22enterprise%20resource%20planning%22%20%22implementation%22&amp;forms=10-Q&amp;dateRange=custom&amp;startdt=2026-07-15&amp;enddt=2026-10-29" rel="noopener" target="_blank">efts.sec.gov/LATEST/search-index?q=%22SAP%22%20%22enterprise%20resourc</a> · read 2026-10-29</li><li>[7] Dodge AI&#x27;s agents resolve L1/L2 incidents and change requests across ERP systems. <a href="https://www.getdodge.ai/" rel="noopener" target="_blank">getdodge.ai/</a> · read 2026-10-29</li></ul>
+  </div>
+</section>
+
+<section class="s" data-key="m3" data-label="Message 3 · Soteris" data-sub="Your sending domain, checked before you scale outbound">
+  <div class="wrap">
+    <p class="kick"><b>Message 3 of 3</b> <s>Run on a real account: Soteris</s></p>
+    <h2>Your sending domain, checked before you scale outbound</h2>
+    <p class="lede">A founder&#x27;s own DNS says whether the domain is ready for volume. soteris.co&#x27;s SPF already uses 9 of the 10 lookups RFC 7208 allows, with HubSpot alone taking 4, so the next sending tool likely pushes mail from it into an SPF error while DMARC sits at reject. The fix is a record edit, not a project.</p>
+    <div class="chips"><a class="chip" href="https://dns.google/resolve" rel="noopener" target="_blank">Google Public DNS (JSON API)</a><a class="chip" href="https://www.rfc-editor.org/rfc/rfc7208" rel="noopener" target="_blank">RFC 7208 (SPF) and RFC 7489 (DMARC)</a><a class="chip" href="https://www.getdodge.ai/" rel="noopener" target="_blank">Prospects&#x27; own websites</a></div>
+    <div class="mail"><div class="to">To: Founder and CEO, Soteris · San Francisco, CA</div><div class="subj">Room for one more sender</div><p>Your soteris.co SPF record already uses 9 of the 10 DNS lookups email allows. Most sending tools need two or more, so the next one you add likely pushes its mail into an SPF error. With DMARC at reject, anything also missing a DKIM signature gets bounced.</p><p>HubSpot alone uses 4 of the 9, across two entries.</p><p>I mapped each include, its lookups and what can go. Want the table?</p></div>
+    <div class="asset"><div class="asset-h"><span>Attached: soteris.co SPF, lookup by lookup</span><span>showing 5 of 6 · source [2]</span></div><table class="tbl"><tr><th>Include</th><th>What it is</th><th>Lookups</th></tr><tr><td>_spf.hubspot.com</td><td>HubSpot shared (pulls in SendGrid)</td><td>3</td></tr><tr><td>send.zcsend.net</td><td>Zoho Campaigns</td><td>2</td></tr><tr><td>244112484.spf08.hubspotemail.net</td><td>HubSpot, account-specific</td><td>1</td></tr><tr><td>_spf.google.com</td><td>Google Workspace</td><td>1</td></tr><tr><td>amazonses.com</td><td>Amazon SES</td><td>1</td></tr></table><p class='asset-note'>Sixth row: servers.mcsv.net (Mailchimp), 1. Total 9 of 10. Read live from Google Public DNS on Oct 29; records can change.</p></div>
+    <h3 style="margin-top:22px">The sequence, if they don't reply</h3><div class="fus"><div class="fu"><b>Day 0</b><p>The email above.</p></div><div class="fu"><b>Day 3</b><p>The fix takes an afternoon: drop includes for tools you no longer send from, move bulk senders like Mailchimp or SES to a subdomain with its own record, and keep the main domain to Google and HubSpot. Want me to draft the new record?</p></div><div class="fu"><b>Day 7</b><p>Worth checking alongside: soteris.ai, your new site&#x27;s domain, has its own SPF with 6 lookups but no MX record, so mail sent to an @soteris.ai address has no mail server listed. Want me to check where replies to your launch emails go?</p></div></div>
+    <div class="two">
+      <div class="pane"><h4>Why they'd reply</h4><p>Founders find deliverability problems after a campaign underperforms. This finds them before, from public records, and hands over the change to make, so it is useful even if they never hire anyone.</p></div>
+      <div class="pane"><h4>Where First Motion comes in</h4><p>Sending setup and deliverability is the first step of First Motion&#x27;s Outbound Launch; the audit is the natural way into it.</p></div>
+    </div>
+    <div class="scores"><span>independent value <b>4</b></span><span>specificity <b>5</b></span><span>pain <b>4</b></span><span>product fit <b>5</b></span><span>provable <b>5</b></span><span>actionable <b>5</b></span></div>
+    <h3 style="margin-top:22px">Where every fact comes from</h3><ul class="ev"><li>[1] soteris.co TXT (Google Public DNS): SPF = include:_spf.hubspot.com include:send.zcsend.net include:_spf.google.com include:amazonses.com include:servers.mcsv.net include:244112484.spf08.hubspotemail.net ~all. MX is Google Workspace. <a href="https://dns.google/resolve?type=TXT&amp;name=soteris.co" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=soteris.co</a> · read 2026-10-29</li><li>[2] Resolving each include: _spf.hubspot.com includes sendgrid.net, which includes ab.sendgrid.net (3 lookups); send.zcsend.net includes zcsend.net (2); _spf.google.com, amazonses.com, servers.mcsv.net and the account-specific HubSpot include use 1 each. Total: 9 of the 10 allowed. HubSpot&#x27;s two entries use 4 of the 9. <a href="https://dns.google/resolve?type=TXT&amp;name=_spf.hubspot.com" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=_spf.hubspot.com</a> · read 2026-10-29</li><li>[3] RFC 7208 section 4.6.4: include, a, mx, ptr, exists and redirect count toward a limit of 10 DNS lookups per SPF evaluation; exceeding it returns permerror. <a href="https://www.rfc-editor.org/rfc/rfc7208#section-4.6.4" rel="noopener" target="_blank">rfc-editor.org/rfc/rfc7208#section-4.6.4</a> · read 2026-10-29</li><li>[4] _dmarc.soteris.co: p=reject. <a href="https://dns.google/resolve?type=TXT&amp;name=_dmarc.soteris.co" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=_dmarc.soteris.co</a> · read 2026-10-29</li><li>[5] soteris.ai (the domain of the new site) publishes its own SPF with 6 lookups and no MX record; its DMARC reports go to soteris.co. <a href="https://dns.google/resolve?type=TXT&amp;name=soteris.ai" rel="noopener" target="_blank">dns.google/resolve?type=TXT&amp;name=soteris.ai</a> · read 2026-10-29</li></ul>
+  </div>
+</section>
+
+<section class="s" data-key="cut" data-label="What I threw out" data-sub="8 ideas and why">
+  <div class="wrap">
+    <p class="kick"><b>Taste</b> <s>The ideas that lost</s></p>
+    <h2>8 ideas didn't make it. Here's why each one lost.</h2>
+    <p class="lede">Each candidate was judged from the recipient's seat: would they pay for this on its own?
+      <strong>"PQS"</strong> means good for choosing who to message, but the message would really be about First Motion.</p>
+    <div class="boxed"><table class="tbl"><tr><th>Idea</th><th>Verdict</th><th>Why it lost</th></tr><tr><td><b>Importers booking IEEPA tariff refunds, from this month&#x27;s 10-Qs</b></td><td><span class='k maybe'>maybe</span></td><td>Same SEC-filing blend as message 2, so it would repeat that angle on the page. Kept as lead copy for Gaia Dynamics and Aron.</td></tr><tr><td><b>Freshly funded API companies with no llms.txt</b></td><td><span class='k kill'>kill</span></td><td>Saturated: 15 of the 16 freshly funded AI and API companies checked already publish llms.txt, past the 50% saturation line set before looking.</td></tr><tr><td><b>Your LinkedIn ad volume against your named competitors</b></td><td><span class='k kill'>kill</span></td><td>Not provable: the LinkedIn Ad Library blocked every automated request from this environment, so no named account could be checked.</td></tr><tr><td><b>Congrats on the seed, here&#x27;s how to hire your first AE</b></td><td><span class='k kill'>PQS</span></td><td>A trigger plus a job post: it is about First Motion, not the recipient. Used only to pick who to message.</td></tr><tr><td><b>Hotel owners whose filings flag labor shortages</b></td><td><span class='k maybe'>maybe</span></td><td>The labor language is boilerplate risk-factor text, so it says little about any one owner. Used once, as lead copy for Dextr AI.</td></tr><tr><td><b>Tracking pixels missing from your demo page</b></td><td><span class='k kill'>PQS</span></td><td>One source and about the seller&#x27;s service: &#x27;you lack what we install&#x27;. Most sampled sites already load the tags.</td></tr><tr><td><b>Competitor reviews complaining about support</b></td><td><span class='k kill'>kill</span></td><td>Review sites block automated reads, and naming individual reviewers crosses the private-individual line.</td></tr><tr><td><b>Public companies describing mainframe modernization in filings</b></td><td><span class='k maybe'>maybe</span></td><td>Thin volume: 14 filings this year, several of them vendors. Used as lead copy for Hypercubic.</td></tr></table></div>
+  </div>
+</section>
+
+<section class="s" data-key="engine" data-label="The engine" data-sub="How the next ten get found">
+  <div class="wrap">
+    <p class="kick"><b>Engine</b> <s>How the next ten get found</s></p>
+    <h2>The ten leads are a sample. This is the engine behind them.</h2>
+    <div class="three"><div class="pane"><h4>SEC filing watch</h4>
+<dl><dt>Trigger</dt><dd>A public company files a 10-Q, 10-K or 8-K whose text names the buying moment for a client&#x27;s product: an ERP go-live, IEEPA tariff refunds, a mainframe modernization.</dd><dt>How</dt><dd>For each client, agree 3-5 phrases on the working session. Query EDGAR full-text search daily for filings from the last day, pull the matching sentence from the filing itself, and drop vendors and boilerplate risk factors. Score by recency and fit to the client&#x27;s segment.</dd>
+<dt>Output</dt><dd>Per account: the filing line, date and link, the owner to reach, and a draft of message 2 written as the client&#x27;s rep, queued in the client&#x27;s CRM for review.</dd><dt>Cadence</dt><dd>Daily pull, weekly send batch</dd></dl>
+<div class="chips"><a class="chip" href="https://efts.sec.gov/LATEST/search-index" rel="noopener" target="_blank">SEC EDGAR full-text search</a><a class="chip" href="https://www.sec.gov/Archives/edgar/data/" rel="noopener" target="_blank">SEC EDGAR filing documents</a></div></div><div class="pane"><h4>Registry adoption watch</h4>
+<dl><dt>Trigger</dt><dd>A company publishes its first server under its own domain in the official MCP Registry, i.e. it just opened its product to agents.</dd><dt>How</dt><dd>Page the registry API daily with updated_since, keep namespaces whose earliest version is new, and re-check each with no date filter so older servers drop out. Resolve the namespace to the company, keep funded software companies, and match them to clients selling agent experience, identity or security.</dd>
+<dt>Output</dt><dd>Per account: company, server, publish date and what it does, plus a draft of message 1 for the client&#x27;s founder or DevRel lead.</dd><dt>Cadence</dt><dd>Daily pull, weekly send batch</dd></dl>
+<div class="chips"><a class="chip" href="https://registry.modelcontextprotocol.io/v0/servers" rel="noopener" target="_blank">Official MCP Registry API</a><a class="chip" href="https://siliconangle.com/" rel="noopener" target="_blank">Funding announcements (company blogs, SiliconANGLE, TheSaaSNews, Fundraise Insider, PhocusWire)</a></div></div><div class="pane"><h4>Funded-founder domain audit</h4>
+<dl><dt>Trigger</dt><dd>A 5-50 person B2B company announces a seed or Series A and its founder still sells: First Motion&#x27;s own buyer, at the moment pipeline becomes urgent.</dd><dt>How</dt><dd>Pull company, founder and domain from the announcement. Read SPF (counting nested lookups), DMARC policy and pct, and MX from public DNS, and flag leftover senders. Keep accounts with a fixable finding; rank by round size and how soon outbound is likely.</dd>
+<dt>Output</dt><dd>Per founder: the finding, the exact record change, and a draft of message 3 from Simas that offers the fix and links his working-session calendar.</dd><dt>Cadence</dt><dd>Daily pull, sends three times a week</dd></dl>
+<div class="chips"><a class="chip" href="https://siliconangle.com/" rel="noopener" target="_blank">Funding announcements (company blogs, SiliconANGLE, TheSaaSNews, Fundraise Insider, PhocusWire)</a><a class="chip" href="https://www.vcbacked.co/directory/funding/seed/city/san-francisco-panama" rel="noopener" target="_blank">VCBacked funded-startup directory</a><a class="chip" href="https://dns.google/resolve" rel="noopener" target="_blank">Google Public DNS (JSON API)</a><a class="chip" href="https://www.rfc-editor.org/rfc/rfc7208" rel="noopener" target="_blank">RFC 7208 (SPF) and RFC 7489 (DMARC)</a></div></div></div>
+  </div>
+</section>
+
+<section class="s" data-key="run" data-label="One run, end to end" data-sub="Method and the TAM math">
+  <div class="wrap">
+    <p class="kick"><b>Method</b> <s>One run, end to end</s></p>
+    <h2>Six steps, and the copy comes last.</h2>
+    <div class="steps"><div class="step"><b>Describe the buyer</b><p>First Motion&#x27;s buyer, and where public data is strongest for them.</p></div><div class="step"><b>Kill rules first</b><p>Set before looking, then 3 pain segments tested against them.</p></div><div class="step"><b>Map the sources</b><p>Public data that describes each account: 12 in this run.</p></div><div class="step"><b>Generate and judge</b><p>11 candidate messages, judged from the recipient&#x27;s seat; 3 kept.</p></div><div class="step"><b>Rank by live signal</b><p>10 named leads, each with its source.</p></div><div class="step"><b>Copy last</b><p>Written under a checker that blocks any number with no source behind it.</p></div></div>
+    <h3 style="margin-top:26px">Does the segment support it</h3><div class="boxed"><table class="tbl"><tr><td style='width:38%'>Segment</td><td>Seed-stage startups in San Francisco in VCBacked&#x27;s recently-funded directory (one city; the US pool is several times larger)</td></tr><tr><td style='width:38%'>Accounts in it</td><td>3306 <a href="https://www.vcbacked.co/directory/funding/seed/city/san-francisco-panama" rel="noopener" target="_blank">source</a></td></tr><tr><td style='width:38%'>Meetings a month, as the goal</td><td>8</td></tr><tr><td style='width:38%'>Share of the segment contacted each month</td><td>20%</td></tr><tr><td style='width:38%'>Positive-reply rate the plan needs</td><td>2.4%</td></tr><tr><td style='width:38%'>Positive replies that book</td><td>50%</td></tr></table></div><p class="src">Not every startup in the directory is B2B with founder-led sales; if a third qualify, the same goal needs about 7% positive, which only a PVP-grade message gets. Hence one sourced finding per email. These are planning inputs, not results.</p>
+  </div>
+</section>
+
+<section class="s" data-key="plan" data-label="If hired: first 14 days" data-sub="Each step measured on its own">
+  <div class="wrap">
+    <p class="kick"><b>If hired</b> <s>The first two weeks</s></p>
+    <h2>What I'd run first, each step measured on its own.</h2>
+    <div class="rows"><div class="row"><em>Days 1-2</em><p><b>Map First Motion&#x27;s past clients (Terac, Steel &amp; Acre, the legal tech team) to the public signals they showed before buying, and agree the ICP filter with Simas.</b>Measured by: Share of past clients the filter would have caught</p></div><div class="row"><em>Days 3-5</em><p><b>Ship the funded-founder domain audit as a daily job on First Motion&#x27;s own pipeline, writing the finding and record change per account.</b>Measured by: Accounts with a fresh finding each week; 20 hand-checked for accuracy</p></div><div class="row"><em>Days 6-8</em><p><b>First 10 sends from the lead board, copy approved by Simas, replies routed to his working-session calendar.</b>Measured by: Replies and positive replies, tracked per message</p></div><div class="row"><em>Days 9-11</em><p><b>Turn the SEC filing watch into a reusable step inside one client&#x27;s Outbound Launch, with phrases set on that client&#x27;s working session.</b>Measured by: Accounts surfaced per week, and the share the client approves</p></div><div class="row"><em>Days 12-14</em><p><b>Readout: working sessions booked and launches sold per play. Kill the weakest play and write the weekly operating rhythm.</b>Measured by: Working sessions booked per 100 sends, by play</p></div></div>
+  </div>
+</section>
+
+<section class="s" data-key="me" data-label="Who&#x27;s building it" data-sub="The receipts">
+  <div class="wrap">
+    <p class="kick"><b>Me</b> <s>Kavish Lodha · GTM engineer</s></p>
+    <h2>I build the systems behind outbound, then test them like experiments.</h2>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span><p>Monthly meetings from the outbound system I ran at Aios.</p></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span><p>Pipeline sourced by outbound at Aios.</p></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span><p>Revenue I closed myself as founder of x97media.</p></div></div>
+    <p class="src">More about me: <a href="https://koderkavish.github.io">koderkavish.github.io</a>.</p>
+  </div>
+</section>
+
+<section class="s mid" data-key="close" data-label="Close" data-sub="The leads are yours">
+  <div class="wrap">
+    <p class="kick"><b>First Motion</b> <s>2026-10-29</s></p>
+    <h1>The ten leads are yours. The engine that finds the next ten is the job.</h1>
+    <p class="lede">Kavish Lodha · <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For First Motion</b> &middot; Kavish Lodha</span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 12</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index &middot; press <span class="mono">Esc</span> to close</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx"), hint = document.getElementById("hint");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  if (i > 0 && hint) { hint.style.opacity = "0"; }
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
