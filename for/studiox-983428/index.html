@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>StudioX Presales Demos</title>
+<meta name="description" content="Three StudioX demos from Kavish Lodha, each opened with a public record.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:12px clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+#tabs{padding-top:calc(12px + env(safe-area-inset-top,0px))}
+#chrome{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.chip{font:500 11px/1.35 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere}
+a.chip:hover{text-decoration:underline}
+.rec p{max-width:none}
+.why{margin-top:20px;padding-top:16px;border-top:1px solid var(--rule)}
+.why b{color:var(--ink)}
+.disc{margin-top:18px}
+.disc h3{margin-bottom:8px}
+.disc ul{margin:0;padding-left:18px;color:var(--ink2);font:400 14.5px/1.6 var(--sans)}
+.cover-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:30px 0 0}
+.cover-grid div{background:var(--surface);padding:18px 20px;min-width:0}
+.cover-grid em{font:600 11px/1 var(--mono);font-style:normal;color:var(--accent)}
+.cover-grid b{display:block;margin:8px 0 6px;font:700 18px/1.2 var(--sans);color:var(--ink)}
+.cover-grid span{display:block;font:400 13.5px/1.5 var(--sans);color:var(--ink2)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0 0}
+.three>*{min-width:0}
+.ms{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;
+  align-self:start;min-width:0}
+.ms-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ms-name{font:600 12px/1 var(--mono);letter-spacing:.4px;color:var(--ink)}
+.play{cursor:pointer;font:600 12px/1 var(--mono);color:var(--on-accent);background:var(--accent);
+  border:0;border-radius:7px;padding:9px 12px}
+.play:hover{filter:brightness(.94)}
+.play:focus-visible,.go-next:focus-visible,#tabs button:focus-visible,#chrome button:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px}
+.ms-trig{margin:14px 0 0;font:400 13px/1.5 var(--sans);color:var(--ink2);background:var(--raised);
+  border-radius:7px;padding:10px 12px;max-width:none}
+.ms-trig span{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.6px;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:5px}
+.ms-steps{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:0}
+.ms-steps li{display:grid;grid-template-columns:52px 1fr;column-gap:12px;padding:10px 0;
+  border-top:1px solid var(--rule2);transition:opacity .3s}
+.ms-steps .t{grid-row:span 2;font:500 11.5px/1.5 var(--mono);color:var(--ink3);
+  font-variant-numeric:tabular-nums}
+.ms-steps b{font:600 13.5px/1.4 var(--sans);color:var(--ink)}
+.ms-steps .d{font:400 13.5px/1.5 var(--sans);color:var(--ink2);min-width:0}
+.ms[data-run] .ms-steps li{opacity:.28}
+.ms[data-run] .ms-steps li.done{opacity:1}
+.ms[data-run] .ms-steps li.now{opacity:1}
+.ms[data-run] .ms-steps li.now .t{color:var(--accent)}
+.ms-end{margin:12px 0 0;font:600 13.5px/1.5 var(--sans);color:var(--ink);max-width:none}
+.ms-note{margin:8px 0 0;font:400 11px/1.5 var(--mono);color:var(--ink3);max-width:none}
+@media (max-width:980px){.cover-grid,.three{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.s,.ms-steps li{transition:none}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s" data-key="start" data-label="Cover" data-sub="Why this page exists">
+  <div class="wrap">
+
+    <p class="kick"><b>For StudioX &middot; Ajay Kumar</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">Three StudioX demos, opened with a record the buyer already knows.</h1>
+    <p class="lede">Your homepage says <strong>&ldquo;Skip the slides. Let&rsquo;s run StudioX on your
+    own systems.&rdquo;</strong> That is the presales job, and it is the one I want. So instead of a
+    resume, here are three demos I would run: one each for NetworkX, FinanceX and ResidentX. Each
+    opens with a public record the buyer&rsquo;s operators know by heart: an FCC outage report, a
+    10-K, an FTC order. Each has a mission you can play.</p>
+    <div class="cover-grid">
+      <div><em>01</em><b>NetworkX</b><span>A core-network change gate, rehearsed on the FCC&rsquo;s
+        account of AT&amp;T&rsquo;s February 2024 outage.</span></div>
+      <div><em>02</em><b>FinanceX</b><span>A close the auditor can follow, for a company remediating
+        four material weaknesses.</span></div>
+      <div><em>03</em><b>ResidentX</b><span>Deposit statements that hold up, after the FTC&rsquo;s
+        $48 million order against the largest single-family landlord.</span></div>
+    </div>
+    <p class="src">Applying for: <a href="https://www.studiox-ai.com/careers/presales-engineer" rel="noopener" target="_blank">Presales Engineer</a>
+    &middot; every fact links to its public source</p>
+  </div>
+</section>
+<section class="s" data-key="networkx" data-label="NetworkX demo" data-sub="Tier-1 mobile operators">
+  <div class="wrap">
+
+    <p class="kick"><b>Demo 01 &middot; NetworkX</b> <s>for tier-1 mobile operators</s></p>
+    <h2>Stop the change that should never reach the core.</h2>
+    <div class="two">
+      <div class="rec">
+        <h3>The public record</h3>
+        <p>At 2:42 AM on February 22, 2024, an AT&amp;T Mobility employee placed a misconfigured
+        network element into production during a routine maintenance window. Three minutes later
+        the nationwide outage began. It blocked <strong>more than 92 million voice calls</strong> and
+        more than 25,000 calls to 911, and full restoration took at least 12 hours.</p>
+        <p>The FCC named the causes: the configuration &ldquo;did not conform to AT&amp;T&rsquo;s
+        established network element design and installment procedures, which require peer
+        review,&rdquo; and there were &ldquo;insufficient safeguards and controls to ensure approval of
+        changes affecting the core network.&rdquo;</p>
+        <div class="chips"><a class="chip" href="https://docs.fcc.gov/public/attachments/DOC-404150A1.pdf" rel="noopener" target="_blank">FCC report, Jul 22 2024</a><a class="chip" href="https://www.studiox-ai.com/networkx" rel="noopener" target="_blank">studiox-ai.com/networkx</a></div>
+        <p class="why"><b>Why it opens the demo.</b> Every NOC director has read this report. It turns
+        &ldquo;autonomous operations&rdquo; from a risk into the control they wish they had: NetworkX
+        stopping for a human exactly where the policy says to.</p>
+        <div class="disc"><h3>First questions in discovery</h3><ul><li>Where does peer review live today: in the change ticket, or in someone&rsquo;s head?</li><li>Which changes count as &ldquo;core&rdquo;, and who can approve one at 2 AM?</li></ul></div>
+      </div>
+      <div class="ms">
+      <div class="ms-top"><span class="ms-name">Mission · core change gate</span>
+        <button class="play" type="button">&#9654; Play the demo</button></div>
+      <p class="ms-trig"><span>Trigger</span> Change ticket opens in ServiceNow for a new core element, 02:30, maintenance window</p>
+      <ol class="ms-steps"><li data-who="Change specialist"><span class="t">02:30</span><b>Change specialist</b><span class="d">Reads the ticket and pulls the config diff from the element manager.</span></li><li data-who="Design-standard agent"><span class="t">02:31</span><b>Design-standard agent</b><span class="d">Checks every parameter against the operator&rsquo;s element design standard, loaded as knowledge. <mark>1 parameter does not conform.</mark></span></li><li data-who="Policy"><span class="t">02:31</span><b>Policy</b><span class="d">Core-network change, no peer review on record. <mark>Blocked.</mark> Sent to the Decision Queue.</span></li><li data-who="Lab-evidence agent"><span class="t">02:33</span><b>Lab-evidence agent</b><span class="d">No lab test attached to the ticket. Requests it from the engineer.</span></li><li data-who="On-call engineer"><span class="t">02:48</span><b>On-call engineer</b><span class="d">Fixes the parameter, attaches the test, approves. You.</span></li><li data-who="Verification agent"><span class="t">02:49</span><b>Verification agent</b><span class="d">Watches device registrations for 15 minutes with the rollback playbook armed. Healthy.</span></li></ol>
+      <p class="ms-end">The demo ends on the trace: every check and tool call, logged, ready for the engineer&rsquo;s manager or a regulator.</p>
+      <p class="ms-note">Demo data is synthetic. The scenario follows the public record on the left.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="s" data-key="financex" data-label="FinanceX demo" data-sub="Companies remediating a material weakness">
+  <div class="wrap">
+
+    <p class="kick"><b>Demo 02 &middot; FinanceX</b> <s>for finance teams remediating controls</s></p>
+    <h2>A close the auditor can follow, every day.</h2>
+    <div class="two">
+      <div class="rec">
+        <h3>The public record</h3>
+        <p>Driven Brands, with over 4,200 locations across 49 U.S. states and Canada, filed its 2025
+        10-K on May 19, 2026. It restated fiscal 2023, 2024 and three 2025 quarters, and reported
+        material weaknesses in <strong>account reconciliations, intercompany and consolidation,
+        leases, and manual journal entries</strong>.</p>
+        <p>Its remediation plan is people: hiring technical accountants, engaging third-party
+        specialists, and building a second-line Sarbanes-Oxley function. It also notes a new ERP whose
+        first stage went live in 2024.</p>
+        <div class="chips"><a class="chip" href="https://www.sec.gov/Archives/edgar/data/1804745/000180474526000048/drvn-20251227.htm" rel="noopener" target="_blank">Driven Brands 10-K, filed May 19 2026</a><a class="chip" href="https://www.studiox-ai.com/financex" rel="noopener" target="_blank">studiox-ai.com/financex</a></div>
+        <p class="why"><b>Why it opens the demo.</b> Three of the four weaknesses map onto what FinanceX
+        already does: reconcile, draft the entry with evidence, and wait for sign-off. The demo shows
+        those controls running every day, next to the people the plan is hiring.</p>
+        <div class="disc"><h3>First questions in discovery</h3><ul><li>Which entities are still outside the new ERP?</li><li>How many reconciliations get reviewed after the deadline today?</li></ul></div>
+      </div>
+      <div class="ms">
+      <div class="ms-top"><span class="ms-name">Mission · daily reconciliation</span>
+        <button class="play" type="button">&#9654; Play the demo</button></div>
+      <p class="ms-trig"><span>Trigger</span> Day 1 of close: bank statements and the general ledger refresh overnight</p>
+      <ol class="ms-steps"><li data-who="Reconciliation agent"><span class="t">06:00</span><b>Reconciliation agent</b><span class="d">Pulls GL cash balances from the ERP and statements from the bank feed for every entity.</span></li><li data-who="Reconciliation agent"><span class="t">06:04</span><b>Reconciliation agent</b><span class="d">Matches straight through. <mark>3 exceptions</mark> surfaced, largest first.</span></li><li data-who="Intercompany agent"><span class="t">06:05</span><b>Intercompany agent</b><span class="d">Pairs entity A&rsquo;s receivable with entity B&rsquo;s payable. Finds a mismatch and drafts the correcting entry with both ledgers attached.</span></li><li data-who="Policy"><span class="t">06:06</span><b>Policy</b><span class="d">Manual entry above the review threshold. <mark>Routed to the controller.</mark> Nothing posts yet.</span></li><li data-who="Controller"><span class="t">09:12</span><b>Controller</b><span class="d">Reviews the evidence and signs off. You.</span></li><li data-who="Ledger"><span class="t">09:12</span><b>Ledger</b><span class="d">Posted. The reviewer, timestamp and evidence are saved for the external auditor.</span></li></ol>
+      <p class="ms-end">The demo ends on the audit pack: who reviewed what, when, against which evidence.</p>
+      <p class="ms-note">Demo data is synthetic. The scenario follows the public record on the left.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="s" data-key="residentx" data-label="ResidentX demo" data-sub="Single-family rental operators">
+  <div class="wrap">
+
+    <p class="kick"><b>Demo 03 &middot; ResidentX</b> <s>for single-family rental operators</s></p>
+    <h2>Deposit statements that hold up.</h2>
+    <div class="two">
+      <div class="rec">
+        <h3>The public record</h3>
+        <p>In September 2024 the FTC acted against Invitation Homes, which it called &ldquo;the
+        country&rsquo;s largest landlord of single-family homes.&rdquo; It alleged deposits were
+        withheld for normal wear and tear, damage that existed before move-in, and renovations. Per the
+        complaint, from 2020 to 2022 the company returned <strong>39.2% of security deposit
+        dollars</strong>, against a national average of 63.9%. The company agreed to pay $48 million
+        without admitting the allegations.</p>
+        <p>The order bars withholding deposits for normal wear and tear or pre-existing issues. In
+        March 2026 the FTC mailed refund checks to 444,131 consumers.</p>
+        <div class="chips"><a class="chip" href="https://www.ftc.gov/news-events/news/press-releases/2024/09/ftc-takes-action-against-invitation-homes-deceiving-renters-charging-junk-fees-withholding-security" rel="noopener" target="_blank">FTC release, Sep 24 2024</a><a class="chip" href="https://www.ftc.gov/news-events/news/press-releases/2026/03/ftc-sends-checks-totaling-more-472-million-consumers-deceived-invitation-homes-undisclosed-fees" rel="noopener" target="_blank">FTC release, Mar 11 2026</a><a class="chip" href="https://www.studiox-ai.com/residentx" rel="noopener" target="_blank">studiox-ai.com/residentx</a></div>
+        <p class="why"><b>Why it opens the demo.</b> Every top-five operator&rsquo;s legal team read this
+        order. ResidentX already has a Deposit agent with itemized charges, photo evidence and human
+        approval. If Invitation Homes is the top-five operator on your ResidentX page, this demo goes
+        to the other four.</p>
+        <div class="disc"><h3>First questions in discovery</h3><ul><li>Who decides wear and tear versus damage today, and is it written down?</li><li>What share of deposit dollars did you return last year?</li></ul></div>
+      </div>
+      <div class="ms">
+      <div class="ms-top"><span class="ms-name">Mission · move-out deposit</span>
+        <button class="play" type="button">&#9654; Play the demo</button></div>
+      <p class="ms-trig"><span>Trigger</span> Move-out inspection is marked complete in Yardi; photos land in SharePoint</p>
+      <ol class="ms-steps"><li data-who="Deposit agent"><span class="t">Day 0</span><b>Deposit agent</b><span class="d">Lists the 6 charges from the inspection and pulls the move-in condition report and photos.</span></li><li data-who="Deposit agent"><span class="t">Day 0</span><b>Deposit agent</b><span class="d">Compares each charge with move-in. <mark>2 items were there at move-in.</mark> Removed.</span></li><li data-who="Policy agent"><span class="t">Day 0</span><b>Policy agent</b><span class="d">Applies the operator&rsquo;s written wear-and-tear rule. Carpet after 4 years is wear. <mark>Removed.</mark></span></li><li data-who="Property manager"><span class="t">Day 1</span><b>Property manager</b><span class="d">Reviews 3 remaining charges with photo evidence and approves. You.</span></li><li data-who="Documents agent"><span class="t">Day 1</span><b>Documents agent</b><span class="d">Sends the itemized statement for e-signature and updates the Yardi ledger.</span></li><li data-who="Reporting agent"><span class="t">Day 1</span><b>Reporting agent</b><span class="d">Adds the move-out to the monthly deposit-return rate, tracked against the national average.</span></li></ol>
+      <p class="ms-end">The demo ends on the resident&rsquo;s view: a magic-link page with every charge, its photo, and a dispute button.</p>
+      <p class="ms-note">Demo data is synthetic. The scenario follows the public record on the left.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="s" data-key="playbook" data-label="How I&#x27;d run presales" data-sub="Three things I&#x27;d build">
+  <div class="wrap">
+
+    <p class="kick"><b>If I join</b> <s>three things I&rsquo;d build in the first month</s></p>
+    <h2>How I&rsquo;d run presales at StudioX.</h2>
+    <div class="three">
+      <div class="pane"><h4>1. A demo kit for each product</h4><p>Seeded sandboxes for NetworkX (an alarm
+        flood and change tickets), FinanceX (a three-entity ledger with planted exceptions) and ResidentX
+        (a 500-home portfolio). A live demo never waits on the prospect&rsquo;s data, and never breaks on stage.</p></div>
+      <div class="pane"><h4>2. A public-record opener for every target</h4><p>Before discovery, the filing,
+        outage report or enforcement record that names the account&rsquo;s pain in its own words. That is
+        the method on this page, done for every account sales is working.</p></div>
+      <div class="pane"><h4>3. Discovery to demo in 48 hours</h4><p>A one-page capture that maps each
+        answer to a Mission specialist and an integration. The second meeting runs on the prospect&rsquo;s
+        own workflow, which is what your homepage promises.</p></div>
+    </div>
+    <p class="src">Built from the role&rsquo;s own list: live demos, setting up and troubleshooting them,
+    turning requirements into solutions, and working between sales and engineering.</p>
+  </div>
+</section>
+<section class="s" data-key="ask" data-label="The ask" data-sub="Presales Engineer">
+  <div class="wrap">
+
+    <p class="kick"><b>The ask</b> <s>Presales Engineer</s></p>
+    <h1>I&rsquo;d like to run these demos for StudioX.</h1>
+    <p class="lede">I have spent my career in front of buyers and building the systems behind the pitch.
+    Give me 20 minutes and I will run one of these three live for you.</p>
+    <div class="stats"><div class="stat"><b class="a">46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b class="a">500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b class="a">100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+    <p class="src">Kavish Lodha &middot; <a href="https://koderkavish.github.io" rel="noopener" target="_blank">koderkavish.github.io</a></p>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who">For StudioX &middot; <b>Kavish Lodha</b></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 6</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index &middot; press <span class="mono">Esc</span> to close</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next &middot; ' + pad(j + 1) + ' / ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- mission player: steps stay readable at rest; Play walks through them in order
+var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+Array.prototype.forEach.call(document.querySelectorAll(".ms"), function(ms){
+  var btn = ms.querySelector(".play"), steps = ms.querySelectorAll(".ms-steps li"), timer = null;
+  btn.addEventListener("click", function(){
+    clearInterval(timer);
+    ms.setAttribute("data-run", "");
+    var k = 0;
+    function tick(){
+      Array.prototype.forEach.call(steps, function(li, j){
+        li.className = j < k ? "done" : (j === k ? "now" : "");
+      });
+      if (k >= steps.length){ clearInterval(timer); ms.removeAttribute("data-run");
+        btn.innerHTML = "&#8635; Replay"; return; }
+      k++;
+    }
+    btn.innerHTML = "Running&hellip;";
+    tick();
+    timer = setInterval(tick, reduce ? 300 : 1100);
+  });
+});
+
+})();
+</script>
+</body>
+</html>
