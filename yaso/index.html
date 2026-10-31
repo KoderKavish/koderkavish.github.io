@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For YASO</title>
+<meta name="description" content="10 named leads with copy and three things I'd build, prepared for YASO.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For YASO</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">Ten global beauty and wellness brands you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, ten named leads to send them to,
+      and three things I'd build at YASO. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. &middot; <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your global beauty and wellness brands would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>Which of your marks China protects today, from the Madrid register<i>For Founder, CEO or head of international</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Your SKUs against China&#x27;s RMB 10/ml high-end skincare tax line<i>For Founder, CEO or head of international</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Your range by China route: special-use cosmetics and cross-border<i>For Founder, CEO or head of international</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>Which of your marks China protects today, from the Madrid register</h3>
+<p class="take">Every mark you hold, with its China status from the Madrid register, and what to file before a China store opens.</p>
+<div class="mail"><div class="to">To: Founder, CEO or head of international, 111SKIN</div>
+<div class="subj">111SKIN in China: the 2028 decision</div><p>On the Madrid register, China protection for your 111SKIN mark ended in July 2024, and for 111SKIN Harley St. London in March 2026. Your March 2026 filing names China, but the register gives CNIPA until January 2028. Today the only granted China mark in the family is Dr. Yannis Alexandrides.</p><p>China approves whoever filed first, so the gap matters. I put every mark&#x27;s China status in one table, with what to file next. Want it?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: 111SKIN marks: China status on the Madrid register (Oct 31, 2026)</span></div><table class="tbl"><tr><th>Mark</th><th>Madrid no.</th><th>China status</th><th>Classes</th><th>Date</th></tr><tr><td>111SKIN</td><td>1229898</td><td>No longer in effect</td><td>3</td><td>08.07.2024</td></tr><tr><td>111SKIN HARLEY ST. LONDON</td><td>1308461</td><td>No longer in effect</td><td>3</td><td>22.03.2026</td></tr><tr><td>NAC Y2</td><td>1229519</td><td>No longer in effect</td><td>3</td><td>08.07.2024</td></tr></table></div>
+<details class="srcs"><summary>Sources &middot; 6</summary><ul class="ev"><li>[1] Madrid Monitor, China column for 111 SKIN LTD&#x27;s marks: 111SKIN (1229898) no longer in effect since 08.07.2024; 111SKIN HARLEY ST. LONDON (1308461) no longer in effect since 22.03.2026; NAC Y2 (1229519) no longer in effect since 08.07.2024; 111SKIN (1928070, registered 2026-03-20) awaiting decision in classes 3, 5, 35, 44 with a 16.01.2028 date; Dr. Yannis Alexandrides (1642239) protection granted in classes 3, 5, 44 on 23.09.2022. <a href="https://www3.wipo.int/madrid/monitor/en/" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/</a></li><li>[2] 111SKIN (international registration 1229898, origin EM, class 3): China designation no longer in effect since 08.07.2024. Only Mexico still shows protection granted. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1229898" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1229898</a></li><li>[3] 111SKIN HARLEY ST. LONDON (1308461, class 3): China designation no longer in effect since 22.03.2026. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1308461" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1308461</a></li><li>[4] 111SKIN (1928070, registered 2026-03-20, classes 3, 5, 35, 44): China awaiting decision, with 16.01.2028 shown as the date. The register also shows provisional refusals from the US (16.10.2026) and Russia (23.10.2026). <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1928070" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1928070</a></li><li>[5] Dr. Yannis Alexandrides (1642239, classes 3, 5, 44): China protection granted 23.09.2022. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1642239" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1642239</a></li><li>[6] PRC Trademark Law Article 31 (current text): where two or more applicants file identical or similar marks for the same or similar goods, the earlier application is preliminarily approved and published. <a href="https://www.jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_taisho_cn.pdf" rel="noopener" target="_blank">jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_</a></li></ul></details>
+</article><article class="pm">
+<h3>Your SKUs against China&#x27;s RMB 10/ml high-end skincare tax line</h3>
+<p class="take">Which SKUs land over China&#x27;s RMB 10/ml high-end skincare tax line at home prices, and the China price that avoids it.</p>
+<div class="mail"><div class="to">To: Founder, CEO or head of international, Skin Rocks</div>
+<div class="subj">Pricing The Light Moisturiser for China</div><p>At UK parity, your Light Moisturiser lands at about RMB 10.5 per ml in China. That&#x27;s just over the high-end skincare line, where cross-border shoppers pay 23.1% tax instead of 9.1%.</p><p>Priced a little lower for China, it sits under the line and the shopper&#x27;s tax drops by more than half. Your serums sit well above it, your cleansers well below.</p><p>I mapped every Skin Rocks SKU against the line at today&#x27;s rate. Want the sheet?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Skin Rocks SKUs against China&#x27;s RMB 10/ml line (ECB rate, 30 Oct 2026)</span></div><table class="tbl"><tr><th>SKU</th><th>UK price</th><th>Size</th><th>RMB per ml at parity</th><th>Cross-border tax</th></tr><tr><td>The Light Moisturiser</td><td>£59</td><td>50ml</td><td>10.52</td><td>23.1% (just over)</td></tr><tr><td>The Support Serum</td><td>£85</td><td>30ml</td><td>25.26</td><td>23.1%</td></tr><tr><td>The Antioxidant</td><td>£75</td><td>30ml</td><td>22.29</td><td>23.1%</td></tr></table></div>
+<details class="srcs"><summary>Sources &middot; 9</summary><ul class="ev"><li>[1] Skin Rocks&#x27; own store feed (GBP): The Light Moisturiser 50ml £59.00; The Support Serum 30ml £85.00; The Antioxidant 30ml £75.00; The Amplifier 100ml £70.00; The Gel Cleanser 125ml £39.00; The Hyperpigmentation Serum 30ml £90.00. <a href="https://skinrocks.com/products.json" rel="noopener" target="_blank">skinrocks.com/products.json</a></li><li>[2] ECB reference rates for 30 Oct 2026: 1 EUR = 0.83380 GBP and 7.4326 CNY, so 1 GBP = 8.914 CNY. <a href="https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml" rel="noopener" target="_blank">ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml</a></li><li>[3] Caishui [2016] No. 103: the cosmetics consumption tax now covers only high-end make-up and skincare, at 15%, defined as a production or import price (before VAT) of RMB 10 per ml (g) or 15 per piece and above. <a href="https://fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b1def83891b101ae146e6adcbf.pdf" rel="noopener" target="_blank">fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b</a></li><li>[4] Caiguanshui [2016] No. 18: for cross-border retail imports the actual transaction price (retail price plus freight and insurance) is the dutiable value; within the limits, import VAT and consumption tax are charged at 70% of the statutory amount. <a href="https://fgk.chinatax.gov.cn/zcfgk/c102416/c5203746/content.html" rel="noopener" target="_blank">fgk.chinatax.gov.cn/zcfgk/c102416/c5203746/content.html</a></li><li>[5] Announcement 2019 No. 39: the 16% VAT rate on sales and imports of goods became 13%. <a href="https://fgk.chinatax.gov.cn/zcfgk/c102416/c5202330/content.html" rel="noopener" target="_blank">fgk.chinatax.gov.cn/zcfgk/c102416/c5202330/content.html</a></li><li>[6] Calculation: at UK parity The Light Moisturiser is 59 x 8.914 = RMB 525.9 for 50ml, or RMB 10.5 per ml, above the RMB 10 line. Cross-border tax on a high-end item is 70% x (15%/85% + 13% x (1 + 15%/85%)) = 23.1%; below the line it&#x27;s 70% x 13% = 9.1%. The Support Serum is RMB 25.3/ml, The Antioxidant 22.3, The Amplifier 6.2, The Gel Cleanser 2.8. <a href="https://fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b1def83891b101ae146e6adcbf.pdf" rel="noopener" target="_blank">fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b</a></li><li>[7] YASO&#x27;s live platform is refreshed every 15 minutes: sales, stock, marketing spend, customer data. <a href="https://goyaso.com/" rel="noopener" target="_blank">goyaso.com/</a></li><li>[8] The Hyperpigmentation Serum is sold as clinically proven to reduce the appearance of dark spots. China&#x27;s cosmetics regulation (Article 16) classes freckle-removal and whitening products as special cosmetics, which need registration before import. <a href="https://www.gov.cn/zhengce/content/2020-06/29/content_5522593.htm" rel="noopener" target="_blank">gov.cn/zhengce/content/2020-06/29/content_5522593.htm</a></li><li>[9] Shangcaifa [2018] No. 486: cross-border retail imports are supervised as personal-use goods and don&#x27;t follow first-import licence, registration or filing requirements. <a href="https://www.cac.gov.cn/2018-12/01/c_1123793309.htm" rel="noopener" target="_blank">cac.gov.cn/2018-12/01/c_1123793309.htm</a></li></ul></details>
+</article><article class="pm">
+<h3>Your range by China route: special-use cosmetics and cross-border</h3>
+<p class="take">Which of your SKUs China treats as special-use cosmetics, and the route that puts each on sale without waiting for registration.</p>
+<div class="mail"><div class="to">To: Founder, CEO or head of international, Ultra Violette</div>
+<div class="subj">Ultra Violette&#x27;s fastest route into China</div><p>Every product on your Australian store carries an SPF, and China classes every sunscreen as a special-use cosmetic. Selling one through normal import means its own NMPA registration first, renewed every 5 years.</p><p>Cross-border retail import of listed goods skips that registration, and you protected the name in China in 2019. So the range can start cross-border, with only proven sellers registered later.</p><p>I mapped all 32 SKUs by route and registration need. Want the map?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Ultra Violette SKUs by China route (store feed, Oct 31, 2026)</span></div><table class="tbl"><tr><th>Product</th><th>Size</th><th>AU price</th><th>China class</th><th>Route now</th></tr><tr><td>Supreme Screen SPF 50+</td><td>75ml</td><td>A$52</td><td>Special-use (sunscreen)</td><td>Cross-border</td></tr><tr><td>Queen Screen SPF 50+</td><td>50ml</td><td>A$52</td><td>Special-use (sunscreen)</td><td>Cross-border</td></tr><tr><td>Unblock Screen SPF 50</td><td>50ml</td><td>A$50</td><td>Special-use (sunscreen)</td><td>Cross-border</td></tr></table></div>
+<details class="srcs"><summary>Sources &middot; 6</summary><ul class="ev"><li>[1] Ultra Violette&#x27;s Australian store lists 32 single products (bundles, merch and gift cards excluded), and every one carries an SPF in its name or description. 8 of the 32 are Sheen Screen SPF 50 lip balms. Examples: Supreme Screen SPF 50+ 75ml A$52, Queen Screen SPF 50+ 50ml A$52, Unblock Screen SPF 50 50ml A$50, Extreme Screen SPF 50+ 150ml A$35, Bejewelled Sheen Screen SPF 50 lip balm A$27. <a href="https://www.ultraviolette.com.au/products.json" rel="noopener" target="_blank">ultraviolette.com.au/products.json</a></li><li>[2] CSAR Article 16: products for hair dye, perm, freckle-removal/whitening, sunscreen and anti-hair-loss, and products claiming new efficacy, are special cosmetics, under registration management. <a href="https://www.gov.cn/zhengce/content/2020-06/29/content_5522593.htm" rel="noopener" target="_blank">gov.cn/zhengce/content/2020-06/29/content_5522593.htm</a></li><li>[3] CSAR: special cosmetics may be produced or imported only after NMPA registration, and the registration certificate is valid for 5 years. <a href="https://www.gov.cn/zhengce/content/2020-06/29/content_5522593.htm" rel="noopener" target="_blank">gov.cn/zhengce/content/2020-06/29/content_5522593.htm</a></li><li>[4] Shangcaifa [2018] No. 486: cross-border retail imports (goods on the cross-border retail import list, for personal use) are supervised as personal-use goods and don&#x27;t follow first-import licence, registration or filing requirements. <a href="https://www.cac.gov.cn/2018-12/01/c_1123793309.htm" rel="noopener" target="_blank">cac.gov.cn/2018-12/01/c_1123793309.htm</a></li><li>[5] ULTRA VIOLETTE (1466096, registered 2019-02-28): China protection granted in classes 3 and 35 on 18.07.2019. ULTRA VIOLETTE (1696785): China granted in classes 5 and 35 on 31.08.2023. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1466096" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1466096</a></li><li>[6] YASO stores brand stock in its bonded warehouses, ships to the customer and handles payment reconciliation; no China entity is required. <a href="https://goyaso.com/" rel="noopener" target="_blank">goyaso.com/</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 10 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The ten leads</s></p>
+    <h2>Ten leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Cécile Budge<i>Fable &amp; Mane &middot; New CEO; 1,250 doors in 33 markets</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Caroline Hirons<i>Skin Rocks &middot; Launched in DACH and Poland with Douglas</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Vanessa Goddevrind<i>111SKIN &middot; New global 111SKIN filing in examination</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Gaëlle Lebrat Personnaz<i>Manucurist &middot; Inflexion minority investment for international growth</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Audrey Minard<i>ROJA London &middot; Acquired by Extravaganza Beauty for global growth</i></span></button><button type="button" aria-pressed="false"><em>06</em><span>Jamie Parker<i>Supergoop! &middot; First CCO, to lead entry into new markets</i></span></button><button type="button" aria-pressed="false"><em>07</em><span>Bec Jefferd<i>Ultra Violette &middot; Unblock Screen launched in the US</i></span></button><button type="button" aria-pressed="false"><em>08</em><span>Karlee Zhang<i>Hello Klean &middot; Launched Skin Filter after BRITA investment</i></span></button><button type="button" aria-pressed="false"><em>09</em><span>Yasmin Sewell<i>Vyrao &middot; Acquired by Athos-backed Tresalis</i></span></button><button type="button" aria-pressed="false"><em>10</em><span>Elisa Fischer<i>Kevin.Murphy &middot; New CEO for next growth stage</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Cécile Budge</h4>
+<p class="meta">Chief Executive, Fable &amp; Mane</p>
+<p class="sig"><strong>Why now:</strong> Cécile Budge was named Fable &amp; Mane&#x27;s CEO in October, with the brand in about 1,250 doors across 33 markets. Its FABLE &amp; MANE Madrid mark designates Australia and Switzerland, not China.</p>
+<div class="msg"><header><span>Email · Fable &amp; Mane&#x27;s name in China</span><button type="button" data-copy>Copy</button></header><pre>Fable &amp; Mane is in about 1,250 doors across 33 markets. On the Madrid register, your FABLE &amp; MANE mark covers Australia and Switzerland, and China isn&#x27;t designated. A national China filing may exist outside Madrid, which is worth confirming.
+
+China approves whoever filed first. I put your marks&#x27; China status in one table, with what to check next. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Cécile, congrats on the CEO role. On the Madrid register the FABLE &amp; MANE mark covers Australia and Switzerland but doesn&#x27;t designate China, where the first filer wins. I put the China status of your marks in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Fable &amp; Mane appointed Cécile Budge as Chief Executive (TheIndustry.beauty, 01 October 2026); about 1,250 retail doors across 33 markets. <a href="https://theindustry.beauty/fable-mane-names-cecile-budge-ceo/" rel="noopener" target="_blank">theindustry.beauty/fable-mane-names-cecile-budge-ceo/</a></li><li>[2] FABLE &amp; MANE (1598560, holder Akita Brands Limited, class 3): protection granted in Australia and Switzerland; Canada no longer in effect; China not designated. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1598560" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1598560</a></li><li>[3] PRC Trademark Law Article 31: the earlier application is approved. <a href="https://www.jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_taisho_cn.pdf" rel="noopener" target="_blank">jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_</a></li></ul>
+</article><article class="lead">
+<h4>Caroline Hirons</h4>
+<p class="meta">Founder, Skin Rocks</p>
+<p class="sig"><strong>Why now:</strong> Skin Rocks launched in Germany, Austria, Switzerland and Poland with Douglas in September as part of a major international expansion, and opened at Pan Pacific London in October.</p>
+<div class="msg"><header><span>Email · Pricing The Light Moisturiser for China</span><button type="button" data-copy>Copy</button></header><pre>At UK parity, your Light Moisturiser lands at about RMB 10.5 per ml in China, just over the high-end skincare line where cross-border shoppers pay 23.1% tax instead of 9.1%.
+
+Priced a little lower for China, it drops under the line. Your serums sit well above it, your cleansers well below.
+
+With Douglas live, China is a natural next look. I mapped every Skin Rocks SKU against the line. Want the sheet?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Caroline, at UK parity The Light Moisturiser lands at about RMB 10.5/ml in China, just over the line where cross-border shoppers pay 23.1% tax, not 9.1%. A slightly lower China price fixes it. I mapped every SKU. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Skin Rocks launches The Support Mask as it expands into Germany, Austria, Switzerland and Poland, exclusively with Douglas, as part of a major international expansion (TheIndustry.beauty, 07 September 2026). <a href="https://theindustry.beauty/skin-rocks-launches-new-plus-category-and-accelerates-european-expansion/" rel="noopener" target="_blank">theindustry.beauty/skin-rocks-launches-new-plus-category-and-acc</a></li><li>[2] Caroline Hirons is the founder of Skin Rocks. <a href="https://theindustry.beauty/skin-rocks-launches-new-plus-category-and-accelerates-european-expansion/" rel="noopener" target="_blank">theindustry.beauty/skin-rocks-launches-new-plus-category-and-acc</a></li><li>[3] Pan Pacific London partnered with Skin Rocks, the first London hotel to offer its treatments (updated 22 October 2026). <a href="https://www.squaremeal.co.uk/event-party-venues/news/pan-pacific-london-becomes-the-first-london-hotel-to-offer-skin-rocks-treatments_11215" rel="noopener" target="_blank">squaremeal.co.uk/event-party-venues/news/pan-pacific-london-beco</a></li><li>[4] The Light Moisturiser £59/50ml x 8.914 (ECB, 30 Oct 2026) = RMB 10.5 per ml; high-end line RMB 10/ml; cross-border tax 23.1% over the line, 9.1% under (Caishui [2016] 103, Caiguanshui [2016] 18, 2019 No. 39). <a href="https://fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b1def83891b101ae146e6adcbf.pdf" rel="noopener" target="_blank">fgw.sh.gov.cn/cmsres/34/344f8b98f3b14a2c858caea14a8bd0a6/d379c3b</a></li><li>[5] YASO&#x27;s platform is refreshed every 15 minutes. <a href="https://goyaso.com/" rel="noopener" target="_blank">goyaso.com/</a></li></ul>
+</article><article class="lead">
+<h4>Vanessa Goddevrind</h4>
+<p class="meta">Chief Executive Officer, 111SKIN</p>
+<p class="sig"><strong>Why now:</strong> 111SKIN&#x27;s March 2026 Madrid filing drew provisional refusals from the US and Russia in October, while China still shows awaiting decision. Its older 111SKIN mark&#x27;s China protection ended in July 2024.</p>
+<div class="msg"><header><span>Email · 111SKIN in China: the 2028 decision</span><button type="button" data-copy>Copy</button></header><pre>On the Madrid register, China protection for your 111SKIN mark ended in July 2024. The new March 2026 filing names China, but the register gives CNIPA until January 2028, and the only granted China mark in the family is Dr. Yannis Alexandrides.
+
+China approves whoever filed first. I put every 111SKIN mark&#x27;s China status in one table, with what to file next. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Vanessa, on the Madrid register China protection for the 111SKIN mark ended in July 2024, and the new filing waits on CNIPA until January 2028. I put every mark&#x27;s China status in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 111SKIN (1928070, registered 2026-03-20, classes 3, 5, 35, 44): China awaiting decision to 16.01.2028; US provisionally refused 16.10.2026; Russia provisionally refused 23.10.2026. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1928070" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1928070</a></li><li>[2] 111SKIN (1229898): China no longer in effect since 08.07.2024. Dr. Yannis Alexandrides (1642239): China protection granted 23.09.2022 in classes 3, 5, 44. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1229898" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1229898</a></li><li>[3] 111SKIN appointed Vanessa Goddevrind as Chief Executive Officer. <a href="https://www.theprnet.com/news/19930" rel="noopener" target="_blank">theprnet.com/news/19930</a></li><li>[4] 111SKIN&#x27;s December 2025 non-executive director appointment was to support expansion in North America and Asia, where it has seen &#x27;substantial growth&#x27;. <a href="https://cosmeticsbusiness.com/111skin-taps-sarah-rotheram-as-non-executive-director" rel="noopener" target="_blank">cosmeticsbusiness.com/111skin-taps-sarah-rotheram-as-non-executi</a></li><li>[5] PRC Trademark Law Article 31: between competing filings, the earlier application is approved. <a href="https://www.jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_taisho_cn.pdf" rel="noopener" target="_blank">jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/origin/20251227_</a></li></ul>
+</article><article class="lead">
+<h4>Gaëlle Lebrat Personnaz</h4>
+<p class="meta">Founder and co-CEO, Manucurist</p>
+<p class="sig"><strong>Why now:</strong> Inflexion took a minority stake in Manucurist to accelerate international growth (reported in Global Cosmetics News&#x27; week-40 review). Its green manucurist mark&#x27;s China designation has been out of effect since April 2020.</p>
+<div class="msg"><header><span>Email · Your Green line&#x27;s name in China</span><button type="button" data-copy>Copy</button></header><pre>Your MANUCURIST marks are protected in China, but on the Madrid register the green manucurist mark&#x27;s China designation has been out of effect since April 2020, and your 2026 MANUCURIST filing is still awaiting China&#x27;s decision.
+
+China approves whoever filed first, so the product-line names matter as much as the house name. I put every mark&#x27;s China status in one table. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Gaëlle, congrats on the Inflexion deal. On the Madrid register, the green manucurist mark&#x27;s China designation has been out of effect since April 2020, while MANUCURIST itself is protected. I put every mark&#x27;s China status in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Inflexion invested in Manucurist to support international expansion (Global Cosmetics News weekly review, week 40, October 2026). <a href="https://www.globalcosmeticsnews.com/global-cosmetics-news-weekly-review-week-40-october-2026/" rel="noopener" target="_blank">globalcosmeticsnews.com/global-cosmetics-news-weekly-review-week</a></li><li>[2] Gaëlle Lebrat Personnaz is Manucurist&#x27;s founder (company press kit). <a href="https://cdn.uc.assets.prezly.com/bcaaef39-f1bb-4a3d-b094-a6633083c370/-/inline/no/Manucurist%20-%20DP%20Founder%20Ga%C3%ABlle%20Lebrat%20Personnaz%20-%20FR.pdf" rel="noopener" target="_blank">cdn.uc.assets.prezly.com/bcaaef39-f1bb-4a3d-b094-a6633083c370/-/</a></li><li>[3] green manucurist (1488396): China no longer in effect since 21.04.2020. MANUCURIST (1490680): China protection granted. MANUCURIST (1923171, 2026): China awaiting decision. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1488396" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1488396</a></li><li>[4] Cosmetics Business on the Inflexion deal: focus on international growth, particularly the US. <a href="https://cosmeticsbusiness.com/manucurist-receives-minority-investment-from-medik8-backer-inflexion" rel="noopener" target="_blank">cosmeticsbusiness.com/manucurist-receives-minority-investment-fr</a></li></ul>
+</article><article class="lead">
+<h4>Audrey Minard</h4>
+<p class="meta">Global CEO, ROJA London</p>
+<p class="sig"><strong>Why now:</strong> Extravaganza Beauty fully acquired ROJA London in September to fund international growth, with Audrey Minard staying as Global CEO. On the Madrid register, Roja is protected in China for perfumery, but the 2023 and 2024 ROJA filings don&#x27;t designate China.</p>
+<div class="msg"><header><span>Email · ROJA&#x27;s China marks, one table</span><button type="button" data-copy>Copy</button></header><pre>On the Madrid register, your Roja mark has been protected in China for perfumery since February 2022. The newer ROJA filings, from 2023 (candles) and 2024 (retail services), don&#x27;t designate China.
+
+With new owners funding international growth, China&#x27;s first-to-file rule makes those gaps worth closing early. I put every ROJA mark&#x27;s China status in one table. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Audrey, congrats on the Extravaganza deal. Roja is protected in China for perfumery since 2022, but the 2023 and 2024 ROJA filings don&#x27;t designate China. I put every mark&#x27;s China status in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] ROJA London fully acquired by Extravaganza Beauty to support international growth; Audrey Minard, who has led ROJA since 2021, continues as Global CEO (TheIndustry.beauty, 21 September 2026). <a href="https://theindustry.beauty/roja-london-acquired-by-extravaganza-beauty-to-accelerate-global-expansion/" rel="noopener" target="_blank">theindustry.beauty/roja-london-acquired-by-extravaganza-beauty-t</a></li><li>[2] Roja (1459687, class 3): China protection granted 17.02.2022. ROJA (1780605, 2023, classes 3, 4) and ROJA (1811189, 2024, class 35): China not designated. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1459687" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1459687</a></li><li>[3] ROJA (1780605, registered 2023-11-24, classes 3, 4): China not among its designations. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1780605" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1780605</a></li></ul>
+</article><article class="lead">
+<h4>Jamie Parker</h4>
+<p class="meta">Chief Commercial Officer, Supergoop!</p>
+<p class="sig"><strong>Why now:</strong> Supergoop named Jamie Parker its first Chief Commercial Officer (reported Sep 16), to lead international commercial strategy as it enters selected markets outside the US. Its whole range is SPF, which China classes as special-use.</p>
+<div class="msg"><header><span>Email · Supergoop&#x27;s fastest route into China</span><button type="button" data-copy>Copy</button></header><pre>Supergoop&#x27;s range is built on SPF, and China classes every sunscreen as a special-use cosmetic: normal import needs an NMPA registration per product first, valid for 5 years.
+
+Cross-border retail import of listed goods skips that registration. So China can open cross-border with the full range, and the registrations go to proven sellers.
+
+I mapped your SKUs by China route. Want the map?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Jamie, congrats on the CCO role. China classes every sunscreen as special-use, so normal import means an NMPA registration per product. Cross-border import skips that step. I mapped Supergoop&#x27;s SKUs by China route. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Supergoop appointed Jamie Parker as its first Chief Commercial Officer (TheIndustry.beauty, 16 September 2026), part of its plan to become a &#x27;global skin health company&#x27;. <a href="https://theindustry.beauty/supergoop-appoints-former-coty-exec-as-its-first-chief-commercial-officer/" rel="noopener" target="_blank">theindustry.beauty/supergoop-appoints-former-coty-exec-as-its-fi</a></li><li>[2] Parker will oversee international commercial strategy as the company enters selected markets outside the US. <a href="https://cosmeticsbusiness.com/supergoop-taps-jamie-parker-as-first-cco" rel="noopener" target="_blank">cosmeticsbusiness.com/supergoop-taps-jamie-parker-as-first-cco</a></li><li>[3] Supergoop&#x27;s store lists SPF products such as City Sunscreen Serum SPF 30, Glow Stick SPF 50 and Mineral Mattescreen SPF 40. <a href="https://supergoop.com/products.json" rel="noopener" target="_blank">supergoop.com/products.json</a></li><li>[4] CSAR: sunscreen is a special cosmetic; import only after registration; certificate valid 5 years. <a href="https://www.gov.cn/zhengce/content/2020-06/29/content_5522593.htm" rel="noopener" target="_blank">gov.cn/zhengce/content/2020-06/29/content_5522593.htm</a></li></ul>
+</article><article class="lead">
+<h4>Bec Jefferd</h4>
+<p class="meta">Co-founder, Ultra Violette</p>
+<p class="sig"><strong>Why now:</strong> Ultra Violette launched Unblock Screen SPF 50 in the US in September, with Sephora stores from Oct 2. Every product on its Australian store carries an SPF, which China classes as special-use.</p>
+<div class="msg"><header><span>Email · Ultra Violette&#x27;s fastest route into China</span><button type="button" data-copy>Copy</button></header><pre>Every product on your Australian store carries an SPF, and China classes every sunscreen as special-use: normal import needs an NMPA registration per product first.
+
+Cross-border retail import of listed goods skips that step, and you protected the name in China in 2019. So the range can start cross-border, registering only proven sellers later.
+
+I mapped all 32 SKUs by route. Want the map?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Bec, China classes every sunscreen as special-use, so normal import means an NMPA registration per product. Cross-border import skips that, and your name has been protected in China since 2019. I mapped all 32 SKUs by route. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Ultra Violette&#x27;s Unblock Screen SPF 50 is online in the US now and expected in Sephora stores nationwide from Oct. 2 (Happi, September 4, 2026). Co-founder Bec Jefferd is quoted. <a href="https://www.happi.com/exclusives/ultra-violette-sunscreen-with-fda-approved-bemotrizinol-arrives-in-us/" rel="noopener" target="_blank">happi.com/exclusives/ultra-violette-sunscreen-with-fda-approved-</a></li><li>[2] Ultra Violette&#x27;s store lists 32 single products, every one with an SPF. <a href="https://www.ultraviolette.com.au/products.json" rel="noopener" target="_blank">ultraviolette.com.au/products.json</a></li><li>[3] ULTRA VIOLETTE (1466096): China protection granted in classes 3, 35 on 18.07.2019. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1466096" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1466096</a></li><li>[4] CSAR: sunscreen is a special cosmetic; import only after NMPA registration. Shangcaifa [2018] No. 486: cross-border retail imports skip first-import registration. <a href="https://www.gov.cn/zhengce/content/2020-06/29/content_5522593.htm" rel="noopener" target="_blank">gov.cn/zhengce/content/2020-06/29/content_5522593.htm</a></li></ul>
+</article><article class="lead">
+<h4>Karlee Zhang</h4>
+<p class="meta">Co-founder and Chief Marketing Officer, Hello Klean</p>
+<p class="sig"><strong>Why now:</strong> Hello Klean launched Skin Filter on Oct 1, its first major launch since BRITA&#x27;s March investment. Its April 2026 Madrid filing names Australia, Canada, Qatar, Saudi Arabia, Türkiye and the UAE, not China.</p>
+<div class="msg"><header><span>Email · Hello Klean&#x27;s name in China</span><button type="button" data-copy>Copy</button></header><pre>Your April 2026 Madrid filing for HELLO KLEAN covers Australia, Canada, the Gulf and Türkiye, and China isn&#x27;t on the list. A national China filing may exist outside Madrid, which is worth confirming.
+
+China approves whoever filed first. I put your filing&#x27;s country-by-country status in one table, with China first. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Karlee, congrats on Skin Filter. Your April 2026 HELLO KLEAN Madrid filing names Australia, Canada, the Gulf and Türkiye but not China, where the first filer wins. I put the country-by-country status in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Hello Klean&#x27;s Skin Filter launched 1 October through HelloKlean.com, its first major launch since BRITA Group&#x27;s strategic investment in March (TheIndustry.beauty, 01 October 2026). Karlee Zhang is co-founder and Chief Marketing Officer. <a href="https://theindustry.beauty/hello-klean-expands-water-filtration-range-with-new-skin-filter-tap-attachment/" rel="noopener" target="_blank">theindustry.beauty/hello-klean-expands-water-filtration-range-wi</a></li><li>[2] HELLO KLEAN (1920303, registered 2026-04-16, classes 3, 11): designations Australia, Canada, Qatar, Saudi Arabia, Türkiye, United Arab Emirates, all awaiting decision; China not designated. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1920303" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1920303</a></li></ul>
+</article><article class="lead">
+<h4>Yasmin Sewell</h4>
+<p class="meta">Founder, Vyrao</p>
+<p class="sig"><strong>Why now:</strong> Tresalis, backed by German investor Athos, acquired Vyrao in late September; founder Yasmin Sewell stays on. The only Vyrao mark on the Madrid register, VYRAO GEORGETTE, has China protection since September 2024.</p>
+<div class="msg"><header><span>Email · Vyrao&#x27;s name in China</span><button type="button" data-copy>Copy</button></header><pre>On the Madrid register, the only Vyrao mark I found is VYRAO GEORGETTE, protected in China since September 2024. The VYRAO name itself doesn&#x27;t appear there, so its China position sits with any national filing, which is worth confirming.
+
+China approves whoever filed first. I put what I found in one table, with what to check next. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Yasmin, congrats on the Tresalis deal. On the Madrid register the only Vyrao mark is VYRAO GEORGETTE, protected in China since 2024; VYRAO itself isn&#x27;t there. I put the China position in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Vyrao acquired by Tresalis, backed by German investment firm Athos; founded by Yasmin Sewell (TheIndustry.beauty, 28 September 2026). <a href="https://theindustry.beauty/vyrao-acquired-by-tresalis-in-new-chapter-for-british-fragrance-brand/" rel="noopener" target="_blank">theindustry.beauty/vyrao-acquired-by-tresalis-in-new-chapter-for</a></li><li>[2] VYRAO GEORGETTE (1790644, classes 3, 4): China protection granted 20.09.2024. A Madrid search for VYRAO returned only this mark. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1790644" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1790644</a></li></ul>
+</article><article class="lead">
+<h4>Elisa Fischer</h4>
+<p class="meta">CEO, Kevin.Murphy</p>
+<p class="sig"><strong>Why now:</strong> Interempresas reported on Oct 19 that Elisa Fischer is Kevin.Murphy&#x27;s new CEO, previously Unilever&#x27;s GM for the Americas and Asia-Pacific. KEVIN.MURPHY is protected in China, but a 2013 Kevin Murphy filing&#x27;s China designation ended in October 2023.</p>
+<div class="msg"><header><span>Email · Kevin.Murphy&#x27;s China marks, one table</span><button type="button" data-copy>Copy</button></header><pre>KEVIN.MURPHY is well covered in China on the Madrid register: protected since 2019 across cosmetics, retail and education classes. One older Kevin Murphy filing, which also covered tools and devices, has had its China designation out of effect since October 2023.
+
+With a new plan forming, a clean China position helps. I put every mark&#x27;s China status in one table. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Elisa, congrats on the CEO role. KEVIN.MURPHY is protected in China in classes 3, 21, 35 and 41, but a 2013 Kevin Murphy filing&#x27;s China designation ended in October 2023. I put every mark&#x27;s China status in one table. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Interempresas (19/10/2026): Elisa Fischer is Kevin.Murphy&#x27;s new CEO; previously GM of IGK and GM for the Americas and Asia-Pacific at Unilever. <a href="https://www.interempresas.net/Peluqueria/666592-Elisa-Fischer-nueva-CEO-de-Kevin-Murphy.html" rel="noopener" target="_blank">interempresas.net/Peluqueria/666592-Elisa-Fischer-nueva-CEO-de-K</a></li><li>[2] KEVIN.MURPHY (1423095): China protection granted in classes 3, 21, 35, 41 on 07.03.2019. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1423095" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1423095</a></li><li>[3] Kevin Murphy (1196434, registered 2013, classes 3, 5, 7, 8, 9, 11, 21, 26, 35; expired): China no longer in effect 09.10.2023. <a href="https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1196434" rel="noopener" target="_blank">www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.1196434</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as YASO's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At YASO">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at YASO.</h2>
+    <div class="three"><div class="pane"><h4>1. A China-readiness feed for the BD queue</h4><p>A weekly job joining each target brand&#x27;s Madrid China status, its price list against the RMB 10/ml line, its special-use claims and trade-press triggers (new CEO, deal, new market). Every BD account arrives with its own China finding, like the 111SKIN table.</p></div><div class="pane"><h4>2. The free AI visibility report, turned into pipeline</h4><p>Every report request enriched in minutes with the brand&#x27;s markets, retail doors, Madrid China status and SKU count, scored against YASO&#x27;s best-fit wins like Pixi and Faith in Nature, and routed to BD with the reason attached.</p></div><div class="pane"><h4>3. Show and summit outbound that books meetings</h4><p>For Cosmoprof Asia, CBBC events and the London and Hamburg calendars: exhibitor and speaker lists built ahead, each brand with one China finding, sequenced before and after the event, on warmed sending domains with bounce monitoring.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>YASO</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at YASO.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For YASO</b> &middot; <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index &middot; press <span class="mono">Esc</span> to close</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next &middot; ' + pad(j + 1) + ' / ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
