@@ -55,7 +55,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
 /* ---------- stage ---------- */
 #stage{position:fixed;inset:0;display:grid;place-items:stretch}
 .s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
-  padding:clamp(60px,7vh,86px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
   opacity:0;visibility:hidden;transform:translateY(10px);
   transition:opacity .34s ease,transform .34s ease,visibility .34s;
   display:flex;flex-direction:column}
@@ -202,8 +202,27 @@ mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:
 #chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
 #chrome button:disabled{opacity:.38;cursor:default}
 #count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
-#hint{position:fixed;right:clamp(20px,6vw,88px);top:18px;z-index:30;
-  font:400 11px/1 var(--mono);color:var(--ink3);transition:opacity .5s}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
 
 /* ---------- index overlay ---------- */
 #idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
@@ -239,7 +258,7 @@ mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:
   h1{max-width:18ch}
 }
 @media (max-width:620px){
-  .s{padding:48px 20px 92px}
+  .s{padding:68px 20px 92px}
   .stats{grid-template-columns:1fr 1fr}
   /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
      the desktop 24px floor is wider than a half-column on a small phone. */
@@ -247,7 +266,6 @@ mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:
   .panel{padding:18px 18px}
   .row{grid-template-columns:1fr;gap:10px}
   .row em{justify-self:start}
-  #hint{display:none}
   #chrome .who{font-size:11px}
 }
 @media (max-width:460px){
@@ -255,7 +273,10 @@ mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:
      name is the only part a reader does not need. */
   #chrome{gap:9px;padding:12px 16px}
   #chrome .who{display:none}
-  .s{padding:44px 16px 86px}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
   .idx ol,#idx ol{grid-template-columns:1fr}
 }
 
@@ -276,7 +297,7 @@ mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:
    needed scrolling there. Keyed on height so a tall desktop monitor keeps the
    generous spacing. */
 @media (min-width:861px) and (max-height:1000px){
-  .s{padding-top:clamp(38px,4.6vh,58px);padding-bottom:clamp(62px,7.6vh,78px)}
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
   h1{font-size:clamp(32px,4.3vw,54px)}
   h1.xl{font-size:clamp(40px,6.2vw,76px)}
   h2{font-size:clamp(24px,2.9vw,37px)}
@@ -403,16 +424,16 @@ details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{con
 <body>
 
 <div id="bar"></div>
-<div id="hint">&larr; &rarr; to move &middot; <b>I</b> for index</div>
+<nav id="tabs" aria-label="Sections"></nav>
 
 <main id="stage">
 <section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
   <div class="wrap">
     <p class="kick"><b>For DEVable</b> <s>from Kavish Lodha</s></p>
-    <h1 class="xl">Ten funded AI devtool companies you could email today.</h1>
-    <p class="lede">Three messages they'd pay to receive, ten named leads to send them to,
+    <h1 class="xl">10 funded AI devtool companies you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 10 named leads to send them to,
       and three things I'd build at DEVable. Every fact links to its public source.</p>
-    <p class="src">I&#x27;m looking for my next GTM role. &middot; <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
   </div>
 </section>
 
@@ -427,22 +448,22 @@ details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{con
 <p class="take">The HN threads where your category gets argued, who gets named in them, and the ones still worth answering.</p>
 <div class="mail"><div class="to">To: Founder or DevRel lead, Tensormesh</div>
 <div class="subj">Where the KV-cache debate happens</div><p>Five Hacker News threads on KV caching since May drew 211 comments, including one on LRU eviction and one on Cloudflare&#x27;s cross-request cache leak. LMCache, the project your team started, is named in none of them.</p><p>Engineers build shortlists in threads like these, and AI answers quote them back. One maintainer reply on eviction or isolation does more than a launch post.</p><p>I pulled the threads, their points, and the comments still worth answering. Want the list?</p></div>
-<div class="asset"><div class="asset-h"><span>Attached: KV-cache threads on Hacker News since May 1, 2026 &middot; first 3 of 5</span></div><table class="tbl"><tr><th>Thread</th><th>Date</th><th>Points</th><th>Comments</th><th>LMCache named</th></tr><tr><td>Cross-request KV cache exposure (Cloudflare)</td><td>Oct 26</td><td>181</td><td>79</td><td>0</td></tr><tr><td>Speculative KV coding: lossless KV compression</td><td>Jun 4</td><td>155</td><td>48</td><td>0</td></tr><tr><td>KVarN: vLLM backend for KV-cache quantization</td><td>Jun 4</td><td>143</td><td>16</td><td>0</td></tr></table></div>
-<details class="srcs"><summary>Sources &middot; 5</summary><ul class="ev"><li>[1] Five HN stories on KV caching since May 1, 2026 with 100+ points: Cross-request KV cache exposure in the GLM-5.3 Workers AI model (Oct 26, 181 points, 79 comments); Speculative KV coding (Jun 4, 155, 48); KVarN vLLM KV-cache quantization (Jun 4, 143, 16); DeepSeek-v4.1 Flash KV cache compression (Sep 17, 131, 10); LRU is harder to beat than the KV-cache papers suggest (Sep 10, 108, 58). 211 comments in all. <a href="https://hn.algolia.com/api/v1/search?query=%22kv+cache%22&amp;tags=story&amp;numericFilters=created_at_i%3E1777593600" rel="noopener" target="_blank">hn.algolia.com/api/v1/search?query=%22kv+cache%22&amp;tags=story&amp;num</a></li><li>[2] Across the full comment trees of those five threads, 0 of 211 comments name LMCache or Tensormesh. SGLang is named in 10 comments and vLLM in 7. <a href="https://hn.algolia.com/api/v1/items/49643543" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/49643543</a></li><li>[3] The Cloudflare thread (Oct 26, 2026) is about KV cache shared across requests exposing other users&#x27; data; SGLang is named in 9 of its 79 comments, LMCache in 0. <a href="https://hn.algolia.com/api/v1/items/50252159" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/50252159</a></li><li>[4] Tensormesh was founded by the UChicago researchers who started LMCache; LMCache has over 220 contributors, and KV cache can persist beyond the lifecycle of a query. <a href="https://blog.lmcache.ai/en/2026/06/02/a-new-chapter-for-lmcache-and-the-kv-cache-community/" rel="noopener" target="_blank">blog.lmcache.ai/en/2026/06/02/a-new-chapter-for-lmcache-and-the-</a></li><li>[5] Tensormesh launched the Tensormesh Platform on Oct 14, 2026. <a href="https://tensormesh.ai/newsroom" rel="noopener" target="_blank">tensormesh.ai/newsroom</a></li></ul></details>
+<div class="asset"><div class="asset-h"><span>Attached: KV-cache threads on Hacker News since May 1, 2026, first 3 of 5</span></div><table class="tbl"><tr><th>Thread</th><th>Date</th><th>Points</th><th>Comments</th><th>LMCache named</th></tr><tr><td>Cross-request KV cache exposure (Cloudflare)</td><td>Oct 26</td><td>181</td><td>79</td><td>0</td></tr><tr><td>Speculative KV coding: lossless KV compression</td><td>Jun 4</td><td>155</td><td>48</td><td>0</td></tr><tr><td>KVarN: vLLM backend for KV-cache quantization</td><td>Jun 4</td><td>143</td><td>16</td><td>0</td></tr></table></div>
+<details class="srcs"><summary>Sources (5)</summary><ul class="ev"><li>[1] Five HN stories on KV caching since May 1, 2026 with 100+ points: Cross-request KV cache exposure in the GLM-5.3 Workers AI model (Oct 26, 181 points, 79 comments); Speculative KV coding (Jun 4, 155, 48); KVarN vLLM KV-cache quantization (Jun 4, 143, 16); DeepSeek-v4.1 Flash KV cache compression (Sep 17, 131, 10); LRU is harder to beat than the KV-cache papers suggest (Sep 10, 108, 58). 211 comments in all. <a href="https://hn.algolia.com/api/v1/search?query=%22kv+cache%22&amp;tags=story&amp;numericFilters=created_at_i%3E1777593600" rel="noopener" target="_blank">hn.algolia.com/api/v1/search?query=%22kv+cache%22&amp;tags=story&amp;num</a></li><li>[2] Across the full comment trees of those five threads, 0 of 211 comments name LMCache or Tensormesh. SGLang is named in 10 comments and vLLM in 7. <a href="https://hn.algolia.com/api/v1/items/49643543" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/49643543</a></li><li>[3] The Cloudflare thread (Oct 26, 2026) is about KV cache shared across requests exposing other users&#x27; data; SGLang is named in 9 of its 79 comments, LMCache in 0. <a href="https://hn.algolia.com/api/v1/items/50252159" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/50252159</a></li><li>[4] Tensormesh was founded by the UChicago researchers who started LMCache; LMCache has over 220 contributors, and KV cache can persist beyond the lifecycle of a query. <a href="https://blog.lmcache.ai/en/2026/06/02/a-new-chapter-for-lmcache-and-the-kv-cache-community/" rel="noopener" target="_blank">blog.lmcache.ai/en/2026/06/02/a-new-chapter-for-lmcache-and-the-</a></li><li>[5] Tensormesh launched the Tensormesh Platform on Oct 14, 2026. <a href="https://tensormesh.ai/newsroom" rel="noopener" target="_blank">tensormesh.ai/newsroom</a></li></ul></details>
 </article><article class="pm">
 <h3>What a rival&#x27;s comparison page says about you, line by line</h3>
 <p class="take">A rival&#x27;s page about you, checked line by line against your own pricing, with the corrections to request.</p>
 <div class="mail"><div class="to">To: Founder or head of marketing, Thunder Compute</div>
 <div class="subj">What Runpod tells buyers about you</div><p>Runpod published a Runpod vs Thunder Compute page two days after your Series A. It says you bill per minute and have no scale-to-zero option.</p><p>Your pricing page now lists Sandboxes, billed per second, that scale to zero. Your own Runpod comparison still says per minute, so both pages tell AI search the old story.</p><p>Runpod&#x27;s page praises your table for quoting them accurately, which makes a correction request easy. I marked every line that no longer matches. Want the marked-up copy?</p></div>
-<div class="asset"><div class="asset-h"><span>Attached: Runpod&#x27;s Aug 21 page against your pricing page on Nov 1 &middot; first 3 of 4</span></div><table class="tbl"><tr><th>Runpod&#x27;s page says</th><th>Your pricing page says</th><th>Status</th></tr><tr><td>Thunder Compute bills per minute</td><td>Sandboxes billed per second</td><td>No longer matches</td></tr><tr><td>No published scale-to-zero serverless tier</td><td>Sandboxes scale up and down to 0</td><td>Appears out of date</td></tr><tr><td>Nothing above an H100 PCIe</td><td>H100 SXM at $3.20/hr</td><td>Body text not updated</td></tr></table></div>
-<details class="srcs"><summary>Sources &middot; 5</summary><ul class="ev"><li>[1] Runpod&#x27;s page &#x27;Runpod vs Thunder Compute: four GPUs vs a full lineup&#x27; was published Aug 21, 2026 and says Thunder bills per minute, publishes no scale-to-zero serverless tier, and has nothing above an H100 PCIe. <a href="https://www.runpod.io/articles/comparison/runpod-vs-thunder-compute" rel="noopener" target="_blank">runpod.io/articles/comparison/runpod-vs-thunder-compute</a></li><li>[2] The same page&#x27;s FAQ answers &#x27;Does Thunder Compute offer serverless GPUs?&#x27; with No, and says Thunder&#x27;s comparison table quoted Runpod accurately. <a href="https://www.runpod.io/articles/comparison/runpod-vs-thunder-compute" rel="noopener" target="_blank">runpod.io/articles/comparison/runpod-vs-thunder-compute</a></li><li>[3] Thunder&#x27;s pricing page on Nov 1, 2026 lists Sandboxes billed per second that scale to zero, and instances with RTX A6000, L40, A100 80GB and H100 SXM ($3.20/hr). <a href="https://www.thundercompute.com/pricing" rel="noopener" target="_blank">thundercompute.com/pricing</a></li><li>[4] Thunder&#x27;s own &#x27;Runpod Pricing vs Thunder Compute&#x27; post, last reviewed Oct 9, 2026, still says Thunder bills per minute. <a href="https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute" rel="noopener" target="_blank">thundercompute.com/blog/runpod-pricing-vs-thunder-compute</a></li><li>[5] Thunder Compute announced a $13 million Series A led by Matrix Partners on Aug 19, 2026, two days before Runpod&#x27;s page. <a href="https://www.thundercompute.com/blog/thunder-compute-series-a" rel="noopener" target="_blank">thundercompute.com/blog/thunder-compute-series-a</a></li></ul></details>
+<div class="asset"><div class="asset-h"><span>Attached: Runpod&#x27;s Aug 21 page against your pricing page on Nov 1, first 3 of 4</span></div><table class="tbl"><tr><th>Runpod&#x27;s page says</th><th>Your pricing page says</th><th>Status</th></tr><tr><td>Thunder Compute bills per minute</td><td>Sandboxes billed per second</td><td>No longer matches</td></tr><tr><td>No published scale-to-zero serverless tier</td><td>Sandboxes scale up and down to 0</td><td>Appears out of date</td></tr><tr><td>Nothing above an H100 PCIe</td><td>H100 SXM at $3.20/hr</td><td>Body text not updated</td></tr></table></div>
+<details class="srcs"><summary>Sources (5)</summary><ul class="ev"><li>[1] Runpod&#x27;s page &#x27;Runpod vs Thunder Compute: four GPUs vs a full lineup&#x27; was published Aug 21, 2026 and says Thunder bills per minute, publishes no scale-to-zero serverless tier, and has nothing above an H100 PCIe. <a href="https://www.runpod.io/articles/comparison/runpod-vs-thunder-compute" rel="noopener" target="_blank">runpod.io/articles/comparison/runpod-vs-thunder-compute</a></li><li>[2] The same page&#x27;s FAQ answers &#x27;Does Thunder Compute offer serverless GPUs?&#x27; with No, and says Thunder&#x27;s comparison table quoted Runpod accurately. <a href="https://www.runpod.io/articles/comparison/runpod-vs-thunder-compute" rel="noopener" target="_blank">runpod.io/articles/comparison/runpod-vs-thunder-compute</a></li><li>[3] Thunder&#x27;s pricing page on Nov 1, 2026 lists Sandboxes billed per second that scale to zero, and instances with RTX A6000, L40, A100 80GB and H100 SXM ($3.20/hr). <a href="https://www.thundercompute.com/pricing" rel="noopener" target="_blank">thundercompute.com/pricing</a></li><li>[4] Thunder&#x27;s own &#x27;Runpod Pricing vs Thunder Compute&#x27; post, last reviewed Oct 9, 2026, still says Thunder bills per minute. <a href="https://www.thundercompute.com/blog/runpod-pricing-vs-thunder-compute" rel="noopener" target="_blank">thundercompute.com/blog/runpod-pricing-vs-thunder-compute</a></li><li>[5] Thunder Compute announced a $13 million Series A led by Matrix Partners on Aug 19, 2026, two days before Runpod&#x27;s page. <a href="https://www.thundercompute.com/blog/thunder-compute-series-a" rel="noopener" target="_blank">thundercompute.com/blog/thunder-compute-series-a</a></li></ul></details>
 </article><article class="pm">
 <h3>The comparison page your rivals wrote and you didn&#x27;t</h3>
 <p class="take">The comparisons your rivals already publish, your share of the HN debate, and an outline for your own page.</p>
 <div class="mail"><div class="to">To: Founder or head of marketing, Restate</div>
 <div class="subj">Your page for Restate vs Temporal</div><p>DBOS, Trigger.dev and Hatchet each publish a page comparing themselves to Temporal. Restate doesn&#x27;t, so when a developer asks an AI how you compare, it answers from other people&#x27;s pages.</p><p>Hacker News shows the same gap. In the three biggest durable-execution threads since May, Temporal came up in 35 comments and Restate in 1, while your TypeScript SDK pulled about 1.2 million npm downloads last month.</p><p>I outlined a Restate vs Temporal page from those threads&#x27; objections. Want it?</p></div>
-<div class="asset"><div class="asset-h"><span>Attached: Who answers &#x27;X vs Temporal&#x27;, and who gets named on HN &middot; first 3 of 5</span></div><table class="tbl"><tr><th>Company</th><th>Publishes a vs Temporal page</th><th>Named in the 3 top HN threads</th></tr><tr><td>Temporal</td><td>n/a</td><td>35 of 641 comments</td></tr><tr><td>DBOS</td><td>Yes: /compare/dbos-vs-temporal</td><td>24 of 641</td></tr><tr><td>Trigger.dev</td><td>Yes: /vs/temporal</td><td>0 of 641</td></tr></table></div>
-<details class="srcs"><summary>Sources &middot; 7</summary><ul class="ev"><li>[1] DBOS&#x27;s sitemap includes a DBOS vs Temporal comparison page. <a href="https://www.dbos.dev/sitemap.xml" rel="noopener" target="_blank">dbos.dev/sitemap.xml</a></li><li>[2] Trigger.dev&#x27;s sitemap includes a Trigger.dev vs Temporal page. <a href="https://trigger.dev/sitemap.xml" rel="noopener" target="_blank">trigger.dev/sitemap.xml</a></li><li>[3] Hatchet&#x27;s sitemap includes a Hatchet vs Temporal page. <a href="https://hatchet.run/sitemap.xml" rel="noopener" target="_blank">hatchet.run/sitemap.xml</a></li><li>[4] restate.dev&#x27;s sitemap (88 URLs) and docs.restate.dev&#x27;s sitemap (206 URLs) contain no comparison, vs or alternatives page. <a href="https://www.restate.dev/sitemap.xml" rel="noopener" target="_blank">restate.dev/sitemap.xml</a></li><li>[5] The three biggest durable-execution stories on HN since May 1, 2026: &#x27;SQLite is all you need for durable workflows&#x27; (720 points, 387 comments), &#x27;pg_durable&#x27; (474, 108) and DBOS&#x27;s &#x27;Building durable workflows on Postgres&#x27; (359, 146). Across their 641 comments, Temporal is named in 35, DBOS in 24 and Restate in 1. <a href="https://hn.algolia.com/api/v1/items/48326802" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/48326802</a></li><li>[6] @restatedev/restate-sdk had 1,248,951 npm downloads from Sep 30 to Oct 29, 2026 (about 1.2 million). <a href="https://api.npmjs.org/downloads/point/last-month/@restatedev/restate-sdk" rel="noopener" target="_blank">api.npmjs.org/downloads/point/last-month/@restatedev/restate-sdk</a></li><li>[7] Restate&#x27;s Series A post argues the durable hot path is a fast log append, a quorum write in a single network roundtrip, rather than a database. <a href="https://restate.dev/blog/announcing-series-a" rel="noopener" target="_blank">restate.dev/blog/announcing-series-a</a></li></ul></details>
+<div class="asset"><div class="asset-h"><span>Attached: Who answers &#x27;X vs Temporal&#x27;, and who gets named on HN, first 3 of 5</span></div><table class="tbl"><tr><th>Company</th><th>Publishes a vs Temporal page</th><th>Named in the 3 top HN threads</th></tr><tr><td>Temporal</td><td>n/a</td><td>35 of 641 comments</td></tr><tr><td>DBOS</td><td>Yes: /compare/dbos-vs-temporal</td><td>24 of 641</td></tr><tr><td>Trigger.dev</td><td>Yes: /vs/temporal</td><td>0 of 641</td></tr></table></div>
+<details class="srcs"><summary>Sources (7)</summary><ul class="ev"><li>[1] DBOS&#x27;s sitemap includes a DBOS vs Temporal comparison page. <a href="https://www.dbos.dev/sitemap.xml" rel="noopener" target="_blank">dbos.dev/sitemap.xml</a></li><li>[2] Trigger.dev&#x27;s sitemap includes a Trigger.dev vs Temporal page. <a href="https://trigger.dev/sitemap.xml" rel="noopener" target="_blank">trigger.dev/sitemap.xml</a></li><li>[3] Hatchet&#x27;s sitemap includes a Hatchet vs Temporal page. <a href="https://hatchet.run/sitemap.xml" rel="noopener" target="_blank">hatchet.run/sitemap.xml</a></li><li>[4] restate.dev&#x27;s sitemap (88 URLs) and docs.restate.dev&#x27;s sitemap (206 URLs) contain no comparison, vs or alternatives page. <a href="https://www.restate.dev/sitemap.xml" rel="noopener" target="_blank">restate.dev/sitemap.xml</a></li><li>[5] The three biggest durable-execution stories on HN since May 1, 2026: &#x27;SQLite is all you need for durable workflows&#x27; (720 points, 387 comments), &#x27;pg_durable&#x27; (474, 108) and DBOS&#x27;s &#x27;Building durable workflows on Postgres&#x27; (359, 146). Across their 641 comments, Temporal is named in 35, DBOS in 24 and Restate in 1. <a href="https://hn.algolia.com/api/v1/items/48326802" rel="noopener" target="_blank">hn.algolia.com/api/v1/items/48326802</a></li><li>[6] @restatedev/restate-sdk had 1,248,951 npm downloads from Sep 30 to Oct 29, 2026 (about 1.2 million). <a href="https://api.npmjs.org/downloads/point/last-month/@restatedev/restate-sdk" rel="noopener" target="_blank">api.npmjs.org/downloads/point/last-month/@restatedev/restate-sdk</a></li><li>[7] Restate&#x27;s Series A post argues the durable hot path is a fast log append, a quorum write in a single network roundtrip, rather than a database. <a href="https://restate.dev/blog/announcing-series-a" rel="noopener" target="_blank">restate.dev/blog/announcing-series-a</a></li></ul></details>
 </article></div>
     </div>
     <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
@@ -451,15 +472,15 @@ details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{con
 
 <section class="s" data-key="leads" data-label="The 10 leads" data-sub="Named, sourced, copy written">
   <div class="wrap">
-    <p class="kick"><b>02</b> <s>The ten leads</s></p>
-    <h2>Ten leads, each with a reason to email now.</h2>
+    <p class="kick"><b>02</b> <s>The 10 leads</s></p>
+    <h2>10 leads, each with a reason to email now.</h2>
     <div class="board">
-      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Junchen Jiang<i>Tensormesh &middot; Launched Tensormesh Platform</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Stephan Ewen<i>Restate &middot; Series A, $20M led by Singular</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Carl Peterson<i>Thunder Compute &middot; Series A; Runpod published a page about them</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Ekechi Nwokah<i>Infino &middot; Seed, $7.5M led by Bessemer</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Jack O&#x27;Brien<i>Subconscious &middot; Raised $5.1M pre-seed and seed</i></span></button><button type="button" aria-pressed="false"><em>06</em><span>Joseph Perla<i>TrustedRouter &middot; Raised $1.25M seed</i></span></button><button type="button" aria-pressed="false"><em>07</em><span>Gilad Salinger<i>Uvi &middot; Renamed from Naboo; $7.5M seed</i></span></button><button type="button" aria-pressed="false"><em>08</em><span>Lalith Suresh<i>Feldera &middot; Series A and Seed, $21.5M</i></span></button><button type="button" aria-pressed="false"><em>09</em><span>Hugo Lu<i>Orchestra &middot; Seed, $3.3M led by Differential</i></span></button><button type="button" aria-pressed="false"><em>10</em><span>Matthew Ao<i>Space &middot; Pre-seed, $2.4M led by a16z speedrun</i></span></button></div>
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Junchen Jiang<i>Tensormesh: Launched Tensormesh Platform</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Stephan Ewen<i>Restate: Series A, $20M led by Singular</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Carl Peterson<i>Thunder Compute: Series A; Runpod published a page about them</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Ekechi Nwokah<i>Infino: Seed, $7.5M led by Bessemer</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Jack O&#x27;Brien<i>Subconscious: Raised $5.1M pre-seed and seed</i></span></button><button type="button" aria-pressed="false"><em>06</em><span>Joseph Perla<i>TrustedRouter: Raised $1.25M seed</i></span></button><button type="button" aria-pressed="false"><em>07</em><span>Gilad Salinger<i>Uvi: Renamed from Naboo; $7.5M seed</i></span></button><button type="button" aria-pressed="false"><em>08</em><span>Lalith Suresh<i>Feldera: Series A and Seed, $21.5M</i></span></button><button type="button" aria-pressed="false"><em>09</em><span>Hugo Lu<i>Orchestra: Seed, $3.3M led by Differential</i></span></button><button type="button" aria-pressed="false"><em>10</em><span>Matthew Ao<i>Space: Pre-seed, $2.4M led by a16z speedrun</i></span></button></div>
       <div class="detail" id="detail" aria-live="polite"><article class="lead">
 <h4>Junchen Jiang</h4>
 <p class="meta">CEO and Co-Founder, Tensormesh</p>
 <p class="sig"><strong>Why now:</strong> Tensormesh launched its platform on Oct 14, 2026. In five busy HN threads on KV caching since May, 211 comments in all, LMCache is never named.</p>
-<div class="msg"><header><span>Email &amp;middot; Where the KV-cache debate happens</span><button type="button" data-copy>Copy</button></header><pre>Since your platform launch, the question is where inference engineers hear about it. Five Hacker News threads on KV caching since May drew 211 comments, on eviction, compression and Cloudflare&#x27;s cross-request leak. LMCache is named in none of them.
+<div class="msg"><header><span>Email subject: Where the KV-cache debate happens</span><button type="button" data-copy>Copy</button></header><pre>Since your platform launch, the question is where inference engineers hear about it. Five Hacker News threads on KV caching since May drew 211 comments, on eviction, compression and Cloudflare&#x27;s cross-request leak. LMCache is named in none of them.
 
 Those threads are where shortlists form, and AI answers quote them back.
 
@@ -470,7 +491,7 @@ I pulled the threads, their points, and the comments still worth a maintainer re
 <h4>Stephan Ewen</h4>
 <p class="meta">CEO and co-founder, Restate</p>
 <p class="sig"><strong>Why now:</strong> Restate raised a $20M Series A on Sep 30, 2026. Its SDK pulls about 1.2 million npm downloads a month, yet in the three biggest durable-execution threads on HN it is named in 1 comment of 641.</p>
-<div class="msg"><header><span>Email &amp;middot; Your page for Restate vs Temporal</span><button type="button" data-copy>Copy</button></header><pre>DBOS, Trigger.dev and Hatchet each publish a page comparing themselves to Temporal. Restate doesn&#x27;t, so when a developer asks an AI how you compare, it answers from other people&#x27;s pages.
+<div class="msg"><header><span>Email subject: Your page for Restate vs Temporal</span><button type="button" data-copy>Copy</button></header><pre>DBOS, Trigger.dev and Hatchet each publish a page comparing themselves to Temporal. Restate doesn&#x27;t, so when a developer asks an AI how you compare, it answers from other people&#x27;s pages.
 
 Hacker News shows the same gap. In the three biggest durable-execution threads since May, Temporal came up in 35 comments and Restate in 1, while your TypeScript SDK pulled about 1.2 million npm downloads last month.
 
@@ -481,7 +502,7 @@ I outlined a Restate vs Temporal page from those threads&#x27; objections. Want 
 <h4>Carl Peterson</h4>
 <p class="meta">Co-founder and Chief Executive, Thunder Compute</p>
 <p class="sig"><strong>Why now:</strong> Thunder raised a $13 million Series A on Aug 19, 2026. Two days later Runpod published a comparison page that still says Thunder bills per minute, which Thunder&#x27;s pricing page now contradicts.</p>
-<div class="msg"><header><span>Email &amp;middot; What Runpod tells buyers about you</span><button type="button" data-copy>Copy</button></header><pre>Runpod published a Runpod vs Thunder Compute page two days after your Series A. It says you bill per minute and have no scale-to-zero option.
+<div class="msg"><header><span>Email subject: What Runpod tells buyers about you</span><button type="button" data-copy>Copy</button></header><pre>Runpod published a Runpod vs Thunder Compute page two days after your Series A. It says you bill per minute and have no scale-to-zero option.
 
 Your pricing page now lists Sandboxes, billed per second, that scale to zero. Your own Runpod comparison still says per minute, so both pages tell AI search the old story.
 
@@ -492,7 +513,7 @@ Runpod&#x27;s page praises your table for quoting them accurately, which makes a
 <h4>Ekechi Nwokah</h4>
 <p class="meta">Co-founder, Infino</p>
 <p class="sig"><strong>Why now:</strong> Infino came out with a $7.5M seed on Oct 6, 2026. Five days earlier turbopuffer&#x27;s &#x27;RIP, vector database&#x27; post hit 405 points on HN, arguing Infino&#x27;s exact thesis, and Infino came up in none of its 116 comments.</p>
-<div class="msg"><header><span>Email &amp;middot; The thread that argued your thesis</span><button type="button" data-copy>Copy</button></header><pre>Five days before your launch, turbopuffer&#x27;s &quot;RIP, vector database&quot; hit 405 points on Hacker News, arguing that search, vectors and analytics belong on object storage. That&#x27;s Infino&#x27;s thesis. None of the 116 comments mentions Infino.
+<div class="msg"><header><span>Email subject: The thread that argued your thesis</span><button type="button" data-copy>Copy</button></header><pre>Five days before your launch, turbopuffer&#x27;s &quot;RIP, vector database&quot; hit 405 points on Hacker News, arguing that search, vectors and analytics belong on object storage. That&#x27;s Infino&#x27;s thesis. None of the 116 comments mentions Infino.
 
 That thread is now what an AI answer cites for &quot;vector database alternatives.&quot;
 
@@ -503,7 +524,7 @@ I pulled the comments that question the approach, which your one-query SQL answe
 <h4>Jack O&#x27;Brien</h4>
 <p class="meta">Co-Founder and CEO, Subconscious</p>
 <p class="sig"><strong>Why now:</strong> Subconscious raised $5.1M on Sep 22, 2026, with a customer who cut monthly AI spend from $40k to $6k on an open model. The 469-comment HN thread on open models and AI margins never names it.</p>
-<div class="msg"><header><span>Email &amp;middot; Your $40k-to-$6k story, where it lands</span><button type="button" data-copy>Copy</button></header><pre>The Hacker News thread on open models and the coming AI margin collapse drew 469 comments, mostly engineers asking whether switching from closed models really saves money. Subconscious isn&#x27;t named once.
+<div class="msg"><header><span>Email subject: Your $40k-to-$6k story, where it lands</span><button type="button" data-copy>Copy</button></header><pre>The Hacker News thread on open models and the coming AI margin collapse drew 469 comments, mostly engineers asking whether switching from closed models really saves money. Subconscious isn&#x27;t named once.
 
 You have the answer: a team that cut monthly AI spend from $40k to $6k on an open model hosted with you.
 
@@ -514,7 +535,7 @@ I pulled the comments asking that exact question. Want them?</pre></div>
 <h4>Joseph Perla</h4>
 <p class="meta">Founder, TrustedRouter</p>
 <p class="sig"><strong>Why now:</strong> TrustedRouter announced a $1.25M seed on Aug 31, 2026. Across four big HN threads on open models, OpenRouter is named in 45 comments and TrustedRouter in none.</p>
-<div class="msg"><header><span>Email &amp;middot; Where developers pick a model router</span><button type="button" data-copy>Copy</button></header><pre>Four big Hacker News threads on open models since June drew 1,957 comments. OpenRouter is named in 45 of them, usually as the way people tried the model. TrustedRouter isn&#x27;t named once.
+<div class="msg"><header><span>Email subject: Where developers pick a model router</span><button type="button" data-copy>Copy</button></header><pre>Four big Hacker News threads on open models since June drew 1,957 comments. OpenRouter is named in 45 of them, usually as the way people tried the model. TrustedRouter isn&#x27;t named once.
 
 Each of those is a developer choosing a router in public, and the privacy question comes up often.
 
@@ -525,7 +546,7 @@ I pulled the comments where someone asks how to try a model privately. Want them
 <h4>Gilad Salinger</h4>
 <p class="meta">Co-founder and Chief Executive, Uvi</p>
 <p class="sig"><strong>Why now:</strong> Uvi renamed itself from Naboo on Sep 23, 2026 and announced a $7.5M seed on Oct 14. naboo.ai already redirects to uvi.io; the old name still lives wherever pages were written before the rename.</p>
-<div class="msg"><header><span>Email &amp;middot; Making Uvi the name AI knows</span><button type="button" data-copy>Copy</button></header><pre>You renamed Naboo to Uvi five weeks ago, and naboo.ai already redirects, which covers Google. AI answers move slower: anything written before the rename still calls you Naboo, and models learn from those pages.
+<div class="msg"><header><span>Email subject: Making Uvi the name AI knows</span><button type="button" data-copy>Copy</button></header><pre>You renamed Naboo to Uvi five weeks ago, and naboo.ai already redirects, which covers Google. AI answers move slower: anything written before the rename still calls you Naboo, and models learn from those pages.
 
 The fix is a short list of pages that still say Naboo, plus fresh Uvi mentions in places agents and engineers read.
 
@@ -536,7 +557,7 @@ I started that list. Want it?</pre></div>
 <h4>Lalith Suresh</h4>
 <p class="meta">CEO and Co-founder, Feldera</p>
 <p class="sig"><strong>Why now:</strong> Feldera announced $21.5 million on Sep 21, 2026. Materialize publishes 7 &#x27;vs&#x27; guides in the same category; Feldera publishes none.</p>
-<div class="msg"><header><span>Email &amp;middot; Feldera vs Materialize, in your words</span><button type="button" data-copy>Copy</button></header><pre>Materialize publishes 7 comparison guides, against Flink, RisingWave, Snowflake, Databricks and more. Feldera&#x27;s site has none, so when a data engineer asks an AI how incremental view maintenance engines compare, Materialize&#x27;s pages frame the answer.
+<div class="msg"><header><span>Email subject: Feldera vs Materialize, in your words</span><button type="button" data-copy>Copy</button></header><pre>Materialize publishes 7 comparison guides, against Flink, RisingWave, Snowflake, Databricks and more. Feldera&#x27;s site has none, so when a data engineer asks an AI how incremental view maintenance engines compare, Materialize&#x27;s pages frame the answer.
 
 Your Series A post already has the strongest line: compute proportional to change, not to data.
 
@@ -547,7 +568,7 @@ I drafted outlines for the first three comparisons Feldera should own. Want them
 <h4>Hugo Lu</h4>
 <p class="meta">CEO, Orchestra</p>
 <p class="sig"><strong>Why now:</strong> Orchestra raised a $3.3M seed on Sep 1, 2026 to expand go-to-market in the US and Europe. Its Python SDK pulled 109,512 PyPI downloads last month, while the PyPI name &#x27;orchestra&#x27; belongs to another company&#x27;s framework.</p>
-<div class="msg"><header><span>Email &amp;middot; Your installs, and a name collision</span><button type="button" data-copy>Copy</button></header><pre>Your orchestra-sdk pulled 109,512 PyPI downloads last month, so plenty of data teams already run Orchestra. But the PyPI name &quot;orchestra&quot; belongs to B12&#x27;s workflow framework, and on Hacker News the word mostly means music.
+<div class="msg"><header><span>Email subject: Your installs, and a name collision</span><button type="button" data-copy>Copy</button></header><pre>Your orchestra-sdk pulled 109,512 PyPI downloads last month, so plenty of data teams already run Orchestra. But the PyPI name &quot;orchestra&quot; belongs to B12&#x27;s workflow framework, and on Hacker News the word mostly means music.
 
 With a brand word that common, AI answers need extra signals to know which Orchestra a data engineer means.
 
@@ -558,7 +579,7 @@ I listed where to pair the name with &quot;data orchestration&quot;. Want the li
 <h4>Matthew Ao</h4>
 <p class="meta">Co-founder and CEO, Space</p>
 <p class="sig"><strong>Why now:</strong> Space raised $2.4M on Aug 18, 2026. Its robots.txt carries Cloudflare&#x27;s managed block on GPTBot, ClaudeBot and Google-Extended, which keeps AI training crawlers out while search crawlers stay allowed.</p>
-<div class="msg"><header><span>Email &amp;middot; A question about your robots.txt</span><button type="button" data-copy>Copy</button></header><pre>Quick one about spacefs.com: your robots.txt includes Cloudflare&#x27;s managed block, which tells GPTBot, ClaudeBot and Google-Extended to stay out. AI search crawlers are still allowed, so this only affects training.
+<div class="msg"><header><span>Email subject: A question about your robots.txt</span><button type="button" data-copy>Copy</button></header><pre>Quick one about spacefs.com: your robots.txt includes Cloudflare&#x27;s managed block, which tells GPTBot, ClaudeBot and Google-Extended to stay out. AI search crawlers are still allowed, so this only affects training.
 
 If that&#x27;s deliberate, ignore me. If it came with a Cloudflare toggle, future models will learn the category without your pages.
 
@@ -591,7 +612,7 @@ I noted which line does what. Want the note?</pre></div>
 </main>
 
 <nav id="chrome">
-  <span class="who"><b>For DEVable</b> &middot; <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <span class="who"><b>For DEVable</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
   <button id="menu" type="button">Index</button>
   <button id="prev" type="button" aria-label="Previous">&larr;</button>
   <span id="count">01 / 05</span>
@@ -599,7 +620,7 @@ I noted which line does what. Want the note?</pre></div>
 </nav>
 
 <div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
-  <h3>Index &middot; press <span class="mono">Esc</span> to close</h3>
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
   <ol id="idxlist"></ol>
 </div>
 
@@ -611,9 +632,36 @@ var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
 var n = slides.length, at = 0;
 var bar = document.getElementById("bar"), count = document.getElementById("count");
 var prev = document.getElementById("prev"), next = document.getElementById("next");
-var idx = document.getElementById("idx"), hint = document.getElementById("hint");
+var idx = document.getElementById("idx");
 
 function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
 
 function show(i, push){
   i = Math.max(0, Math.min(n - 1, i));
@@ -632,7 +680,10 @@ function show(i, push){
   next.disabled = i === n - 1;
   var key = slides[i].getAttribute("data-key");
   if (push && key) history.replaceState(null, "", "#" + key);
-  if (i > 0 && hint) { hint.style.opacity = "0"; }
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
 }
 
 function go(d){ show(at + d, true); }
