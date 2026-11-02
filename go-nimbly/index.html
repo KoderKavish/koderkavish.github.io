@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Go Nimbly</title>
+<meta name="description" content="6 named leads with copy and three things I'd build, prepared for Go Nimbly.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For Go Nimbly</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">6 mid-market and public SaaS companies you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 6 named leads to send them to,
+      and three things I'd build at Go Nimbly. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your mid-market and public SaaS companies would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>The acquired brand still has its own front door<i>For CRO or head of revenue operations at the acquirer</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>The pricing change that only shipped in English<i>For CRO, head of revenue operations or pricing lead</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>New practices in your market, from the registry<i>For CRO or VP sales operations at vertical SaaS for practices</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>The acquired brand still has its own front door</h3>
+<p class="take">Where an acquired brand&#x27;s leads still land, form by form, and how to route them into one system.</p>
+<div class="mail"><div class="to">To: CRO or head of revenue operations at the acquirer, Navan</div>
+<div class="subj">Two front doors for Navan events</div><p>BoomPop joined Navan on Sep 9, but boompop.com still sends its demo requests into BoomPop&#x27;s own HubSpot portal and Chili Piper. navan.com/events captures the same events buyer on a Marketo form.</p><p>That means two records and two owners for one buyer, and nobody sees the full history.</p><p>I&#x27;m with Go Nimbly, the RevOps partner behind teams like Intercom and Rippling. I mapped both front doors, form by form. Want the map?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Inbound front doors for Navan&#x27;s events buyers, Nov 2, 2026, first 3 of 3</span></div><table class="tbl"><tr><th>Page</th><th>Form system</th><th>Scheduler</th><th>Visitor ID</th></tr><tr><td>boompop.com (3 forms)</td><td>HubSpot portal 19841098</td><td>Chili Piper (boompop.chilipiper.com)</td><td>Warmly, Vector</td></tr><tr><td>navan.com/events</td><td>Marketo form 2561</td><td>Not in page source</td><td>Not in page source</td></tr><tr><td>navan.com/demo</td><td>Marketo form 1598</td><td>Not in page source</td><td>Not in page source</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: one inbound standard for events, BoomPop&#x27;s HubSpot forms re-pointed or synced into Marketo, one router, and a Clay dedupe pass so a buyer who touched both sites lands as one lead with one owner. Want the cutover plan?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Navan has folded in Reed &amp; Mackay, Comtravo, Tripeur and Smartrips too. An audit of which of their old domains still capture leads, and where those leads go, usually turns up a forgotten form or two. Want me to run it?</pre></div>
+<details class="srcs"><summary>Sources (4)</summary><ul class="ev"><li>[1] Navan announced on Sep 9, 2026 that it had acquired BoomPop, and said it will draw on its experience integrating Reed &amp; Mackay, Comtravo, Tripeur and Smartrips. <a href="https://investors.navan.com/news-releases/news-release-details/navan-acquires-leading-ai-powered-events-platform-boompop" rel="noopener" target="_blank">investors.navan.com/news-releases/news-release-details/navan-acq</a></li><li>[2] On Nov 2, 2026 boompop.com shows a &#x27;BoomPop has joined Navan&#x27; banner, loads HubSpot portal 19841098, posts three forms to HubSpot&#x27;s submissions API for that portal, and loads Chili Piper from boompop.chilipiper.com plus Warmly and Vector. The page was last published Oct 27, 2026. <a href="https://www.boompop.com/" rel="noopener" target="_blank">boompop.com/</a></li><li>[3] On Nov 2, 2026 navan.com/events renders Marketo form 2561, and navan.com/demo renders Marketo form 1598. <a href="https://navan.com/events" rel="noopener" target="_blank">navan.com/events</a></li><li>[4] Go Nimbly&#x27;s homepage shows client logos including Intercom, Rippling, Twilio and Zendesk, and an Intercom customer story. <a href="https://www.gonimbly.com/" rel="noopener" target="_blank">gonimbly.com/</a></li></ul></details>
+</article><article class="pm">
+<h3>The pricing change that only shipped in English</h3>
+<p class="take">Every entitlement that now differs between your English, French and Japanese pricing pages and your SLA doc.</p>
+<div class="mail"><div class="to">To: CRO, head of revenue operations or pricing lead, Acquia</div>
+<div class="subj">What your French pricing page promises</div><p>Your English Cloud Platform pricing page now lists Elite search at 250K queries a month. Your French and Japanese pricing pages still say 4.2M, still include Site Studio, and still cap Standard at 4 support contacts.</p><p>A buyer in Paris or Tokyo can quote those rows back at signature or renewal.</p><p>I&#x27;m with Go Nimbly, the RevOps partner behind teams like Twilio and Zendesk; CPQ and quote-to-cash are a big part of our work. I lined up every row that differs. Want the sheet?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Acquia Cloud Platform entitlements by page, Nov 2, 2026, first 3 of 5</span></div><table class="tbl"><tr><th>Row</th><th>English page</th><th>French page</th><th>Japanese page</th><th>SLA doc</th></tr><tr><td>Elite search (queries / index / docs)</td><td>250K / 5GB / 250K</td><td>4.2M / 5GB / 1M</td><td>4.2M / 5GB / 1M</td><td>Not covered</td></tr><tr><td>Premium search</td><td>250K / 2500MB / 250K</td><td>850K / 2500MB / 250K</td><td>850K / 2500MB / 250K</td><td>Not covered</td></tr><tr><td>Site Studio</td><td>Not listed</td><td>1 site, included</td><td>1 site, included</td><td>Not covered</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would fix it for good: one entitlement table in your CPQ product catalog, with the web pages, order forms and SLA doc all reading from it, plus a check that flags any page that drifts. Then a pricing change ships everywhere at once. Want the outline?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more: Site Studio dropped off the English table the same week. Customers who bought on the old page may expect it at renewal, so a renewal play that confirms each account&#x27;s entitlements before the quote goes out avoids that surprise. Want the checklist?</pre></div>
+<details class="srcs"><summary>Sources (6)</summary><ul class="ev"><li>[1] On Nov 2, 2026 Acquia&#x27;s English Cloud Platform pricing page lists Acquia Search for Elite at 250K queries / 5GB / 250K docs and Premium at 250K / 2500MB / 250K, Number of Support Contacts as Unlimited on all four tiers, Platform Email for Standard as 10/100k, and no Site Studio row. <a href="https://www.acquia.com/products/acquia-cloud-platform/pricing-plans" rel="noopener" target="_blank">acquia.com/products/acquia-cloud-platform/pricing-plans</a></li><li>[2] On Nov 2, 2026 Acquia&#x27;s French pricing page lists Elite search at 4.2M / 5GB / 1M, Premium at 850K / 2500MB / 250K, Acquia Site Studio included (1 Site) on every tier, Platform Email for Standard as 10/5k, and support contacts as 4 / 4 / 10 / Unlimited. <a href="https://www.acquia.com/fr/products/acquia-cloud-platform/pricing-plans" rel="noopener" target="_blank">acquia.com/fr/products/acquia-cloud-platform/pricing-plans</a></li><li>[3] On Nov 2, 2026 Acquia&#x27;s Japanese pricing page lists the same old rows: Elite search 4.2M / 5GB / 1M, Site Studio included (1 site), support contacts 4 / 4 / 10 / unlimited. <a href="https://www.acquia.com/jp/products/acquia-cloud-platform/pricing-plans" rel="noopener" target="_blank">acquia.com/jp/products/acquia-cloud-platform/pricing-plans</a></li><li>[4] Acquia&#x27;s SLA documentation lists Cloud Enterprise support contacts as 4 (Standard), 4 (Plus), 10 (Premium) and Unlimited (Elite). <a href="https://docs.acquia.com/service-offerings/service-level-agreement-sla" rel="noopener" target="_blank">docs.acquia.com/service-offerings/service-level-agreement-sla</a></li><li>[5] PricingSaaS recorded the change between its Oct 19, 2026 and Oct 26, 2026 captures of Acquia&#x27;s pricing page, including support contacts moving from 4/4/10 to Unlimited and the Site Studio row being removed. <a href="https://pricingsaas.com/companies/acquia/diffs/2026W44" rel="noopener" target="_blank">pricingsaas.com/companies/acquia/diffs/2026W44</a></li><li>[6] Go Nimbly lists CPQ and quote-to-cash among its RevOps solutions, and its homepage shows Twilio and Zendesk logos. <a href="https://www.gonimbly.com/solutions" rel="noopener" target="_blank">gonimbly.com/solutions</a></li></ul></details>
+</article><article class="pm">
+<h3>New practices in your market, from the registry</h3>
+<p class="take">Every new dental organization in Texas since August, with city, specialty and registration date, ready for your reps.</p>
+<div class="mail"><div class="to">To: CRO or VP sales operations at vertical SaaS for practices, Weave</div>
+<div class="subj">New Texas practices since August</div><p>Since Aug 1, 127 dental organizations with a Texas practice address got a new NPI, 54 of them in October. One group, Mountain Smiles, registered six new entities in a single week.</p><p>New and newly bought practices pick their phones and patient texting in the first weeks, before habits set in.</p><p>I&#x27;m with Go Nimbly; we build signal workflows in Clay for teams like Intercom and Rippling. I pulled all of them with city, specialty and NPI date. Want the list?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: New dental organizations with a Texas practice address, Aug 1 to Nov 2, 2026, first 3 of 127</span></div><table class="tbl"><tr><th>Practice</th><th>City</th><th>NPI date</th><th>Specialty</th></tr><tr><td>Ghaben Endodontics PLLC</td><td>Frisco</td><td>Oct 28</td><td>Endodontics</td></tr><tr><td>North Garland Dental PLLC</td><td>Garland</td><td>Oct 22</td><td>General practice</td></tr><tr><td>Mountain Smiles - Benbrook PLLC</td><td>Benbrook</td><td>Oct 15</td><td>Dentist</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: a weekly Clay pull of new NPI registrations by specialty and state, matched to each practice&#x27;s site, scored by group size, and routed into your CRM with an owner before a competitor calls. Multi-site groups like Mountain Smiles go to your multi-location team. Want a sample week?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: the same registry covers optometry and physical therapy, and a group adding several entities at once can mean an acquisition, which usually brings a phone and software review. Want the multi-entity groups across your specialties?</pre></div>
+<details class="srcs"><summary>Sources (4)</summary><ul class="ev"><li>[1] An NPI Registry API pull on Nov 2, 2026 (organizations, taxonomy Dentist, every Texas ZIP prefix 750-799, paged to completion) returned 127 organizations with a Texas practice location and an enumeration date since Aug 1, 2026: 36 in August, 37 in September and 54 in October. <a href="https://npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;taxonomy_description=Dentist&amp;state=TX&amp;postal_code=760*&amp;limit=200" rel="noopener" target="_blank">npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;</a></li><li>[2] Six organizations named Mountain Smiles were enumerated between Oct 9 and Oct 16, 2026, in Saginaw (two), Boyd, Burleson, Benbrook and Springtown. <a href="https://npiregistry.cms.hhs.gov/api/?version=2.1&amp;organization_name=MOUNTAIN+SMILES*&amp;state=TX" rel="noopener" target="_blank">npiregistry.cms.hhs.gov/api/?version=2.1&amp;organization_name=MOUNT</a></li><li>[3] Weave describes itself as a vertical SaaS company with a patient communications and engagement platform for healthcare practices, and reported Q2 2026 revenue of $67.5 million on Aug 6, 2026. <a href="https://s21.q4cdn.com/507868397/files/doc_news/Weave-Announces-Second-Quarter-2026-Financial-Results-2026.pdf" rel="noopener" target="_blank">s21.q4cdn.com/507868397/files/doc_news/Weave-Announces-Second-Qu</a></li><li>[4] Go Nimbly&#x27;s homepage shows client logos including Intercom, Rippling, Twilio and Zendesk, and an Intercom customer story. <a href="https://www.gonimbly.com/" rel="noopener" target="_blank">gonimbly.com/</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 6 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The 6 leads</s></p>
+    <h2>6 leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Ryan Colas<i>Acquia: Pricing page changed; French and Japanese didn&#x27;t</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Yair Holtzer<i>Guesty: Closed Smily acquisition; two HubSpot portals live</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Michael Sindicich<i>Navan: Acquired BoomPop; its site runs a separate stack</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>David McNeil<i>Weave: Q2 revenue up 15.5%; new practices registering weekly</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Ian Tickle<i>Freshworks: Agreed to acquire Torii</i></span></button><button type="button" aria-pressed="false"><em>06</em><span>Suzanne Cogan<i>WebPT: New clinical innovation hire; PT clinics registering</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Ryan Colas</h4>
+<p class="meta">Chief Revenue Officer, Acquia</p>
+<p class="sig"><strong>Why now:</strong> Acquia&#x27;s English pricing page changed between Oct 19 and Oct 26, 2026. As of this week its French and Japanese pages and its SLA doc still show the old search quotas, Site Studio and support-contact limits.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: What your French pricing page promises</span><button type="button" data-copy>Copy</button></header><pre>Your English pricing page now lists Elite search at 250K queries a month. The French and Japanese pages still say 4.2M, still include Site Studio, and your SLA doc still caps Standard at 4 support contacts.
+
+Your EMEA and APAC reps may be quoting from a different table than HQ.
+
+I&#x27;m with Go Nimbly, the RevOps partner behind teams like Twilio and Zendesk. I lined up every row that differs. Want the sheet?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would fix it: one entitlement catalog in your CPQ, with web pages, order forms and the SLA doc all reading from it, plus a weekly check that flags drift. Want the outline?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A different idea: renewals signed on the old bundle may expect Site Studio. A renewal play that confirms each account&#x27;s entitlements before the quote goes out heads that off. Want the checklist? If not, I&#x27;ll stop here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Ryan, Acquia&#x27;s English pricing page lists Elite search at 250K queries; the French and Japanese pages still say 4.2M and include Site Studio. I lined up every row that differs across the pages and the SLA doc, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Acquia&#x27;s leadership page names Ryan Colas Chief Revenue Officer, leading global Sales, Presales, Channel and Revenue Operations. <a href="https://www.acquia.com/people/leadership/ryan-colas" rel="noopener" target="_blank">acquia.com/people/leadership/ryan-colas</a></li><li>[2] English page: Elite search 250K / 5GB / 250K. French and Japanese pages: 4.2M / 5GB / 1M and Site Studio included. SLA doc: 4 / 4 / 10 / Unlimited support contacts. <a href="https://www.acquia.com/fr/products/acquia-cloud-platform/pricing-plans" rel="noopener" target="_blank">acquia.com/fr/products/acquia-cloud-platform/pricing-plans</a></li><li>[3] PricingSaaS recorded the change between its Oct 19, 2026 and Oct 26, 2026 captures. <a href="https://pricingsaas.com/companies/acquia/diffs/2026W44" rel="noopener" target="_blank">pricingsaas.com/companies/acquia/diffs/2026W44</a></li></ul>
+</article><article class="lead">
+<h4>Yair Holtzer</h4>
+<p class="meta">Chief Revenue Officer, Guesty</p>
+<p class="sig"><strong>Why now:</strong> Guesty completed its acquisition of Smily on Sep 17, 2026. On Nov 2 smily.com, now branded &#x27;a Guesty company&#x27;, still loads HubSpot portal 5088672, while guesty.com loads portal 2950575.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: One portal for the French market</span><button type="button" data-copy>Copy</button></header><pre>Smily now carries the &#x27;a Guesty company&#x27; logo, but smily.com still loads its own HubSpot portal, 5088672, while guesty.com runs portal 2950575.
+
+That&#x27;s two lead databases for one French market, and a French property manager can sit in both.
+
+I&#x27;m with Go Nimbly, the RevOps partner behind teams like Intercom and Rippling. I mapped both sites&#x27; forms and tracking. Want the map?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: a portal merge plan, matching Smily contacts to Guesty accounts with Clay, one set of lifecycle stages, and routing that sends French demand to the right team on day one. Want the plan?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Last idea, then I&#x27;ll stop: Smily&#x27;s customers who don&#x27;t use Guesty&#x27;s newer features are an upsell list hiding in the merge. Want me to show how to pull it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Yair, smily.com still loads its own HubSpot portal while guesty.com runs a different one, so French leads can live in two databases. I mapped both sites&#x27; forms and tracking, if useful for the integration.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Yair Holtzer is quoted as Chief Revenue Officer, Guesty. <a href="https://www.traveldailynews.com/hospitality/villa-tracker-partners-with-guesty/" rel="noopener" target="_blank">traveldailynews.com/hospitality/villa-tracker-partners-with-gues</a></li><li>[2] Guesty announced the Smily acquisition on Sep 17, 2026. <a href="https://www.guesty.com/press/guesty-acquires-smily-deepening-its-investment-in-frances-booming-short-term-rental-market/" rel="noopener" target="_blank">guesty.com/press/guesty-acquires-smily-deepening-its-investment-</a></li><li>[3] On Nov 2, 2026 smily.com shows a &#x27;Smily - a Guesty company&#x27; logo and loads HubSpot portal 5088672; guesty.com loads HubSpot portal 2950575. <a href="https://www.smily.com/" rel="noopener" target="_blank">smily.com/</a></li></ul>
+</article><article class="lead">
+<h4>Michael Sindicich</h4>
+<p class="meta">President, Navan</p>
+<p class="sig"><strong>Why now:</strong> Navan announced the BoomPop acquisition on Sep 9, 2026 and Sindicich is the executive quoted on fully integrating BoomPop&#x27;s team and technology. On Nov 2 boompop.com still posts its forms to its own HubSpot portal and Chili Piper.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Two front doors for Navan events</span><button type="button" data-copy>Copy</button></header><pre>You said fully integrating BoomPop&#x27;s team and technology is the plan. On boompop.com, demo requests still go to BoomPop&#x27;s own HubSpot portal and Chili Piper, while navan.com/events uses a Marketo form.
+
+One events buyer can become two leads with two owners.
+
+I&#x27;m with Go Nimbly, the RevOps partner behind teams like Intercom and Rippling. I mapped every form on both sites and where it lands. Want the map?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run the cutover: BoomPop&#x27;s HubSpot forms re-pointed or synced into Marketo, one router for events demand, and a Clay dedupe pass so past BoomPop leads join their Navan account record. Want the plan?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Last note from me. Reed &amp; Mackay, Comtravo, Tripeur and Smartrips may still have live forms on their old domains. If you&#x27;d like, I&#x27;ll check each one and send what I find, no strings attached.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Michael, boompop.com still sends demo requests to BoomPop&#x27;s own HubSpot portal and Chili Piper, while navan.com/events runs on Marketo. I mapped every form on both sites and where each lands, if it helps the integration.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Navan announced on Sep 9, 2026 that it acquired BoomPop; Michael Sindicich, President of Navan, is quoted. <a href="https://investors.navan.com/news-releases/news-release-details/navan-acquires-leading-ai-powered-events-platform-boompop" rel="noopener" target="_blank">investors.navan.com/news-releases/news-release-details/navan-acq</a></li><li>[2] boompop.com on Nov 2, 2026 loads HubSpot portal 19841098 and Chili Piper from boompop.chilipiper.com. <a href="https://www.boompop.com/" rel="noopener" target="_blank">boompop.com/</a></li><li>[3] navan.com/events renders Marketo form 2561 on Nov 2, 2026. <a href="https://navan.com/events" rel="noopener" target="_blank">navan.com/events</a></li></ul>
+</article><article class="lead">
+<h4>David McNeil</h4>
+<p class="meta">Chief Revenue Officer, Weave</p>
+<p class="sig"><strong>Why now:</strong> Weave reported Q2 2026 revenue of $67.5 million, up 15.5%, on Aug 6. Since Aug 1, 127 dental organizations with a Texas practice address have registered a new NPI.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: New Texas practices since August</span><button type="button" data-copy>Copy</button></header><pre>Since Aug 1, 127 dental organizations with a Texas practice address got a new NPI. Mountain Smiles alone registered six in one week across Saginaw, Boyd, Burleson, Benbrook and Springtown.
+
+New and newly bought practices pick phones and patient texting early.
+
+I&#x27;m with Go Nimbly; we build signal workflows in Clay for teams like Intercom and Rippling. I pulled every one with city, specialty and NPI date. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: a weekly Clay pull of new NPI registrations for dental, optometry and physical therapy, matched to each practice&#x27;s site, scored by group size and routed to the right rep. Want a sample week?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: groups registering several entities at once, like Mountain Smiles, are often consolidating practices. A short list of those groups for your multi-location team could be the highest-value slice. Want it?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>David, since Aug 1, 127 dental organizations with a Texas practice address got a new NPI, six of them Mountain Smiles entities in one week. I pulled the full list with city, specialty and date, if useful for your reps.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Weave announced David McNeil as Chief Revenue Officer. <a href="https://www.getweave.com/press-releases/weave-appoints-david-mcneil-as-chief-revenue-officer/" rel="noopener" target="_blank">getweave.com/press-releases/weave-appoints-david-mcneil-as-chief</a></li><li>[2] Weave reported Q2 2026 revenue of $67.5 million, up 15.5% year over year, on Aug 6, 2026. <a href="https://s21.q4cdn.com/507868397/files/doc_news/Weave-Announces-Second-Quarter-2026-Financial-Results-2026.pdf" rel="noopener" target="_blank">s21.q4cdn.com/507868397/files/doc_news/Weave-Announces-Second-Qu</a></li><li>[3] NPI Registry pull on Nov 2, 2026: 127 dental organizations with a Texas practice location enumerated since Aug 1, 2026; six Mountain Smiles entities enumerated Oct 9 to Oct 16. <a href="https://npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;taxonomy_description=Dentist&amp;state=TX&amp;postal_code=760*&amp;limit=200" rel="noopener" target="_blank">npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;</a></li></ul>
+</article><article class="lead">
+<h4>Ian Tickle</h4>
+<p class="meta">Chief Revenue Officer, Freshworks</p>
+<p class="sig"><strong>Why now:</strong> Freshworks signed a definitive agreement to acquire Torii on Oct 12, 2026, with closing expected in its fourth quarter. Torii&#x27;s site runs HubSpot portal 4265482 with Drift chat and Calendly; Freshworks&#x27; Freshservice pages are built on Marketo forms.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Torii&#x27;s front door after close</span><button type="button" data-copy>Copy</button></header><pre>Torii&#x27;s site still captures leads in HubSpot portal 4265482, with Drift chat and Calendly booking. Freshservice runs on Marketo forms.
+
+At close, Torii&#x27;s pipeline, open trials and chat history need a home in your stack, and the weeks before close are the cheapest time to decide where.
+
+I&#x27;m with Go Nimbly, the RevOps partner behind teams like Zendesk and Twilio. I mapped Torii&#x27;s forms and where each lands. Want the map?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: a day-one routing plan for Torii demand into Freshservice&#x27;s sales team, a field mapping from Torii&#x27;s HubSpot to your CRM, and a Clay pass that matches Torii accounts to existing Freshworks customers for cross-sell. Want the outline?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Torii&#x27;s customers that already run Freshservice are the first cross-sell list. Matching the two customer bases before close tells your reps who to call in week one. Want me to sketch how?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Ian, Torii&#x27;s site still captures leads in its own HubSpot portal with Drift and Calendly, while Freshservice runs on Marketo forms. I mapped Torii&#x27;s forms and where each lands, if useful for the integration plan.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Freshworks promoted Ian Tickle to Chief Revenue Officer on Mar 5, 2026, overseeing all sales, customer success and customer experience. <a href="https://ir.freshworks.com/news/news-details/2026/Freshworks-Unifies-Global-Sales-Organization-to-Accelerate-Growth/default.aspx" rel="noopener" target="_blank">ir.freshworks.com/news/news-details/2026/Freshworks-Unifies-Glob</a></li><li>[2] Freshworks announced a definitive agreement to acquire Torii on Oct 12, 2026, with closing expected in its fourth fiscal quarter of 2026. <a href="https://www.freshworks.com/pressrelease/freshworks-to-extend-freshservice-into-ai-and-software-spend-governance-with-agreement-to-acquire-torii/" rel="noopener" target="_blank">freshworks.com/pressrelease/freshworks-to-extend-freshservice-in</a></li><li>[3] toriihq.com on Nov 2, 2026 loads HubSpot portal 4265482, Drift and Calendly; freshworks.com/freshservice carries Marketo form configuration. <a href="https://www.toriihq.com/" rel="noopener" target="_blank">toriihq.com/</a></li></ul>
+</article><article class="lead">
+<h4>Suzanne Cogan</h4>
+<p class="meta">President and Chief Customer Officer, WebPT</p>
+<p class="sig"><strong>Why now:</strong> WebPT named a Head of Clinical Innovation on Aug 6, 2026. Since Aug 1, 44 physical therapy organizations with a Texas practice address got a new NPI, and Agilitas USA registered three Texas sites on Oct 26.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: New PT clinics in Texas</span><button type="button" data-copy>Copy</button></header><pre>Since Aug 1, 44 physical therapy organizations with a Texas practice address got a new NPI. Agilitas USA registered three Texas sites on a single day, Oct 26, in Humble, Missouri City and San Antonio.
+
+New clinics choose their EMR and billing before the first patient.
+
+I&#x27;m with Go Nimbly; we build signal workflows in Clay for teams like Intercom and Rippling. I pulled all of them with city and NPI date. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Go Nimbly would run it: a weekly Clay pull of new rehab therapy registrations across your states, matched to each clinic&#x27;s site, scored by group size and routed to the right rep with context. Want a sample week?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: groups registering several sites at once, like Agilitas, are worth a separate multi-site play. I can pull those groups across every state you sell in. Want that cut?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Suzanne, since Aug 1, 44 physical therapy organizations with a Texas practice address got a new NPI, three of them Agilitas USA sites on one day. I pulled the list with city and date, if useful for your team.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] WebPT&#x27;s year-end release says Suzanne Cogan was named president and chief customer officer. <a href="https://www.webpt.com/about/press/webpt-closed-2025-with-strong-momentum-across-leadership-platform-innovation-and-member-experience" rel="noopener" target="_blank">webpt.com/about/press/webpt-closed-2025-with-strong-momentum-acr</a></li><li>[2] WebPT named Dr. Alex Bendersky Head of Clinical Innovation on Aug 6, 2026. <a href="https://digital-release.wowktv.com/business/press-releases/cision/20260806LA20178/webpt-names-dr-alex-bendersky-head-of-clinical-innovation" rel="noopener" target="_blank">digital-release.wowktv.com/business/press-releases/cision/202608</a></li><li>[3] NPI Registry pull on Nov 2, 2026: 44 physical therapy organizations with a Texas practice location enumerated since Aug 1, 2026; Agilitas USA, Inc enumerated three on Oct 26, 2026, in Humble, Missouri City and San Antonio. <a href="https://npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;taxonomy_description=Physical+Therapist&amp;state=TX&amp;postal_code=770*&amp;limit=200" rel="noopener" target="_blank">npiregistry.cms.hhs.gov/api/?version=2.1&amp;enumeration_type=NPI-2&amp;</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as Go Nimbly's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At Go Nimbly">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at Go Nimbly.</h2>
+    <div class="three"><div class="pane"><h4>1. A daily feed of RevOps moments, each with its finding attached</h4><p>Acquisitions, pricing-page changes and new CRO or RevOps hires at mid-market and public SaaS, from press wires, PricingSaaS and leadership pages, checked automatically: whose acquired site still posts to its own HubSpot, whose localized pricing lags. Each lands in the CRM with an owner.</p></div><div class="pane"><h4>2. Two findings turned into paid entry offers</h4><p>A post-acquisition front-door audit and a pricing-change quote-to-cash audit, each a fixed-scope week that ends in a map and a plan. They open the door to Launch and Scale engagements with the operator who owns the problem.</p></div><div class="pane"><h4>3. Clay cross-sell into 750+ Gong implementations</h4><p>Go Nimbly&#x27;s Gong clients already trust it with their stack. A monthly check of each for an acquisition, pricing change or new revenue leader, paired with the Clay plus Gong add-on, gives the engagement managers a reason to call with something specific.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>Go Nimbly</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at Go Nimbly.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For Go Nimbly</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
