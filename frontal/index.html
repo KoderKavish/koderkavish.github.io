@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Frontal</title>
+<meta name="description" content="5 named leads with copy and three things I'd build, prepared for Frontal.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For Frontal</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">5 funded B2B SaaS companies you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 5 named leads to send them to,
+      and three things I'd build at Frontal. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your funded B2B SaaS companies would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>The liquor stores choosing a POS this quarter<i>For Founder and CEO</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>The security vendors hiring a class of sellers right now<i>For CEO or head of revenue</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>AI vendors hand-building Salesforce and NetSuite connections<i>For Co-founder and CEO</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>The liquor stores choosing a POS this quarter</h3>
+<p class="take">Every New York liquor and wine store licensed since August or still waiting on its license, with address and status.</p>
+<div class="mail"><div class="to">To: Founder and CEO, Santé</div>
+<div class="subj">New York&#x27;s next liquor store openings</div><p>New York has issued 326 new liquor and wine store licenses since August, and 175 more applications are waiting at the State Liquor Authority, 25 of them conditionally approved.</p><p>Pending applicants are still setting up, which is when a store picks its POS.</p><p>I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled the pending list with each address and status. Want it?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Pending liquor and wine store license applications, New York State, first 3 of 175</span></div><table class="tbl"><tr><th>Applicant</th><th>City</th><th>County</th><th>Received</th><th>Status</th></tr><tr><td>Lyell Liquor Inc</td><td>Rochester</td><td>Monroe</td><td>Jul 3, 2026</td><td>Conditionally Approved</td></tr><tr><td>Bushy Wine &amp; Liquor LLC</td><td>Silver Springs</td><td>Wyoming</td><td>May 27, 2026</td><td>Conditionally Approved</td></tr><tr><td>SAF Liquors Inc.</td><td>Lindenhurst</td><td>Suffolk</td><td>May 26, 2026</td><td>Conditionally Approved</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a daily pull of new and pending licenses in every state that publishes them, each store matched to its owner, scored by county and status, and handed to your reps with a first line that names the address. The same stores see your ads that week. Want one week of it for New York?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Queens and Brooklyn have 23 pending store applications each, close to your New York base. That&#x27;s a week of in-person visits for one rep, with the list sorted by street. Want the two borough lists?</pre></div>
+<details class="srcs"><summary>Sources (4)</summary><ul class="ev"><li>[1] 326 New York liquor store and wine store licenses have an original issue date on or after Aug 1, 2026 (111 in August, 97 in September, 117 in October, 1 in November). 3,432 such licenses are active in all. <a href="https://data.ny.gov/resource/9s3h-dpkz.json?$select=count(*)&amp;$where=description%20in(%22Liquor%20Store%22,%22Wine%20Store%22)%20AND%20originalissuedate%3E=%222026-08-01%22" rel="noopener" target="_blank">data.ny.gov/resource/9s3h-dpkz.json?$select=count(*)&amp;$where=desc</a></li><li>[2] 175 liquor store and wine store license applications are pending at the NY State Liquor Authority: 92 Under Review, 52 IntakeComplete, 25 Conditionally Approved and 6 in Reconsideration. 64 were received since Aug 1, 2026. Queens and Kings (Brooklyn) counties have 23 each, the most of any county. <a href="https://data.ny.gov/resource/f8i8-k2gm.json?$select=status,count(*)&amp;$where=description%20in(%22Liquor%20Store%22,%22Wine%20Store%22)&amp;$group=status" rel="noopener" target="_blank">data.ny.gov/resource/f8i8-k2gm.json?$select=status,count(*)&amp;$whe</a></li><li>[3] Santé is a New York company selling an AI-powered POS and operating system built for wine and spirits retailers; it raised a $15M Series A led by FINTOP and is expanding its go-to-market team to reach more of the 34,000 independent US liquor stores. <a href="https://alleywatch.com/2026/10/sante-wine-spirits-retail-software-ai-liquor-store-pos-darren-fike/" rel="noopener" target="_blank">alleywatch.com/2026/10/sante-wine-spirits-retail-software-ai-liq</a></li><li>[4] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul></details>
+</article><article class="pm">
+<h3>The security vendors hiring a class of sellers right now</h3>
+<p class="take">The security vendors posting the most seller roles since September, each role dated and linked.</p>
+<div class="mail"><div class="to">To: CEO or head of revenue, Avarra</div>
+<div class="subj">Security vendors hiring sellers this quarter</div><p>Since early September, Cato Networks posted 27 seller roles on its job board, Chainguard 24 and Vanta 21. Each new class of reps has to learn the pitch by January, at companies that look a lot like your customers Proofpoint and Netskope.</p><p>I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled the security vendors hiring the most sellers, with every role dated. Want the list?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Security vendors by seller roles posted since Sep 2, 2026, first 3 of 15</span></div><table class="tbl"><tr><th>Company</th><th>Seller roles posted since Sep 2</th><th>Open roles in all</th><th>Board</th></tr><tr><td>Cloudflare</td><td>76</td><td>467</td><td>Greenhouse</td></tr><tr><td>Okta</td><td>48</td><td>386</td><td>Greenhouse</td></tr><tr><td>Rubrik</td><td>36</td><td>157</td><td>Greenhouse</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a weekly scan of every security and data vendor&#x27;s job board, scored by new seller roles, then the CRO and enablement lead at each one get a sequence and see your LinkedIn ads in the same week. Your AEs only take the accounts that reply. Want the first scan?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Netskope, already your customer, posted 23 seller roles since early September. That class needs onboarding too, which makes it an expansion conversation before it&#x27;s a renewal one. Want the Netskope role list?</pre></div>
+<details class="srcs"><summary>Sources (5)</summary><ul class="ev"><li>[1] Seller roles (account executive, sales or business development rep, solutions or sales engineer, sales director) first published on or after Sep 2, 2026, on each public job board on Nov 2, 2026: Cloudflare 76, Okta 48, Rubrik 36, Cato Networks 27, Chainguard 24, Vanta 21, Wiz 18, 1Password 17, Abnormal Security 14, Sysdig 11. Open roles in all: Cloudflare 467, Okta 386, Rubrik 157, Cato Networks 106, Chainguard 94, Vanta 79, Wiz 114. <a href="https://boards-api.greenhouse.io/v1/boards/catonetworks/jobs?content=true" rel="noopener" target="_blank">boards-api.greenhouse.io/v1/boards/catonetworks/jobs?content=tru</a></li><li>[2] Vanta&#x27;s open roles come from its Ashby board, which lists titles such as Sales Development Representative, Enterprise and Account Executive, SLED Government - East. <a href="https://api.ashbyhq.com/posting-api/job-board/vanta" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/vanta</a></li><li>[3] Avarra raised a $17 million Series A led by Duration Ventures on Oct 6, 2026; customers include Elastic, Masimo, Proofpoint, Netskope and Owner.com, and customers have cut sales ramp time by roughly half. <a href="https://pulse2.com/avarra-raises-17-million-series-a/" rel="noopener" target="_blank">pulse2.com/avarra-raises-17-million-series-a/</a></li><li>[4] Netskope, an Avarra customer, posted 23 seller roles since Sep 2, 2026 out of 120 open roles. <a href="https://boards-api.greenhouse.io/v1/boards/netskope/jobs?content=true" rel="noopener" target="_blank">boards-api.greenhouse.io/v1/boards/netskope/jobs?content=true</a></li><li>[5] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul></details>
+</article><article class="pm">
+<h3>AI vendors hand-building Salesforce and NetSuite connections</h3>
+<p class="take">The AI-native vendors hiring people to build Salesforce, NetSuite and SAP integrations by hand, with each role and date.</p>
+<div class="mail"><div class="to">To: Co-founder and CEO, Ampersand</div>
+<div class="subj">Who&#x27;s hand-building NetSuite and Salesforce links</div><p>Campfire has 8 open implementation and integration roles that name NetSuite, Salesforce or SAP. Its Integrations Specialist post says customers move off NetSuite, then connect Salesforce and HubSpot. Rillet and Decagon are hiring for the same work.</p><p>That&#x27;s integration work AI-native vendors are staffing by hand.</p><p>I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled each role with the systems it names. Want the list?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: AI-native vendors hiring integration and implementation roles that name a CRM or ERP, first 3 of 15</span></div><table class="tbl"><tr><th>Company</th><th>Role</th><th>Posted</th><th>Systems named</th></tr><tr><td>Campfire</td><td>Integrations Specialist</td><td>Sep 23, 2026</td><td>NetSuite, Salesforce, HubSpot</td></tr><tr><td>Campfire</td><td>Forward Deployed Engineer</td><td>Sep 30, 2026</td><td>NetSuite</td></tr><tr><td>Rillet</td><td>Director of Partner Implementation</td><td>Oct 30, 2026</td><td>NetSuite, SAP, Oracle</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a weekly scan of AI-native vendors&#x27; job boards for integration roles that name a system of record, each matched to the CTO and opened with the exact post, while the same accounts see your ads on LinkedIn. Your team takes the replies. Want a month of it?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: Hatch&#x27;s CTO is already quoted in your launch, saying Ampersand opened customers Hatch couldn&#x27;t serve before. A short page on that, sent to the CTOs on this list, gives each one a peer reason to reply. Want an outline?</pre></div>
+<details class="srcs"><summary>Sources (6)</summary><ul class="ev"><li>[1] Campfire&#x27;s Ashby board lists 51 open roles; 8 implementation, deployment or integration roles name NetSuite, Salesforce or SAP in their description, including Integrations Specialist (posted Sep 23, 2026) and Forward Deployed Engineer (Sep 30, 2026). <a href="https://api.ashbyhq.com/posting-api/job-board/campfire" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/campfire</a></li><li>[2] Rillet lists 3 such roles, including Director of Partner Implementation (posted Oct 30, 2026), which asks for experience with NetSuite, SAP or Oracle. <a href="https://api.ashbyhq.com/posting-api/job-board/rillet" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/rillet</a></li><li>[3] Decagon&#x27;s Agent Development Manager, Implementations role asks for familiarity with Zendesk or Salesforce. <a href="https://api.ashbyhq.com/posting-api/job-board/decagon" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/decagon</a></li><li>[4] Across the boards checked, 15 implementation, deployment or integration roles at AI-native vendors name a CRM or ERP: Campfire 8, Rillet 3, EliseAI 2, Decagon 1, Artisan 1. <a href="https://api.ashbyhq.com/posting-api/job-board/eliseai" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/eliseai</a></li><li>[5] Ampersand raised a $15 million Series A led by Bessemer Venture Partners on Oct 6, 2026, building integration infrastructure so agentic applications can read and write inside CRMs, ERPs and other systems of record. <a href="https://www.prnewswire.com/news-releases/ampersand-closes-generation-gap-between-agents-and-the-enterprise-software-stack-backed-by-15-million-from-bessemer-venture-partners-302900006.html" rel="noopener" target="_blank">prnewswire.com/news-releases/ampersand-closes-generation-gap-bet</a></li><li>[6] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 5 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The 5 leads</s></p>
+    <h2>5 leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Darren Fike<i>Santé: Series A; scaling go-to-market team</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>David Knight<i>Avarra: Series A; GTM hiring</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Ayan Barua<i>Ampersand: Series A led by Bessemer</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Manny Cominsky<i>Sunbound: Series A; acquired Richter Healthcare Consultants</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Siadhal Magos<i>Metaview: Series C led by Insight Partners</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Darren Fike</h4>
+<p class="meta">Co-founder and CEO, Santé</p>
+<p class="sig"><strong>Why now:</strong> Santé raised a $15M Series A led by FINTOP in October 2026 and is expanding its go-to-market team. In its home state, 175 liquor and wine store applications are pending right now, 25 conditionally approved.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: New York&#x27;s next liquor store openings</span><button type="button" data-copy>Copy</button></header><pre>New York has issued 326 new liquor and wine store licenses since August, and 175 more applications are waiting at the State Liquor Authority, 25 of them conditionally approved.
+
+Pending applicants are still setting up, which is when a store picks its POS.
+
+I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled the pending list with each address and status. Want it?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a daily pull of new and pending licenses in every state that publishes them, each store matched to its owner, scored by county and status, and handed to your reps with a first line that names the address. The same stores see your ads that week. Want one week of it for New York?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Queens and Brooklyn have 23 pending store applications each, close to your New York base. That&#x27;s a week of in-person visits for one rep, with the list sorted by street. Want the two borough lists?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Darren, New York has 175 liquor and wine store applications pending at the SLA, 25 conditionally approved. They&#x27;re still setting up, which is when a store picks its POS. I pulled the list with addresses and status, if useful for the new GTM team.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 326 New York liquor and wine store licenses were first issued on or after Aug 1, 2026. <a href="https://data.ny.gov/resource/9s3h-dpkz.json?$select=count(*)&amp;$where=description%20in(%22Liquor%20Store%22,%22Wine%20Store%22)%20AND%20originalissuedate%3E=%222026-08-01%22" rel="noopener" target="_blank">data.ny.gov/resource/9s3h-dpkz.json?$select=count(*)&amp;$where=desc</a></li><li>[2] 175 liquor and wine store applications are pending; 25 are Conditionally Approved. Queens and Kings (Brooklyn) have 23 each. <a href="https://data.ny.gov/resource/f8i8-k2gm.json?$select=status,count(*)&amp;$where=description%20in(%22Liquor%20Store%22,%22Wine%20Store%22)&amp;$group=status" rel="noopener" target="_blank">data.ny.gov/resource/f8i8-k2gm.json?$select=status,count(*)&amp;$whe</a></li><li>[3] AlleyWatch: Santé raised a $15M Series A led by FINTOP and is expanding its engineering and go-to-market teams; it targets about 34,000 independent US liquor stores. Darren Fike is Founder and CEO. <a href="https://alleywatch.com/2026/10/sante-wine-spirits-retail-software-ai-liquor-store-pos-darren-fike/" rel="noopener" target="_blank">alleywatch.com/2026/10/sante-wine-spirits-retail-software-ai-liq</a></li><li>[4] SaaSRise dates the Santé Series A to Oct 6, 2026. <a href="https://www.saasrise.com/blog/this-week-in-saas-october-6---12-2026" rel="noopener" target="_blank">saasrise.com/blog/this-week-in-saas-october-6---12-2026</a></li><li>[5] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul>
+</article><article class="lead">
+<h4>David Knight</h4>
+<p class="meta">Co-founder and CEO, Avarra</p>
+<p class="sig"><strong>Why now:</strong> Avarra raised a $17 million Series A on Oct 6, 2026 for engineering and go-to-market hiring. Since early September, Cato Networks posted 27 seller roles, Chainguard 24 and Vanta 21: lookalikes of its customers Proofpoint and Netskope, each onboarding a class of reps.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Security vendors hiring sellers this quarter</span><button type="button" data-copy>Copy</button></header><pre>Since early September, Cato Networks posted 27 seller roles on its job board, Chainguard 24 and Vanta 21. Each new class of reps has to learn the pitch by January, at companies that look a lot like your customers Proofpoint and Netskope.
+
+I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled the security vendors hiring the most sellers, with every role dated. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a weekly scan of every security and data vendor&#x27;s job board, scored by new seller roles, then the CRO and enablement lead at each one get a sequence and see your LinkedIn ads in the same week. Your AEs only take the accounts that reply. Want the first scan?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Netskope, already your customer, posted 23 seller roles since early September. That class needs onboarding too, which makes it an expansion conversation before it&#x27;s a renewal one. Want the Netskope role list?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>David, since early September Cato Networks posted 27 seller roles, Chainguard 24 and Vanta 21, all lookalikes of Proofpoint and Netskope. Each class has to ramp by January. I pulled the full list with every role dated, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Seller roles first published since Sep 2, 2026 on public boards (Nov 2, 2026): Cato Networks 27, Chainguard 24, Vanta 21, Wiz 18; Netskope 23. <a href="https://boards-api.greenhouse.io/v1/boards/catonetworks/jobs?content=true" rel="noopener" target="_blank">boards-api.greenhouse.io/v1/boards/catonetworks/jobs?content=tru</a></li><li>[2] Avarra raised a $17 million Series A on Oct 6, 2026 for engineering and go-to-market hiring; customers include Proofpoint and Netskope. <a href="https://pulse2.com/avarra-raises-17-million-series-a/" rel="noopener" target="_blank">pulse2.com/avarra-raises-17-million-series-a/</a></li><li>[3] Lightspeed: Avarra is led by David Knight, previously EVP/GM at Proofpoint; Crunchbase lists him as co-founder and CEO. <a href="https://lsvp.com/stories/investing-in-avarra-transforming-enterprise-with-human-like-avatars/" rel="noopener" target="_blank">lsvp.com/stories/investing-in-avarra-transforming-enterprise-wit</a></li><li>[4] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul>
+</article><article class="lead">
+<h4>Ayan Barua</h4>
+<p class="meta">Co-Founder and CEO, Ampersand</p>
+<p class="sig"><strong>Why now:</strong> Ampersand raised a $15 million Series A led by Bessemer on Oct 6, 2026. Campfire alone has 8 open implementation and integration roles that name NetSuite, Salesforce or SAP: the work Ampersand&#x27;s product replaces.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Who&#x27;s hand-building NetSuite and Salesforce links</span><button type="button" data-copy>Copy</button></header><pre>Campfire has 8 open implementation and integration roles that name NetSuite, Salesforce or SAP. Its Integrations Specialist post says customers move off NetSuite, then connect Salesforce and HubSpot. Rillet and Decagon are hiring for the same work.
+
+That&#x27;s integration work AI-native vendors are staffing by hand.
+
+I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I pulled each role with the systems it names. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a weekly scan of AI-native vendors&#x27; job boards for integration roles that name a system of record, each matched to the CTO and opened with the exact post, while the same accounts see your ads on LinkedIn. Your team takes the replies. Want a month of it?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: Hatch&#x27;s CTO is already quoted in your launch, saying Ampersand opened customers Hatch couldn&#x27;t serve before. A short page on that, sent to the CTOs on this list, gives each one a peer reason to reply. Want an outline?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Ayan, Campfire has 8 open implementation and integration roles that name NetSuite, Salesforce or SAP, and Rillet and Decagon are hiring for the same work. I pulled each role with the systems it names, if useful for outbound.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Campfire lists 8 implementation, deployment or integration roles naming NetSuite, Salesforce or SAP; its Integrations Specialist post says customers migrate off NetSuite and connect Salesforce and HubSpot. <a href="https://api.ashbyhq.com/posting-api/job-board/campfire" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/campfire</a></li><li>[2] Ampersand announced a $15 million Series A led by Bessemer Venture Partners on Oct 6, 2026; the release quotes Hatch&#x27;s CTO on reaching customers it couldn&#x27;t serve before. <a href="https://www.prnewswire.com/news-releases/ampersand-closes-generation-gap-between-agents-and-the-enterprise-software-stack-backed-by-15-million-from-bessemer-venture-partners-302900006.html" rel="noopener" target="_blank">prnewswire.com/news-releases/ampersand-closes-generation-gap-bet</a></li><li>[3] Ampersand&#x27;s about page names Ayan Barua Co-Founder and CEO. <a href="https://www.withampersand.com/about" rel="noopener" target="_blank">withampersand.com/about</a></li><li>[4] Rillet and Decagon list implementation roles naming NetSuite, SAP or Salesforce. <a href="https://api.ashbyhq.com/posting-api/job-board/rillet" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/rillet</a></li><li>[5] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul>
+</article><article class="lead">
+<h4>Manny Cominsky</h4>
+<p class="meta">CEO and co-founder, Sunbound</p>
+<p class="sig"><strong>Why now:</strong> Sunbound raised a $24M Series A led by TTV Capital on Oct 15, 2026 and bought Richter Healthcare Consultants, a senior-living billing firm. CMS&#x27;s latest file lists 269 nursing facilities under new owners since July 2025, 34 in Texas.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Nursing homes under new operators</span><button type="button" data-copy>Copy</button></header><pre>CMS&#x27;s latest ownership-change file lists 269 skilled nursing facilities that changed hands since July 2025, 34 of them in Texas. Every new operator takes over admissions and billing on day one.
+
+The file can trail a deal by months, so the newest names matter most.
+
+I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I matched each facility to its new operator. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: every new CMS ownership file and state licensing update, matched to the operator&#x27;s CFO and revenue-cycle lead, worked as outbound within the week while the same operators see your ads on LinkedIn. Want the Texas list to start?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: with Richter&#x27;s billing team now part of Sunbound, the pitch to an operator who just inherited someone else&#x27;s claims writes itself. A short case page on one of those takeovers would carry the whole list. Want an outline?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Manny, CMS&#x27;s latest ownership-change file lists 269 skilled nursing facilities under new owners since July 2025, 34 in Texas. Each new operator inherits admissions and billing. I matched each facility to its operator, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] CMS&#x27;s Skilled Nursing Facility Change of Ownership file released Sep 29, 2026 lists 269 ownership changes effective Jul 1, 2025 or later; 34 are in Texas, the most of any state. <a href="https://data.cms.gov/sites/default/files/2026-10/89166aa5-0fb8-49d6-bef5-f970876794b5/SNF_CHOW_2026.09.29.csv" rel="noopener" target="_blank">data.cms.gov/sites/default/files/2026-10/89166aa5-0fb8-49d6-bef5</a></li><li>[2] Sunbound raised a $24M Series A led by TTV Capital on Oct 15, 2026, and announced it acquired Richter Healthcare Consultants. <a href="https://www.thesaasnews.com/news/sunbound-raises-24m-series-a" rel="noopener" target="_blank">thesaasnews.com/news/sunbound-raises-24m-series-a</a></li><li>[3] Sunbound&#x27;s site says it is purpose-built for assisted living and skilled nursing operators. <a href="https://www.sunbound.ai/" rel="noopener" target="_blank">sunbound.ai/</a></li><li>[4] Manny Cominsky is Sunbound&#x27;s CEO and co-founder, per a Senior Housing News press release. <a href="https://seniorhousingnews.com/2025/05/14/sunbound-announces-strategic-partnership-with-omega-healthcare-investors/" rel="noopener" target="_blank">seniorhousingnews.com/2025/05/14/sunbound-announces-strategic-pa</a></li><li>[5] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul>
+</article><article class="lead">
+<h4>Siadhal Magos</h4>
+<p class="meta">CEO and co-founder, Metaview</p>
+<p class="sig"><strong>Why now:</strong> Metaview raised a $60 million Series C on Sep 30, 2026 and is taking fillmore, its autonomous recruiting agent, to general availability. On Nov 2, Harvey had 378 open roles on its job board, Legora 305 and Sierra 220.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Where recruiting load is peaking now</span><button type="button" data-copy>Copy</button></header><pre>Harvey has 378 open roles on its job board, Legora 305 and Sierra 220. Talent teams hiring at that pace are buried in screens and debriefs, the work fillmore takes on.
+
+I&#x27;m with Frontal; we run signal-based outbound and ABM for teams like AirOps and Aircall. I ranked the AI scale-ups by open roles, with each board linked. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Frontal would run this: a weekly count of open roles on every public job board in your ICP, so the accounts whose hiring jumps reach your AEs with the head of talent named, and see your LinkedIn ads the same week. Want a sample week?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Deel and Replit, both named Metaview customers, publish their job boards too. Tracking open roles at your own customers each month shows who is about to need more seats before renewal comes up. Want that view for your top accounts?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Siadhal, Harvey has 378 open roles on its job board, Legora 305 and Sierra 220, the load fillmore is built for. I ranked the AI scale-ups by open roles with each board linked, if useful for the GA push.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Open roles on each company&#x27;s public Ashby board on Nov 2, 2026: Harvey 378, Legora 305, Sierra 220, ElevenLabs 140, Decagon 133. <a href="https://api.ashbyhq.com/posting-api/job-board/harvey" rel="noopener" target="_blank">api.ashbyhq.com/posting-api/job-board/harvey</a></li><li>[2] Metaview announced a $60 million Series C led by Insight Partners on Sep 30, 2026; it brings fillmore, its autonomous recruiting coworker, to general availability. Siadhal Magos is CEO and co-founder; customers include Deel, Affirm, Navan and Replit. <a href="https://www.reworked.co/the-wire/metaview-raises-60m-series-c-to-lead-the-shift-to-agentic-recruiting/" rel="noopener" target="_blank">reworked.co/the-wire/metaview-raises-60m-series-c-to-lead-the-sh</a></li><li>[3] Frontal&#x27;s case studies include AirOps and Aircall. <a href="https://frontal.so/case-studies" rel="noopener" target="_blank">frontal.so/case-studies</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as Frontal's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At Frontal">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at Frontal.</h2>
+    <div class="three"><div class="pane"><h4>1. A public-records signal library, built one vertical at a time</h4><p>A catalog of registries with per-account, dated records (state liquor and trade licenses, CMS ownership changes, permits) wired into Clay as sources. Each vertical client&#x27;s Foundation then starts from a live trigger, like Santé&#x27;s 175 pending stores, not a static list.</p></div><div class="pane"><h4>2. Job-board signals for every client&#x27;s TAM, written into the CRM</h4><p>A daily read of Greenhouse, Ashby and Lever boards for each client&#x27;s scored accounts: seller cohorts, stack-naming roles and hiring surges, pushed to HubSpot or Salesforce with decay and synced to ad audiences, so outbound and ABM act on the same signal.</p></div><div class="pane"><h4>3. Frontal&#x27;s own pipeline: a mini Foundation for every new raise</h4><p>A weekly feed of B2B rounds from Series A to C, matched to the founder or head of growth, each sent a slice of its own TAM scored by a live signal, exactly like this page. It turns Frontal&#x27;s offer into the first email.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>Frontal</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at Frontal.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For Frontal</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
