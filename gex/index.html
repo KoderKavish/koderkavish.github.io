@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Growth Engine X</title>
+<meta name="description" content="5 named leads with copy and three things I'd build, prepared for Growth Engine X.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For Growth Engine X</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">5 funded B2B companies you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 5 named leads to send them to,
+      and three things I'd build at Growth Engine X. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your funded B2B companies would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>New restaurants from groups that already run one<i>For VP Sales or head of growth</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Your best client&#x27;s look-alikes, counted in a state registry<i>For CEO or head of sales</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Builders whose project volume jumped this year<i>For VP Sales or CRO</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>New restaurants from groups that already run one</h3>
+<p class="take">The local restaurant groups that opened another Texas location last month, with permit and opening dates.</p>
+<div class="mail"><div class="to">To: VP Sales or head of growth, MarginEdge</div>
+<div class="subj">21 Texas groups opening another location</div><p>Texas issued sales-tax permits to 425 new full-service restaurant locations in October. Leaving out national chains and sole owners, 21 belong to local groups that already run a restaurant elsewhere, like Bottlecap Alley in Euless and Sr. Cruda on South Padre Island.</p><p>A new location is when invoices stop fitting into one manager&#x27;s week.</p><p>I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the 21, with opening dates?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: New Texas restaurants from groups that already run one elsewhere, October 2026, first 3 of 21</span></div><table class="tbl"><tr><th>Restaurant</th><th>City</th><th>Permit issued</th><th>First sales</th><th>Group also runs</th></tr><tr><td>Bottlecap Alley</td><td>Euless</td><td>Oct 29</td><td>Jan 1, 2027</td><td>Icehouse Grill in Grapevine, Corsicana and 3 more</td></tr><tr><td>Sr. Cruda Ceviche and Micheladas</td><td>South Padre Island</td><td>Oct 2</td><td>Dec 1</td><td>McAllen, Edinburg, Weslaco, Pharr</td></tr><tr><td>Sushibox</td><td>Allen</td><td>Oct 9</td><td>Nov 1</td><td>Mimikisushi in The Colony; Sushibox in Lake Dallas</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run this: every month we pull new restaurant permits in each state that publishes them, keep the groups adding a location, find the owner or ops lead, and send from warmed backup domains so volume never stalls. Your reps get the positive replies, not a spreadsheet. Want October&#x27;s 21 as a free test campaign?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: Texas lists each outlet&#x27;s first sales date, so the list can be timed. Sr. Cruda opens on South Padre Island on December 1. An email two weeks before an opening lands while the owner is still choosing systems. Want the opening calendar for the next 60 days?</pre></div>
+<details class="srcs"><summary>Sources (7)</summary><ul class="ev"><li>[1] Texas&#x27;s Active Sales Tax Permit Holders file lists 426 permits issued from Oct 1 to Oct 31, 2026 to outlets coded NAICS 722511 (full-service restaurants), at 425 distinct outlet addresses. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=count%28%2A%29&amp;%24where=outlet_naics_code%3D%27722511%27+AND+outlet_permit_issue_date+between+%272026-10-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=count%28%2A%29&amp;</a></li><li>[2] Removing national chains and franchise systems, sole proprietors, re-permits of outlets selling before August 2026, and outlets whose operator holds no other restaurant permit at a different name or city leaves 21 new outlets run by 20 local groups that already operate a restaurant elsewhere. First sales dates run up to 60 days ahead of the pull. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=outlet_naics_code%3D%27722511%27+AND+outlet_permit_issue_date+between+%272026-10-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24limit=5000" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=outlet_naics_cod</a></li><li>[3] Bottlecap Alley, LLC was issued a permit for a Euless outlet on October 29, 2026, first sales listed January 1, 2027. The same taxpayer holds Bottlecap Alley Icehouse Grill permits in Corsicana, Crossroads, Grapevine, Greenville and Nacogdoches, plus River Camp Eats in White Oak. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27BOTTLECAP+ALLEY%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[4] Sr. Cruda Ceviche and Micheladas LLC was issued a permit for a South Padre Island outlet on October 2, 2026, first sales listed December 1, 2026. It also holds outlets in Edinburg, McAllen, Weslaco and Pharr. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27SR.+CRUDA%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[5] MarginEdge raised an $80 million Series D led by Schooner Capital and Ten Coves Capital, supports more than 13,000 restaurants, and serves operators from independent restaurants to PE-backed and public restaurant groups. <a href="https://www.citybiz.co/article/887064/marginedge-raises-80-million-series-d-to-expand-restaurant-ai-platform/" rel="noopener" target="_blank">citybiz.co/article/887064/marginedge-raises-80-million-series-d-</a></li><li>[6] MarginEdge sells a multi-unit offer: recipes managed across all locations, transfers between locations, and multi-unit onboarding packages. <a href="https://www.marginedge.com/for-multi-units" rel="noopener" target="_blank">marginedge.com/for-multi-units</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul></details>
+</article><article class="pm">
+<h3>Your best client&#x27;s look-alikes, counted in a state registry</h3>
+<p class="take">The multi-store paint dealers in Texas that look like your client Clement&#x27;s Paint, with store counts.</p>
+<div class="mail"><div class="to">To: CEO or head of sales, Rundoo</div>
+<div class="subj">17 Texas paint dealers like Clement&#x27;s</div><p>Sherwin-Williams holds 432 of the paint-store sales-tax permits in Texas. Among the independents, 17 companies besides Clement&#x27;s Paint, your client in Austin, hold permits for two or more stores, like Southwestern Paint around Houston and Helm Paint in North Texas.</p><p>They look like Clement&#x27;s: regional, multi-store, and up against a national chain.</p><p>I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the 17, with store counts?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Texas paint-store operators with 2 or more outlets, national chains removed, first 3 of 17</span></div><table class="tbl"><tr><th>Company</th><th>Paint-store permits</th><th>Cities</th></tr><tr><td>Southwestern Paint and Wallpaper</td><td>13</td><td>Houston, Katy, Spring, Beaumont, Galveston and more</td></tr><tr><td>Laredo Paint &amp; Decorating</td><td>5</td><td>Laredo, San Antonio</td></tr><tr><td>Whitestar Distributors</td><td>5</td><td>Dallas, Houston, Lewisville</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: the 17 multi-store owners get a personal sequence written around their own stores, and the single-store independents get a broader campaign, all sent from warmed backup domains under your reps&#x27; names. We&#x27;d add hardware, feed and lumber codes the same way. Want to start with Texas paint as a free test?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Another idea: Texas codes 1,603 outlets as hardware stores and 2,774 as other building-material dealers. The same filter, chains out and multi-store owners on top, gives your hardware and LBM reps their own list per state. Want the hardware cut?</pre></div>
+<details class="srcs"><summary>Sources (7)</summary><ul class="ev"><li>[1] Texas&#x27;s sales tax permit file lists 622 active outlets coded NAICS 444120 (paint stores); 432 of them belong to The Sherwin-Williams Company. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code%3D444120&amp;%24group=taxpayer_name&amp;%24order=n+desc&amp;%24limit=500" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2</a></li><li>[2] Leaving out Sherwin-Williams, Dunn-Edwards, sole proprietors and Clement&#x27;s Paint itself, 17 companies hold paint-store permits at two or more outlets, among them Southwestern Paint and Wallpaper (13, Houston area) and Helm Paint and Supply (4: Fort Worth, Flower Mound, Granbury, Tyler). <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code%3D444120&amp;%24group=taxpayer_name&amp;%24order=n+desc&amp;%24limit=500" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2</a></li><li>[3] Rundoo&#x27;s clients page lists Clements Paint of Austin, Texas. <a href="https://rundoo.ai/clients/" rel="noopener" target="_blank">rundoo.ai/clients/</a></li><li>[4] Clement&#x27;s Paint Inc. holds 10 paint-store permits in Texas, in Austin, Lakeway, Marble Falls and Temple. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27CLEMENT%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[5] Rundoo raised a $30 million Series B led by Battery Ventures and serves more than 500 independent stores; co-founder and CEO is Nick Hershey. <a href="https://www.citybiz.co/article/891541/rundoo-raises-30-million-series-b-to-expand-ai-platform-for-independent-supply-stores/" rel="noopener" target="_blank">citybiz.co/article/891541/rundoo-raises-30-million-series-b-to-e</a></li><li>[6] The same Texas file codes 1,603 outlets as hardware stores (444130) and 2,774 as other building-material dealers (444190). <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=outlet_naics_code%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code+in+%28444130%2C444190%29&amp;%24group=outlet_naics_code" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=outlet_naics_co</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul></details>
+</article><article class="pm">
+<h3>Builders whose project volume jumped this year</h3>
+<p class="take">The Austin builders whose permit count jumped 50% or more this year, with both years&#x27; numbers.</p>
+<div class="mail"><div class="to">To: VP Sales or CRO, Adaptive</div>
+<div class="subj">Austin builders scaling up fast</div><p>Fourteen Austin builders pulled at least 50% more building permits from January to October than a year earlier. Novo Construction went from 39 to 99.</p><p>That&#x27;s the stretch where job costing and WIP stop fitting in a spreadsheet, which is the moment your agents are built for.</p><p>I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the list, with permit counts?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Austin builders whose building permits grew 50% or more, Jan to Oct 2026 vs 2025, first 3 of 14</span></div><table class="tbl"><tr><th>Builder</th><th>Permits Jan-Oct 2025</th><th>Permits Jan-Oct 2026</th></tr><tr><td>Harvey-Cleary Builders</td><td>50</td><td>144</td></tr><tr><td>Milestone Community Builders</td><td>57</td><td>131</td></tr><tr><td>Novo Construction</td><td>39</td><td>99</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run it: a monthly pull of building permits from every city that publishes contractor names, ranked by year-over-year growth, matched to the CFO or controller, and sent from warmed backup domains. Each email opens with the builder&#x27;s own permit count. Want a free test on the 14?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: specialty trades grow first. Austin&#x27;s electrical permits show 16 contractors up 50% or more this year, and Adaptive serves trades as well as GCs. Want that list as a second segment?</pre></div>
+<details class="srcs"><summary>Sources (7)</summary><ul class="ev"><li>[1] Austin&#x27;s Issued Construction Permits data, general-contractor building permits issued January 1 to October 31: Novo Construction 39 in 2025 and 99 in 2026; Hoch Construction 14 and 49; Harvey-Cleary Builders 50 and 144; Milestone Community Builders 57 and 131; Zapalac/Reed Construction 10 and 33 on its main account. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[2] The same query for January 1 to October 31, 2025 gives the prior-year counts (Novo 39, Hoch 14, Harvey-Cleary 50, Milestone 57, Zapalac/Reed 10). <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272025-01-01T00%3A00%3A00%27+and+%272025-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[3] 23 general contractors with at least 10 permits in 2025 pulled at least 50% more in 2026 over the same months. Removing national firms likely above $1 billion in revenue and foundation, window and bath remodelers leaves 14 builders. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[4] Adaptive&#x27;s homepage says its agents keep job costing, AP, billing and WIP current as project volume grows, for builders from $5M to $1B. <a href="https://www.adaptive.build/" rel="noopener" target="_blank">adaptive.build/</a></li><li>[5] Adaptive raised a $30 million Series B led by Tidemark on September 17, 2026; Matt Calvano is co-founder and CEO. <a href="https://www.constructiondive.com/press-release/20260917-adaptive-raises-30-million-series-b-led-by-tidemark-to-bring-agentic-accou/" rel="noopener" target="_blank">constructiondive.com/press-release/20260917-adaptive-raises-30-m</a></li><li>[6] Austin electrical permits, January to October: 16 electrical contractors with at least 20 permits in 2025 pulled at least 50% more in 2026. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27EP%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 5 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The 5 leads</s></p>
+    <h2>5 leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Connor Watumull<i>Miter: $40M Series B led by Battery Ventures</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Matt Calvano<i>Adaptive: $30M Series B led by Tidemark</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Bo Davis<i>MarginEdge: $80M Series D for AI and sales</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>AJ Jain<i>Broccoli AI: $30M Series B led by Khosla Ventures</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Nick Hershey<i>Rundoo: $30M Series B led by Battery Ventures</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Connor Watumull</h4>
+<p class="meta">Co-founder and CEO, Miter</p>
+<p class="sig"><strong>Why now:</strong> Miter raised a $40 million Series B on September 30, 2026 and plans to add go-to-market teams across the US. In Austin, 16 electrical contractors pulled at least 50% more permits this year than last.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: 16 Austin electricians growing fast</span><button type="button" data-copy>Copy</button></header><pre>Sixteen Austin electrical contractors pulled at least 50% more permits from January to October than a year earlier. In Charge Electrical Services went from 420 to 716.
+
+Crews growing that fast hire faster than payroll and certified payroll can keep up.
+
+I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the list, with permit counts?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run it: monthly permit pulls from cities that publish contractor names, ranked by growth, matched to the owner or controller, and sent from warmed backup domains under your reps&#x27; names. Each email opens with the contractor&#x27;s own permit count. Want a free test on these 16?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Another idea: your release ties construction hiring to AI data center work. The same permit data can single out contractors on large commercial jobs, where certified payroll is the real pain. Want that cut?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Connor, 16 Austin electrical contractors pulled at least 50% more permits this year than last; In Charge Electrical went from 420 to 716. Crews growing that fast feel payroll first. Happy to send the list.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Austin electrical permits, January 1 to October 31: 16 electrical contractors with at least 20 permits in 2025 pulled at least 50% more in 2026. In Charge Electrical Services went from 420 to 716; MSF Electric from 24 to 91; Prism Electric from 25 to 53. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27EP%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[2] The 2025 query gives In Charge 420, MSF 24, Prism 25. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27EP%27+AND+issue_date+between+%272025-01-01T00%3A00%3A00%27+and+%272025-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[3] Miter announced a $40 million Series B led by Battery Ventures on September 30, 2026, will add go-to-market teams across the US, and serves more than 2,000 contractors; Connor Watumull co-founded Miter and serves as CEO. <a href="https://www.constructiondive.com/press-release/20260930-miter-the-ai-platform-for-construction-raises-40-million-for-the-built-w/" rel="noopener" target="_blank">constructiondive.com/press-release/20260930-miter-the-ai-platfor</a></li><li>[4] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul>
+</article><article class="lead">
+<h4>Matt Calvano</h4>
+<p class="meta">Co-founder and CEO, Adaptive</p>
+<p class="sig"><strong>Why now:</strong> Adaptive raised a $30 million Series B on September 17, 2026 to expand its Boston and New York teams. Its pitch is keeping the books current as project volume grows, and 14 Austin builders just grew their permit counts 50% or more.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Austin builders scaling up fast</span><button type="button" data-copy>Copy</button></header><pre>Fourteen Austin builders pulled at least 50% more building permits from January to October than a year earlier. Novo Construction went from 39 to 99.
+
+That&#x27;s the stretch where job costing and WIP stop fitting in a spreadsheet, which is the moment your agents are built for.
+
+I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the list, with permit counts?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run it: a monthly pull of building permits from every city that publishes contractor names, ranked by year-over-year growth, matched to the CFO or controller, and sent from warmed backup domains. Each email opens with the builder&#x27;s own permit count. Want a free test on the 14?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: specialty trades grow first. Austin&#x27;s electrical permits show 16 contractors up 50% or more this year, and Adaptive serves trades as well as GCs. Want that list as a second segment?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Matt, 14 Austin builders pulled at least 50% more building permits this year than last; Novo Construction went from 39 to 99. That&#x27;s the volume growth Adaptive&#x27;s homepage talks about. Happy to send the list.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Austin&#x27;s Issued Construction Permits data, general-contractor building permits issued January 1 to October 31: Novo Construction 39 in 2025 and 99 in 2026; Hoch Construction 14 and 49; Harvey-Cleary Builders 50 and 144; Milestone Community Builders 57 and 131; Zapalac/Reed Construction 10 and 33 on its main account. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[2] The same query for January 1 to October 31, 2025 gives the prior-year counts (Novo 39, Hoch 14, Harvey-Cleary 50, Milestone 57, Zapalac/Reed 10). <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272025-01-01T00%3A00%3A00%27+and+%272025-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[3] 23 general contractors with at least 10 permits in 2025 pulled at least 50% more in 2026 over the same months. Removing national firms likely above $1 billion in revenue and foundation, window and bath remodelers leaves 14 builders. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27BP%27+AND+contractor_trade%3D%27General+Contractor%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[4] Adaptive&#x27;s homepage says its agents keep job costing, AP, billing and WIP current as project volume grows, for builders from $5M to $1B. <a href="https://www.adaptive.build/" rel="noopener" target="_blank">adaptive.build/</a></li><li>[5] Adaptive raised a $30 million Series B led by Tidemark on September 17, 2026; Matt Calvano is co-founder and CEO. <a href="https://www.constructiondive.com/press-release/20260917-adaptive-raises-30-million-series-b-led-by-tidemark-to-bring-agentic-accou/" rel="noopener" target="_blank">constructiondive.com/press-release/20260917-adaptive-raises-30-m</a></li><li>[6] Austin electrical permits, January to October: 16 electrical contractors with at least 20 permits in 2025 pulled at least 50% more in 2026. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype%3D%27EP%27+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul>
+</article><article class="lead">
+<h4>Bo Davis</h4>
+<p class="meta">Founder and CEO, MarginEdge</p>
+<p class="sig"><strong>Why now:</strong> MarginEdge raised an $80 million Series D in August 2026 and says part of it goes to sales and marketing. Its multi-unit offer fits the 21 Texas groups that opened another restaurant in October.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: 21 Texas groups opening another location</span><button type="button" data-copy>Copy</button></header><pre>Texas issued sales-tax permits to 425 new full-service restaurant locations in October. Leaving out national chains and sole owners, 21 belong to local groups that already run a restaurant elsewhere, like Bottlecap Alley in Euless and Sr. Cruda on South Padre Island.
+
+A new location is when invoices stop fitting into one manager&#x27;s week.
+
+I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the 21, with opening dates?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run this: every month we pull new restaurant permits in each state that publishes them, keep the groups adding a location, find the owner or ops lead, and send from warmed backup domains so volume never stalls. Your reps get the positive replies, not a spreadsheet. Want October&#x27;s 21 as a free test campaign?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>One more idea: Texas lists each outlet&#x27;s first sales date, so the list can be timed. Sr. Cruda opens on South Padre Island on December 1. An email two weeks before an opening lands while the owner is still choosing systems. Want the opening calendar for the next 60 days?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Bo, Texas issued permits to 425 new full-service restaurants in October. 21 went to local groups opening another location, like Bottlecap Alley in Euless. I have the list with opening dates if it&#x27;s useful for your team.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Texas&#x27;s Active Sales Tax Permit Holders file lists 426 permits issued from Oct 1 to Oct 31, 2026 to outlets coded NAICS 722511 (full-service restaurants), at 425 distinct outlet addresses. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=count%28%2A%29&amp;%24where=outlet_naics_code%3D%27722511%27+AND+outlet_permit_issue_date+between+%272026-10-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=count%28%2A%29&amp;</a></li><li>[2] Removing national chains and franchise systems, sole proprietors, re-permits of outlets selling before August 2026, and outlets whose operator holds no other restaurant permit at a different name or city leaves 21 new outlets run by 20 local groups that already operate a restaurant elsewhere. First sales dates run up to 60 days ahead of the pull. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=outlet_naics_code%3D%27722511%27+AND+outlet_permit_issue_date+between+%272026-10-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24limit=5000" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=outlet_naics_cod</a></li><li>[3] Bottlecap Alley, LLC was issued a permit for a Euless outlet on October 29, 2026, first sales listed January 1, 2027. The same taxpayer holds Bottlecap Alley Icehouse Grill permits in Corsicana, Crossroads, Grapevine, Greenville and Nacogdoches, plus River Camp Eats in White Oak. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27BOTTLECAP+ALLEY%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[4] Sr. Cruda Ceviche and Micheladas LLC was issued a permit for a South Padre Island outlet on October 2, 2026, first sales listed December 1, 2026. It also holds outlets in Edinburg, McAllen, Weslaco and Pharr. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27SR.+CRUDA%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[5] MarginEdge raised an $80 million Series D led by Schooner Capital and Ten Coves Capital, supports more than 13,000 restaurants, and serves operators from independent restaurants to PE-backed and public restaurant groups. <a href="https://www.citybiz.co/article/887064/marginedge-raises-80-million-series-d-to-expand-restaurant-ai-platform/" rel="noopener" target="_blank">citybiz.co/article/887064/marginedge-raises-80-million-series-d-</a></li><li>[6] MarginEdge sells a multi-unit offer: recipes managed across all locations, transfers between locations, and multi-unit onboarding packages. <a href="https://www.marginedge.com/for-multi-units" rel="noopener" target="_blank">marginedge.com/for-multi-units</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li><li>[8] MarginEdge&#x27;s Series D will fund AI products, R&amp;D and investment in sales and marketing; founder and CEO is Bo Davis. <a href="https://www.citybiz.co/article/887064/marginedge-raises-80-million-series-d-to-expand-restaurant-ai-platform/" rel="noopener" target="_blank">citybiz.co/article/887064/marginedge-raises-80-million-series-d-</a></li><li>[9] MarginEdge&#x27;s press page dates its Series D coverage to August 6 to 11, 2026. <a href="https://www.marginedge.com/press" rel="noopener" target="_blank">marginedge.com/press</a></li></ul>
+</article><article class="lead">
+<h4>AJ Jain</h4>
+<p class="meta">Co-founder and CEO, Broccoli AI</p>
+<p class="sig"><strong>Why now:</strong> Broccoli announced a $30 million Series B on October 28, 2026, nine months after a $22 million Series A. In Austin, JRV Home Services more than doubled its plumbing and mechanical permits this year, from 79 to 179.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Austin service shops adding jobs fast</span><button type="button" data-copy>Copy</button></header><pre>JRV Home Services pulled 179 plumbing and mechanical permits in Austin from January to October, up from 79 a year earlier. Loredos Plumbing and Alamo Austin Air Conditioning grew too.
+
+Each permit is a call someone answered and booked. Growth like that is when missed calls start costing jobs.
+
+I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the list of Austin shops growing fastest?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Growth Engine X would run it: pull permit counts from every city that publishes contractor names, rank service shops by growth, find the owner or GM, and send from warmed backup domains. Each email opens with the shop&#x27;s own permit count, so it reads like research, not a blast. Want a free test campaign on Austin?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Last note from me: if Austin isn&#x27;t a market you push into, the same permit pull works in Dallas, Phoenix and the other cities that publish contractor names. Tell me the metro and I&#x27;ll send that list instead.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>AJ, JRV Home Services more than doubled its Austin plumbing and mechanical permits this year, 79 to 179. A few other service shops there grew fast too. I pulled the list if it&#x27;s useful for your team.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Austin plumbing and mechanical permits, January 1 to October 31: JRV Home Services Austin 79 in 2025 and 179 in 2026; Loredos Plumbing 101 and 138; Alamo Austin Air Conditioning &amp; Heating 119 and 156. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype+in+%28%27MP%27%2C%27PP%27%29+AND+issue_date+between+%272026-01-01T00%3A00%3A00%27+and+%272026-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[2] The same query for 2025 gives JRV 79, Loredos 101 and Alamo Austin 119. <a href="https://data.austintexas.gov/resource/3syk-w9eu.json?%24select=contractor_company_name%2Ccount%28%2A%29+as+n&amp;%24where=permittype+in+%28%27MP%27%2C%27PP%27%29+AND+issue_date+between+%272025-01-01T00%3A00%3A00%27+and+%272025-10-31T23%3A59%3A59%27&amp;%24group=contractor_company_name&amp;%24limit=20000" rel="noopener" target="_blank">data.austintexas.gov/resource/3syk-w9eu.json?%24select=contracto</a></li><li>[3] Broccoli raised $52 million across a $22 million Series A and a $30 million Series B, both led by Khosla Ventures; Jain is co-founder and CEO. <a href="https://fortune.com/2026/10/28/broccoli-ai-funding-khosla-ventures-marcelle-flowers-plumbing-gen-z-founders/" rel="noopener" target="_blank">fortune.com/2026/10/28/broccoli-ai-funding-khosla-ventures-marce</a></li><li>[4] Broccoli&#x27;s letter announcing the Series B is dated October 28, 2026 and describes building for plumbers, electricians and HVAC shops. <a href="https://www.broccoli.com/blog/thank-you-to-our-customers" rel="noopener" target="_blank">broccoli.com/blog/thank-you-to-our-customers</a></li><li>[5] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li></ul>
+</article><article class="lead">
+<h4>Nick Hershey</h4>
+<p class="meta">Co-founder and CEO, Rundoo</p>
+<p class="sig"><strong>Why now:</strong> Rundoo raised a $30 million Series B in August 2026 and serves more than 500 independent stores. Its only Texas paint client on its clients page is Clement&#x27;s Paint, and 17 look-alike paint dealers in Texas aren&#x27;t on it.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: 17 Texas paint dealers like Clement&#x27;s</span><button type="button" data-copy>Copy</button></header><pre>Sherwin-Williams holds 432 of the paint-store sales-tax permits in Texas. Among the independents, 17 companies besides Clement&#x27;s Paint, your client in Austin, hold permits for two or more stores, like Southwestern Paint around Houston and Helm Paint in North Texas.
+
+They look like Clement&#x27;s: regional, multi-store, and up against a national chain.
+
+I&#x27;m with Growth Engine X; we run outbound for teams like Numeral and Donut. Want the 17, with store counts?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: the 17 multi-store owners get a personal sequence written around their own stores, and the single-store independents get a broader campaign, all sent from warmed backup domains under your reps&#x27; names. We&#x27;d add hardware, feed and lumber codes the same way. Want to start with Texas paint as a free test?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Another idea: Texas codes 1,603 outlets as hardware stores and 2,774 as other building-material dealers. The same filter, chains out and multi-store owners on top, gives your hardware and LBM reps their own list per state. Want the hardware cut?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Nick, Sherwin-Williams holds 432 of Texas&#x27;s paint-store permits. 17 independents besides Clement&#x27;s Paint hold permits for two or more stores, like Southwestern Paint around Houston. Happy to send the list with store counts.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Texas&#x27;s sales tax permit file lists 622 active outlets coded NAICS 444120 (paint stores); 432 of them belong to The Sherwin-Williams Company. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code%3D444120&amp;%24group=taxpayer_name&amp;%24order=n+desc&amp;%24limit=500" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2</a></li><li>[2] Leaving out Sherwin-Williams, Dunn-Edwards, sole proprietors and Clement&#x27;s Paint itself, 17 companies hold paint-store permits at two or more outlets, among them Southwestern Paint and Wallpaper (13, Houston area) and Helm Paint and Supply (4: Fort Worth, Flower Mound, Granbury, Tyler). <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code%3D444120&amp;%24group=taxpayer_name&amp;%24order=n+desc&amp;%24limit=500" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=taxpayer_name%2</a></li><li>[3] Rundoo&#x27;s clients page lists Clements Paint of Austin, Texas. <a href="https://rundoo.ai/clients/" rel="noopener" target="_blank">rundoo.ai/clients/</a></li><li>[4] Clement&#x27;s Paint Inc. holds 10 paint-store permits in Texas, in Austin, Lakeway, Marble Falls and Temple. <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+like+%27CLEMENT%25%27" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24where=taxpayer_name+li</a></li><li>[5] Rundoo raised a $30 million Series B led by Battery Ventures and serves more than 500 independent stores; co-founder and CEO is Nick Hershey. <a href="https://www.citybiz.co/article/891541/rundoo-raises-30-million-series-b-to-expand-ai-platform-for-independent-supply-stores/" rel="noopener" target="_blank">citybiz.co/article/891541/rundoo-raises-30-million-series-b-to-e</a></li><li>[6] The same Texas file codes 1,603 outlets as hardware stores (444130) and 2,774 as other building-material dealers (444190). <a href="https://data.texas.gov/resource/jrea-zgmq.json?%24select=outlet_naics_code%2Ccount%28%2A%29+as+n&amp;%24where=outlet_naics_code+in+%28444130%2C444190%29&amp;%24group=outlet_naics_code" rel="noopener" target="_blank">data.texas.gov/resource/jrea-zgmq.json?%24select=outlet_naics_co</a></li><li>[7] Growth Engine X&#x27;s site lists Numeral (partnered 3+ years) and Donut (partnered 1+ years) among its clients. <a href="https://www.growthenginex.com/" rel="noopener" target="_blank">growthenginex.com/</a></li><li>[8] Rundoo&#x27;s press page dates the Series B to August 20, 2026. <a href="https://rundoo.ai/press/" rel="noopener" target="_blank">rundoo.ai/press/</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as Growth Engine X's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At Growth Engine X">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at Growth Engine X.</h2>
+    <div class="three"><div class="pane"><h4>1. A public-registry list library next to Maps and New in Role</h4><p>Feeds from state sales-tax permits, city building permits and licensing boards, refreshed monthly into Clay: new locations, multi-store owners and fast growers by category. It becomes a third free list on coldoutbound.com and a niche-campaign source for every client selling to local businesses.</p></div><div class="pane"><h4>2. Free test campaigns that open with the prospect&#x27;s own pipeline</h4><p>When a company applies for the free test, a Claude Code job pulls 20 of its real prospects from public data and drafts three emails like the ones on this page. The first call starts with their market, which should lift test-to-retainer conversion.</p></div><div class="pane"><h4>3. GEX&#x27;s own outbound, scored against its fit rules</h4><p>A daily feed of Series B to C rounds and post-IPO companies, filtered by GEX&#x27;s rules (100K+ contacts, $5K+ lifetime gross profit, sales team in place), each with its PVP list attached. Eric&#x27;s pipeline gets the same treatment GEX gives its clients.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>Growth Engine X</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at Growth Engine X.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For Growth Engine X</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
