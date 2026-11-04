@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Union</title>
+<meta name="description" content="5 named leads with copy and three things I'd build, prepared for Union.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For Union</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">5 apartment operators you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 5 named leads to send them to,
+      and three things I'd build at Union. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your apartment operators would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>Three front doors on a lease-up page<i>For President or VP running lease-ups</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Rent-reporting offers at a California takeover<i>For President of property management</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Pre-leasing communities with a finished twin nearby<i>For VP of pre-leasing and startup operations</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>Three front doors on a lease-up page</h3>
+<p class="take">Every way a renter can reach your new community, which tool catches it, and when nobody answers.</p>
+<div class="mail"><div class="to">To: President or VP running lease-ups, Lewis Apartments (Independence in West Sacramento)</div>
+<div class="subj">Independence&#x27;s three front doors</div><p>Independence in West Sacramento opened last month, and its page gives renters three ways in: EliseAI chat, a Knock &quot;Request Information&quot; form, and a phone line staffed 9 to 6 that books the tours.</p><p>In a lease-up, a renter who chats at night and calls the next morning can become two leads unless those tools share a record.</p><p>I&#x27;m with Union; we run AI leasing and CRM on one renter record for operators like Mark-Taylor and CAPREIT. I mapped where each door lands for both Independence sites. Want the map?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Every way a renter reaches Independence in West Sacramento, first 3 of 5</span></div><table class="tbl"><tr><th>Way in</th><th>Tool on the page</th><th>When it answers</th><th>Where the lead lands</th></tr><tr><td>Web chat</td><td>EliseAI</td><td>Any hour</td><td>EliseAI</td></tr><tr><td>Request Information button</td><td>Knock Doorway form</td><td>Form, any hour</td><td>Knock CRM</td></tr><tr><td>Phone</td><td>Leasing office</td><td>9 am to 6 pm daily</td><td>Leasing team</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: one AI answers chat and phone at any hour and books the tour itself, writing to the same renter record your team works from. At Mark-Taylor, moving calls from voicemail to Union Voice AI took lead-to-tour from 7.3% to 18.1%. Want to see it on Independence?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: Folsom, Vacaville, Fairfield and Newark are next for Independence. Setting the front door once, before those open, saves wiring chat, forms and phones again at each one. Want a one-page launch spec you could reuse?</pre></div>
+<details class="srcs"><summary>Sources (6)</summary><ul class="ev"><li>[1] Independence in West Sacramento, 208 townhome-style rental homes by Lewis Apartments, opened its leasing office and models on Saturday, Oct 24, open daily 9 a.m. to 6 p.m. It is Lewis&#x27;s second Independence in Northern California after Dixon; Folsom, Vacaville, Fairfield and Newark are planned. The release names state-government professionals, healthcare workers and dual-income households as its renters. <a href="https://www.bastillepost.com/global/article/6285327-lewis-apartments-opens-independence-rental-home-community-near-downtown-sacramento" rel="noopener" target="_blank">bastillepost.com/global/article/6285327-lewis-apartments-opens-i</a></li><li>[2] The Independence in West Sacramento page loads EliseAI&#x27;s chat (organization lewisgroupofcompanies) and Knock&#x27;s Doorway script; its Request Information button opens the Knock contact form. Office hours read 9 am - 6 pm Daily, and renters are told to call to schedule a tour. <a href="https://www.lewisapartments.com/independence-in-west-sacramento-sacramento-ca" rel="noopener" target="_blank">lewisapartments.com/independence-in-west-sacramento-sacramento-c</a></li><li>[3] The Independence in Dixon page loads the same EliseAI chat and Knock Doorway scripts. <a href="https://www.lewisapartments.com/independence-in-dixon-dixon-ca" rel="noopener" target="_blank">lewisapartments.com/independence-in-dixon-dixon-ca</a></li><li>[4] Union&#x27;s compare page names EliseAI as an AI leasing overlay and Knock CRM (RealPage) as a PMS-owned leasing CRM, and says overlay AI reads a synced copy of the record. <a href="https://www.gounion.com/compare" rel="noopener" target="_blank">gounion.com/compare</a></li><li>[5] At Mark-Taylor, measured on the same 5,225 engaged leads, voicemail converted 7.3% to a scheduled tour and Union Voice AI converts 18.1%. <a href="https://www.gounion.com/customers/mark-taylor" rel="noopener" target="_blank">gounion.com/customers/mark-taylor</a></li><li>[6] Union&#x27;s compare page lists Mark-Taylor, Avanti, CAPREIT and Pacific Companies as operators running on Union. <a href="https://www.gounion.com/compare" rel="noopener" target="_blank">gounion.com/compare</a></li></ul></details>
+</article><article class="pm">
+<h3>Rent-reporting offers at a California takeover</h3>
+<p class="take">The rent-reporting offer California requires for every tenant at a property you just took over, drafted and dated.</p>
+<div class="mail"><div class="to">To: President of property management, Bidwell Park (Sares-Regis managed, Roxborough owned)</div>
+<div class="subj">Bidwell Park&#x27;s rent-reporting offers</div><p>Bidwell Park, the 246 Fremont homes Roxborough just bought, is coming onto your roster. California requires offering every tenant there rent reporting at signing and at least yearly, on a written election form, with any fee capped at the lesser of your cost or $10 a month.</p><p>In a takeover, the prior manager&#x27;s offer dates don&#x27;t always come across.</p><p>I&#x27;m with Union; we run leasing and resident programs on one record for operators like Mark-Taylor. I drafted Bidwell&#x27;s election form and a year of offer dates. Want both?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: What Bidwell Park&#x27;s rent-reporting election must include (Civil Code 1954.07(d)), first 3 of 8</span></div><table class="tbl"><tr><th>Part</th><th>What it must say</th></tr><tr><td>Optional</td><td>Reporting is optional</td></tr><tr><td>Bureaus</td><td>Each consumer reporting agency it goes to</td></tr><tr><td>Fee</td><td>Any fee, never above the lesser of cost or $10 a month</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: the rent-reporting offer goes out inside the lease and renewal flow, the election is signed on the same renter record, and the yearly reminder sends itself. Credit Builder reports on-time rent to the bureaus with no on-site work. Want to see it on Bidwell?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: the same rule covers every California building you manage above 15 units, and smaller ones for corporate or REIT owners. A one-time check of which properties have a current yearly offer on file closes the gap before a tenant asks. Want the checklist?</pre></div>
+<details class="srcs"><summary>Sources (5)</summary><ul class="ev"><li>[1] On Oct 29, 2026, The Roxborough Group acquired Bidwell Park, a 246-unit, 95% occupied community at 39800 Fremont Blvd in Fremont, for $109.4 million. Sares-Regis Group will provide property management. <a href="https://www.connectcre.com/stories/roxborough-makes-second-norcal-apartment-buy-through-latest-fund/" rel="noopener" target="_blank">connectcre.com/stories/roxborough-makes-second-norcal-apartment-</a></li><li>[2] California Civil Code 1954.07 requires a landlord to offer each tenant positive rent reporting at the time of the lease and at least once a year, with a written election listing eight items; any fee may not exceed the lesser of actual cost or $10 a month. Buildings of 15 or fewer units are exempt unless the landlord owns more than one building and is a REIT, corporation, or LLC with a corporate member. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=1954.07" rel="noopener" target="_blank">leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawC</a></li><li>[3] SRG Residential, a subsidiary of Sares Regis Group, merged with Milhaus in July 2026; Jeff Bailey, president of property management at SRG Residential, continues to lead the combined operations group, with 50,000 units under third-party management. <a href="https://www.multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-acquire-broadshore-capital/" rel="noopener" target="_blank">multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-</a></li><li>[4] Union Credit Builder reports residents&#x27; on-time rent to the credit bureaus, billed and managed in-platform with no on-site work. <a href="https://www.gounion.com/ancillary-revenue" rel="noopener" target="_blank">gounion.com/ancillary-revenue</a></li><li>[5] Union&#x27;s compare page lists Mark-Taylor, Avanti, CAPREIT and Pacific Companies as operators running on Union. <a href="https://www.gounion.com/compare" rel="noopener" target="_blank">gounion.com/compare</a></li></ul></details>
+</article><article class="pm">
+<h3>Pre-leasing communities with a finished twin nearby</h3>
+<p class="take">For each pre-leasing community, the open sister nearby where renters can tour the same home today.</p>
+<div class="mail"><div class="to">To: VP of pre-leasing and startup operations, Pointe Grand (Hillpointe)</div>
+<div class="subj">Tour Four Corners at Champions Village</div><p>Crossing at Four Corners is pre-leasing at $1,695, with hard-hat tours. Champions Village in Davenport, in the same Orlando group on your site, is open now with the same two-bed at $1,530.</p><p>A renter who wants to walk a finished home before signing can do that today and stay with Pointe Grand either way.</p><p>I&#x27;m with Union; we run AI leasing and CRM for operators like Mark-Taylor and CAPREIT. I paired all 8 of your pre-leasing communities that have an open sister in the same metro. Want the pairs?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Pointe Grand pre-leasing communities and the open sister to tour, first 3 of 8</span></div><table class="tbl"><tr><th>Pre-leasing</th><th>Its posted rent</th><th>Open in the same metro group</th><th>Metro</th></tr><tr><td>Crossing at Four Corners, FL</td><td>$1,695</td><td>Champions Village, Davenport</td><td>Orlando</td></tr><tr><td>Hills at Minneola, FL</td><td>$1,650</td><td>DeLand, Davenport, Champions Village</td><td>Orlando</td></tr><tr><td>Inlet at Fleming Island, FL</td><td>$1,525</td><td>At Oakleaf, Jacksonville West, On Main</td><td>Jacksonville</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: when a pre-lease prospect calls or chats, Union&#x27;s AI books a hard-hat tour or a model tour at the open sister, on one renter record across both communities. At Mark-Taylor, Voice AI took lead-to-tour from 7.3% to 18.1%. Want to see it on Four Corners?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: on your community index, pre-leasing cards show no price and a Get in Touch button, while the Four Corners page itself shows $1,695. Putting the posted rent, or a sister&#x27;s tour button, on the card gives a browsing renter a reason to raise a hand. Want the list of cards that differ?</pre></div>
+<details class="srcs"><summary>Sources (7)</summary><ul class="ev"><li>[1] Pointe Grand&#x27;s community index on Nov 4, 2026 shows 43 communities open and 12 pre-leasing. Pre-leasing cards show no price and a Get in Touch button; open cards show a price and Schedule Tour. 8 of the 12 pre-leasing communities share a metro group with an open one: Four Corners and Minneola (Orlando), Fleming Island (Jacksonville), Vero Beach (Treasure Coast: Fort Pierce), Abercorn and Gardenview (Savannah, GA), Okatie and Hardeeville (Savannah, SC: Port Wentworth and Statesboro). <a href="https://pointegrand.com/apartment-rentals/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/</a></li><li>[2] Crossing at Four Corners&#x27; own page shows rent of $1,695 a month, status Pre-leasing now, opening soon, hard-hat tours, and every home a two-bedroom, two-bath of 1,170 square feet. <a href="https://pointegrand.com/apartment-rentals/fl/orlando/four-corners/pg-crossing-at-four-corners/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/fl/orlando/four-corners/pg-cro</a></li><li>[3] Champions Village in Davenport, FL, in the same Orlando group, shows status Now leasing and rent of $1,530 a month on its own page. <a href="https://pointegrand.com/apartment-rentals/fl/orlando/davenport/pg-champions-village/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/fl/orlando/davenport/pg-champi</a></li><li>[4] Pre-leasing pages on Nov 4 show rents of $1,650 (Hills at Minneola), $1,525 (Inlet at Fleming Island), $1,575 (Abercorn at Savannah), $1,550 (Gardenview at Savannah, Southpoint at Hardeeville); Seabreeze at Vero Beach and Riverbend at Okatie show none. <a href="https://pointegrand.com/apartment-rentals/fl/orlando/minneola/pg-hills-at-minneola/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/fl/orlando/minneola/pg-hills-a</a></li><li>[5] Pointe Grand says every community centers on the same two-bed, two-bath layout. <a href="https://pointegrand.com/apartment-rentals/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/</a></li><li>[6] At Mark-Taylor, measured on the same 5,225 engaged leads, voicemail converted 7.3% to a scheduled tour and Union Voice AI converts 18.1%. <a href="https://www.gounion.com/customers/mark-taylor" rel="noopener" target="_blank">gounion.com/customers/mark-taylor</a></li><li>[7] Union&#x27;s compare page lists Mark-Taylor, Avanti, CAPREIT and Pacific Companies as operators running on Union. <a href="https://www.gounion.com/compare" rel="noopener" target="_blank">gounion.com/compare</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 5 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The 5 leads</s></p>
+    <h2>5 leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Richard Lewis<i>Lewis Apartments (Lewis Group of Companies): Opened Independence in West Sacramento</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Jessica Gooden<i>Hillpointe (Pointe Grand): 12 Pointe Grand communities pre-leasing at once</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Jeff Bailey<i>Milhaus (SRG Residential): Named manager of Bidwell Park, Fremont</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Christopher Reid<i>CRG Residential: Opened The Slate, 242 units, near Cincinnati</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Lauren Evett<i>Daniel Management Group: Promoted to VP, transition-to-stabilization lead</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Richard Lewis</h4>
+<p class="meta">President, California Operations, Lewis Apartments (Lewis Group of Companies)</p>
+<p class="sig"><strong>Why now:</strong> Independence in West Sacramento opened Oct 24 with 208 rental townhomes, and four more Independence sites are planned in Northern California. Its page runs EliseAI chat and a Knock contact form side by side.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Independence&#x27;s three front doors</span><button type="button" data-copy>Copy</button></header><pre>Independence in West Sacramento opened Oct 24, and its page gives renters three ways in: EliseAI chat, a Knock &quot;Request Information&quot; form, and a phone line staffed 9 to 6 that books the tours.
+
+In a lease-up, a renter who chats at night and calls the next morning can become two leads unless those tools share a record.
+
+I&#x27;m with Union; we run AI leasing and CRM on one renter record for operators like Mark-Taylor. I mapped where each door lands, for Dixon too. Want the map?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: one AI answers chat and phone at any hour and books the tour itself, writing to the same renter record your team works from. At Mark-Taylor, moving calls from voicemail to Union Voice AI took lead-to-tour from 7.3% to 18.1%. Want to see it on Independence?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: Folsom, Vacaville, Fairfield and Newark are next for Independence. Setting the front door once, before those open, saves wiring chat, forms and phones again at each one. If that&#x27;s already handled, I&#x27;ll leave it here. Want a reusable launch spec?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Richard, Independence in West Sacramento&#x27;s page runs EliseAI chat and a Knock contact form side by side, and tours are booked by phone 9 to 6. I mapped where each renter door lands for both Independence sites. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Independence in West Sacramento, 208 townhome-style rental homes by Lewis Apartments, opened its leasing office and models on Saturday, Oct 24, open daily 9 a.m. to 6 p.m. It is Lewis&#x27;s second Independence in Northern California after Dixon; Folsom, Vacaville, Fairfield and Newark are planned. The release names state-government professionals, healthcare workers and dual-income households as its renters. <a href="https://www.bastillepost.com/global/article/6285327-lewis-apartments-opens-independence-rental-home-community-near-downtown-sacramento" rel="noopener" target="_blank">bastillepost.com/global/article/6285327-lewis-apartments-opens-i</a></li><li>[2] The Independence in West Sacramento page loads EliseAI&#x27;s chat (organization lewisgroupofcompanies) and Knock&#x27;s Doorway script; its Request Information button opens the Knock contact form. Office hours read 9 am - 6 pm Daily, and renters are told to call to schedule a tour. <a href="https://www.lewisapartments.com/independence-in-west-sacramento-sacramento-ca" rel="noopener" target="_blank">lewisapartments.com/independence-in-west-sacramento-sacramento-c</a></li><li>[3] Richard Lewis is President, California Operations, at Lewis Group of Companies. <a href="https://lewisgroupofcompanies.com/leadership/" rel="noopener" target="_blank">lewisgroupofcompanies.com/leadership/</a></li><li>[5] Lewis Group of Companies&#x27; legacy includes more than 58,000 homes and 13,000 apartments across California and Nevada (from the Oct 23 release). <a href="https://www.bastillepost.com/global/article/6285327-lewis-apartments-opens-independence-rental-home-community-near-downtown-sacramento" rel="noopener" target="_blank">bastillepost.com/global/article/6285327-lewis-apartments-opens-i</a></li><li>[4] At Mark-Taylor, measured on the same 5,225 engaged leads, voicemail converted 7.3% to a scheduled tour and Union Voice AI converts 18.1%. <a href="https://www.gounion.com/customers/mark-taylor" rel="noopener" target="_blank">gounion.com/customers/mark-taylor</a></li></ul>
+</article><article class="lead">
+<h4>Jessica Gooden</h4>
+<p class="meta">Vice President of Property, Marketing, Startup and Pre-Leasing Operations, Hillpointe (Pointe Grand)</p>
+<p class="sig"><strong>Why now:</strong> On Nov 4, Pointe Grand listed 12 communities pre-leasing, and 8 of them have an open sister in the same metro group selling the same two-bed. Gooden leads every new Pointe Grand launch.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Tour Four Corners at Champions Village</span><button type="button" data-copy>Copy</button></header><pre>Crossing at Four Corners is pre-leasing at $1,695, with hard-hat tours. Champions Village in Davenport, in the same Orlando group on your site, is open now with the same two-bed at $1,530.
+
+A renter who wants to walk a finished home before signing can do that today and stay with Pointe Grand either way.
+
+I&#x27;m with Union; we run AI leasing and CRM for operators like Mark-Taylor. I paired all 8 of your pre-leasing communities that have an open sister nearby. Want the pairs?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: when a pre-lease prospect calls or chats, Union&#x27;s AI books a hard-hat tour or a model tour at the open sister, on one renter record across both communities. At Mark-Taylor, Voice AI took lead-to-tour from 7.3% to 18.1%. Want to see it on Four Corners?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: on your community index, pre-leasing cards show no price and a Get in Touch button, while the Four Corners page itself shows $1,695. Putting the posted rent, or a sister&#x27;s tour button, on the card gives a browsing renter a reason to raise a hand. Want the list of cards that differ?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Jessica, 8 of Pointe Grand&#x27;s 12 pre-leasing communities have an open sister in the same metro selling the same two-bed, like Four Corners and Champions Village. I paired all 8 so pre-lease renters can tour a finished home today. Happy to send it.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Pointe Grand&#x27;s community index on Nov 4, 2026 shows 43 communities open and 12 pre-leasing. Pre-leasing cards show no price and a Get in Touch button; open cards show a price and Schedule Tour. 8 of the 12 pre-leasing communities share a metro group with an open one: Four Corners and Minneola (Orlando), Fleming Island (Jacksonville), Vero Beach (Treasure Coast: Fort Pierce), Abercorn and Gardenview (Savannah, GA), Okatie and Hardeeville (Savannah, SC: Port Wentworth and Statesboro). <a href="https://pointegrand.com/apartment-rentals/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/</a></li><li>[2] Crossing at Four Corners&#x27; own page shows rent of $1,695 a month, status Pre-leasing now, opening soon, hard-hat tours, and every home a two-bedroom, two-bath of 1,170 square feet. <a href="https://pointegrand.com/apartment-rentals/fl/orlando/four-corners/pg-crossing-at-four-corners/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/fl/orlando/four-corners/pg-cro</a></li><li>[3] Champions Village in Davenport, FL, in the same Orlando group, shows status Now leasing and rent of $1,530 a month on its own page. <a href="https://pointegrand.com/apartment-rentals/fl/orlando/davenport/pg-champions-village/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/fl/orlando/davenport/pg-champi</a></li><li>[4] Multifamily Dive (July 1, 2026): Jessica Gooden was promoted to vice president of property, marketing, startup and pre-leasing operations at Hillpointe, a Winter Park, Florida firm ranked fifth on NMHC&#x27;s 2026 top developers list, and will be the strategic lead for launching new Pointe Grand communities. <a href="https://www.multifamilydive.com/news/hillpointe-promotions-marketing-operations-vice-president/824231/" rel="noopener" target="_blank">multifamilydive.com/news/hillpointe-promotions-marketing-operati</a></li><li>[5] Pointe Grand lists 21 communities in Florida. <a href="https://pointegrand.com/apartment-rentals/" rel="noopener" target="_blank">pointegrand.com/apartment-rentals/</a></li><li>[6] At Mark-Taylor, measured on the same 5,225 engaged leads, voicemail converted 7.3% to a scheduled tour and Union Voice AI converts 18.1%. <a href="https://www.gounion.com/customers/mark-taylor" rel="noopener" target="_blank">gounion.com/customers/mark-taylor</a></li></ul>
+</article><article class="lead">
+<h4>Jeff Bailey</h4>
+<p class="meta">President of Property Management, SRG Residential (now Milhaus), Milhaus (SRG Residential)</p>
+<p class="sig"><strong>Why now:</strong> Bidwell Park, 246 units in Fremont, changed hands on Oct 29 with Sares-Regis Group named as manager, three months after SRG Residential merged into Milhaus. Bailey leads the combined operations group of 50,000 units.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Bidwell Park&#x27;s rent-reporting offers</span><button type="button" data-copy>Copy</button></header><pre>Bidwell Park, the 246 Fremont homes Roxborough just bought, is coming onto your roster. California requires offering every tenant there rent reporting at signing and at least yearly, on a written election form, with any fee capped at the lesser of your cost or $10 a month.
+
+In a takeover, the prior manager&#x27;s offer dates don&#x27;t always come across.
+
+I&#x27;m with Union; we run leasing and resident programs on one record for operators like Mark-Taylor. I drafted Bidwell&#x27;s election form and offer dates. Want both?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: the rent-reporting offer goes out inside the lease and renewal flow, the election is signed on the same renter record, and the yearly reminder sends itself. Credit Builder reports on-time rent to the bureaus with no on-site work. Want to see it on Bidwell?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>Second idea: with SRG and Milhaus now one operations group of 50,000 units, the leasing stack across both is up for a decision anyway. Union replaces the separate CRM, AI chat, AI voice and screening tools while your PMS stays. If the timing&#x27;s wrong, I&#x27;ll stop here. Worth a look?</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Jeff, Bidwell Park (246 units, Fremont) is coming onto your roster. California requires a rent-reporting offer to every tenant at signing and yearly, fee capped at cost or $10. I drafted Bidwell&#x27;s election form and offer dates if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] On Oct 29, 2026, The Roxborough Group acquired Bidwell Park, a 246-unit, 95% occupied community at 39800 Fremont Blvd in Fremont, for $109.4 million. Sares-Regis Group will provide property management. <a href="https://www.connectcre.com/stories/roxborough-makes-second-norcal-apartment-buy-through-latest-fund/" rel="noopener" target="_blank">connectcre.com/stories/roxborough-makes-second-norcal-apartment-</a></li><li>[2] California Civil Code 1954.07 requires a landlord to offer each tenant positive rent reporting at the time of the lease and at least once a year, with a written election listing eight items; any fee may not exceed the lesser of actual cost or $10 a month. Buildings of 15 or fewer units are exempt unless the landlord owns more than one building and is a REIT, corporation, or LLC with a corporate member. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=1954.07" rel="noopener" target="_blank">leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawC</a></li><li>[3] SRG Residential, a subsidiary of Sares Regis Group, merged with Milhaus in July 2026; Jeff Bailey, president of property management at SRG Residential, continues to lead the combined operations group, with 50,000 units under third-party management. <a href="https://www.multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-acquire-broadshore-capital/" rel="noopener" target="_blank">multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-</a></li><li>[4] The combined Milhaus pipeline includes Tallevast in Sarasota, Florida and Blume at Villages of Mason in the Cincinnati market. <a href="https://www.multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-acquire-broadshore-capital/" rel="noopener" target="_blank">multihousingnews.com/milhaus-and-srg-residential-merge-agree-to-</a></li></ul>
+</article><article class="lead">
+<h4>Christopher Reid</h4>
+<p class="meta">Chief Executive Officer, CRG Residential</p>
+<p class="sig"><strong>Why now:</strong> CRG opened The Slate, a $50 million, 242-unit community in Union Township east of Cincinnati, on Oct 10. Its listing offers up to a month free to renters who apply within 48 hours of their tour.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: A 48-hour clock on every tour</span><button type="button" data-copy>Copy</button></header><pre>The Slate&#x27;s listing offers up to a month free to renters who apply within 48 hours of their tour. That puts the clock on your team: every tour needs the application link and a follow-up the same day.
+
+I&#x27;m with Union; we run AI leasing and applications on one renter record for operators like Mark-Taylor and CAPREIT. I wrote a 48-hour follow-up sequence for The Slate&#x27;s tours. Want it?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: after each tour, Union&#x27;s AI sends the application link, answers questions by text or phone at any hour, and nudges before the 48 hours run out. The application, screening and lease sit on the same record as the tour. Want to see the flow on The Slate?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>If tour follow-up is already covered at The Slate, I&#x27;ll leave it here. If CRG has more lease-ups coming, the same sequence works for each one, and I&#x27;m happy to send it whenever it&#x27;s useful.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Christopher, The Slate&#x27;s listing offers up to a month free if renters apply within 48 hours of their tour. That makes same-day tour follow-up the whole game. I wrote a 48-hour follow-up sequence for The Slate if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Local 12 (Oct 10, 2026): leasing is underway at The Slate Apartments, a new $50 million, 242-unit community in Clermont County&#x27;s Eastgate area; CRG Residential is developer and owner, and Christopher Reid is CRG Residential&#x27;s CEO. <a href="https://local12.com/news/local/slate-apartments-opens-union-township-eastgate-clermont-county" rel="noopener" target="_blank">local12.com/news/local/slate-apartments-opens-union-township-eas</a></li><li>[2] The Slate&#x27;s Zumper listing offers up to 1 month free to renters who apply within 48 hours of their tour, with total monthly prices of $1,595 to $2,240 on a 15-month lease and office hours of 9:00 am to 6:00 pm ET. <a href="https://www.zumper.com/apartment-buildings/p1612377/the-slate-cincinnati-oh" rel="noopener" target="_blank">zumper.com/apartment-buildings/p1612377/the-slate-cincinnati-oh</a></li></ul>
+</article><article class="lead">
+<h4>Lauren Evett</h4>
+<p class="meta">Vice President of Property Management, Daniel Management Group</p>
+<p class="sig"><strong>Why now:</strong> Daniel Management Group promoted Evett on Sept 17 to lead properties through the transition from acquisition or repositioning into stable operations, across a growing third-party portfolio.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Carrying renters across a takeover</span><button type="button" data-copy>Copy</button></header><pre>Your new role covers the stretch from acquisition to stable operations. That&#x27;s where leasing history is easiest to lose: open conversations, booked tours and half-finished applications sit in the prior manager&#x27;s tools on day one.
+
+I&#x27;m with Union; we run AI leasing and CRM on one renter record for operators like Mark-Taylor and CAPREIT. I wrote a takeover handoff checklist for leasing records. Want it?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How Union would run it: on day one of a takeover, open prospects and residents load into one record, the AI answers calls and chats under the new name from the start, and your team picks up each conversation with its history. Most operators go live in 30 days. Want to see a takeover timeline?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>If takeovers already run smoothly at DMG, I&#x27;ll leave it here. If a new one is coming up, I&#x27;m happy to send the checklist so your team has it before the keys change hands.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Lauren, your new role covers the stretch from acquisition to stable operations, where open conversations and booked tours sit in the prior manager&#x27;s tools. I wrote a takeover handoff checklist for leasing records if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] Daniel Management Group (Sept 17, 2026) promoted Lauren Evett to Vice President of Property Management, responsible for setting the strategic direction for each asset as it moves from acquisition or repositioning into stable operations. <a href="https://danielmanagement.com/daniel-management-group-promotes-lauren-evett-to-vice-president-of-property-management/" rel="noopener" target="_blank">danielmanagement.com/daniel-management-group-promotes-lauren-eve</a></li><li>[2] Union says most operators go live in 30 days. <a href="https://www.gounion.com/" rel="noopener" target="_blank">gounion.com/</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as Union's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At Union">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at Union.</h2>
+    <div class="three"><div class="pane"><h4>1. A lead feed for the Ohio, Florida and NorCal AE seats</h4><p>Every week, the lease-ups, takeovers and acquisitions in each new territory, from trade press and community sites, with each site&#x27;s leasing stack read from its page code (EliseAI, Knock, Funnel, Entrata). Each account lands with its AE already carrying its own opener.</p></div><div class="pane"><h4>2. State-by-state plays for Credit Builder and Security Deposit</h4><p>California caps the rent-reporting fee at cost or $10, so pitch compliance and retention there, not the spread. Florida 83.491 sets the fee-in-lieu rules. One sheet per state, so each AE leads with the version of the product that&#x27;s legal there.</p></div><div class="pane"><h4>3. OPTECH follow-up within 48 hours</h4><p>For every operator met in Las Vegas on Nov 16-18: a follow-up carrying that operator&#x27;s own page audit, meaning front doors, office hours and pre-leasing status, plus a sequence that keeps going until a demo is booked or the answer is no.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>Union</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at Union.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For Union</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
