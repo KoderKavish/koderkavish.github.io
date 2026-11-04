@@ -2,155 +2,236 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Plays and Pilot</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Union GTM Plays</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root{--bg:#fcfcfb;--ink:#14171a;--mute:#5d646b;--line:#e3e5e2;--card:#ffffff;--soft:#f1f2ef;--acc:#405a00;--acc-ink:#ffffff}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121412;--ink:#eceeea;--mute:#a3a9a2;--line:#2c302b;--card:#191c18;--soft:#20241f;--acc:#a6c95a;--acc-ink:#121412}}
-:root[data-theme="dark"]{--bg:#121412;--ink:#eceeea;--mute:#a3a9a2;--line:#2c302b;--card:#191c18;--soft:#20241f;--acc:#a6c95a;--acc-ink:#121412}
+/* Layout: one reading column, tables and the funnel break out wider; summary first, detail after */
+:root{
+  --bg:#F5F6F3; --surface:#FFFFFF; --ink:#18211D; --muted:#5A6660; --line:#DCE1DC;
+  --accent:#1F5BD6; --accent-soft:#E4ECFB; --good:#1E7A4C; --warn:#A15C07;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111614; --surface:#18201C; --ink:#E7ECE8; --muted:#9AA6A0; --line:#2B3530;
+  --accent:#7FA6F5; --accent-soft:#1D2A44; --good:#5FC495; --warn:#E2A14B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111614; --surface:#18201C; --ink:#E7ECE8; --muted:#9AA6A0; --line:#2B3530;
+  --accent:#7FA6F5; --accent-soft:#1D2A44; --good:#5FC495; --warn:#E2A14B; color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:40px 16px 80px}
-.eyebrow{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
-.eyebrow b{color:var(--acc);font-weight:600}
-h1{font-size:clamp(32px,6vw,52px);line-height:1.05;letter-spacing:-.03em;margin:14px 0 14px;font-weight:800}
-h2{font-size:clamp(22px,3.6vw,30px);letter-spacing:-.02em;margin:56px 0 6px;line-height:1.15}
-h3{font-size:18px;margin:0 0 4px}
-p{margin:0 0 12px}
-.lede{font-size:18px;color:var(--mute);max-width:640px}
-.sub{color:var(--mute);margin-bottom:20px}
-a{color:var(--acc)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;margin:16px 0}
-.meta{font:400 13px/1.4 "IBM Plex Mono",monospace;color:var(--mute);margin-bottom:12px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0}
-.stat{background:var(--soft);padding:14px}
-.stat .n{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
-.stat .l{font-size:13px;color:var(--mute);margin-top:4px}
-.row{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-.row:first-of-type{border-top:0}
-.k{font:500 12px/1.6 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
-blockquote{margin:14px 0 0;padding:12px 16px;border-left:3px solid var(--acc);background:var(--soft);border-radius:0 8px 8px 0;color:var(--ink)}
-blockquote small{display:block;color:var(--mute);margin-top:6px}
-.tag{display:inline-block;font:500 11px/1 "IBM Plex Mono",monospace;padding:5px 8px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--mute);margin:0 6px 6px 0}
-table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{text-align:left;padding:10px 8px;border-top:1px solid var(--line);vertical-align:top}
-th{font:500 12px/1.4 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);border-top:0}
-.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.note{font-size:14px;color:var(--mute)}
-.cta{display:block;margin-top:40px;background:var(--acc);color:var(--acc-ink);text-decoration:none;border-radius:12px;padding:20px 22px;font-weight:600}
-.cta span{display:block;font:500 12px/1 "IBM Plex Mono",monospace;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
-@media (max-width:560px){.row{grid-template-columns:1fr;gap:2px}.card{padding:18px}}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+.prose{max-width:66ch}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3rem);letter-spacing:-.01em}
+h2{font-size:1.6rem}
+h3{font-size:1.1rem}
+p{margin:0}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:18px}
+.lede{font-size:1.1rem;color:var(--muted)}
+a{color:var(--accent)}
+.num{font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:4px}
+.stat b{font:700 2rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.9rem}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 .85rem var(--mono)}
+.flow .step{background:var(--accent-soft);color:var(--ink);padding:8px 12px;border-radius:4px}
+.flow .arr{color:var(--muted)}
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.chip{display:inline-block;font:500 .72rem var(--mono);padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.live{color:var(--good);border-color:currentColor}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:720px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+svg text{fill:var(--ink);font-family:var(--mono);font-size:12px}
+svg .mut{fill:var(--muted)}
+.note{font-size:.85rem;color:var(--muted)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+label{display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+label output{font:500 .9rem var(--mono)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.funnel{display:flex;flex-direction:column;gap:8px}
+.frow{display:grid;grid-template-columns:150px 1fr 110px;gap:12px;align-items:center;font-size:.9rem}
+@media (max-width:520px){.frow{grid-template-columns:96px 1fr 84px;font-size:.8rem}}
+.bar{height:22px;background:var(--line);position:relative;border-radius:2px;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);opacity:.35}
+.bar i.hi{opacity:.85}
+.frow .v{font:500 .9rem var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+ol.weeks{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+ol.weeks li{background:var(--surface);padding:16px;display:flex;flex-direction:column;gap:6px}
+ol.weeks li b{font:500 .75rem var(--mono);color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem}
+input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
-<main class="wrap">
-  <div class="eyebrow"><b>For Michael Hopkins, Union</b> &nbsp; from Kavish Lodha</div>
-  <h1>The plays I've run, what they produced, and a pilot for Union.</h1>
-  <p class="lede">You asked about mapping, cold outreach and demo booking. Part 1 is what I've run before, with the numbers. Part 2 is three plays I'd run for Union over 30 days, and how we'd judge them.</p>
-  <p class="note">Companion to <a href="../">the Union page</a> with 5 operator leads and three tested messages.</p>
 
-  <h2>The map: each play and its outreach and demo-booking impact</h2>
-  <p class="sub">The one-screen answer. Details follow below.</p>
-  <div class="tablewrap">
-  <table>
-    <tr><th>Play</th><th>Mapping</th><th>Cold outreach</th><th>Demos and pipeline</th></tr>
-    <tr><td><b>Signal-based outbound</b><br><span class="note">Aios Medical (YC), 12 months</span></td><td>Accounts on funding, hiring and tech-stack signals; contacts by persona; a new vertical opened in 6 weeks</td><td>500+ touches a week, email and LinkedIn. Reply rate 5% to 12%</td><td>46 meetings a month (about 12 a week, solo) vs 6-7 a week from a 5+ BDR team. Up to 15 SQLs a month. $500K+ qualified pipeline in 6 months</td></tr>
-    <tr><td><b>Outbound agency</b><br><span class="note">x97, founder, 3.5 years</span></td><td>ICP filtering and enrichment per client</td><td>Multi-channel sequences, with tests on messaging and targeting</td><td>$500K+ pipeline for clients. $100K+ contract value I closed myself</td></tr>
-    <tr><td><b>Signal account map</b><br><span class="note">Madison Wells, retained search</span></td><td>5 hiring signals, a pre-posting layer, a 4-tier account map with routing</td><td>Copy routed by tier and signal</td><td>No meeting counts to quote. Manual research replaced, and the firm kept me on</td></tr>
-    <tr><td><b>Displacement and agent-deployment plays</b><br><span class="note">Two clients, running now</span></td><td>Competitor install bases; evidence of real AI-agent deployment</td><td>Live</td><td>Too early. One is paid per qualified meeting only</td></tr>
-  </table>
+<div class="wrap">
+
+<header style="display:flex;flex-direction:column;gap:14px">
+  <span class="eyebrow">For Michael Hopkins, Union, from Kavish Lodha</span>
+  <h1>The plays I've run, how I map them, and what they did to outreach and demos.</h1>
+  <p class="lede prose">In order: plays I've run and their results, the cold outreach and demo booking impact in detail, how I map an account, the six plays I'd run for Union, and a 4-week pilot with the funnel math laid out so you can check it.</p>
+</header>
+
+<section>
+  <span class="eyebrow">Track record</span>
+  <h2>Plays I've run and what they did</h2>
+  <p class="prose">Two of these I ran end to end and own the numbers. Two I built for clients and handed over to their internal teams, so the results sit with them and I only show what I built.</p>
+  <div class="tbl"><table>
+    <tr><th>Where</th><th>Play and trigger</th><th>Channel</th><th>Volume</th><th>Impact</th><th>My role</th></tr>
+    <tr><td>Aios (YC W20/S21)<br><span class="note">Telehealth, Feb 2025 to Feb 2026</span></td><td>Signal plays on funding, hiring and tech-stack triggers. One campaign underperformed because its ICP was too broad; I rebuilt it from converted customers with a narrower persona.</td><td>Email + LinkedIn</td><td class="num">500+ touches / week</td><td class="num"><b>46 meetings / month</b> (team baseline 6 to 7 / week)<br>Reply rate 5% → 12%<br>Up to 15 SQLs / month<br>$500K+ qualified pipeline in 6 months</td><td><span class="chip live">Ran end to end</span></td></tr>
+    <tr><td>x97media<br><span class="note">My agency, SaaS and VC-backed clients</span></td><td>Persona-level LinkedIn outbound. When replies stalled, I split results by persona and restructured the message for the personas that responded.</td><td>LinkedIn + email</td><td class="num">Multiple client campaigns</td><td class="num"><b>$100K+</b> closed contract value<br>$500K+ client pipeline</td><td><span class="chip live">Ran end to end</span></td></tr>
+    <tr><td>US executive search firm<br><span class="note">Client, 2026</span></td><td>Hiring-signal detection: five signals that a company is about to hire senior leaders, a four-tier account intelligence framework, and a weighted scoring model to rank accounts before outreach.</td><td>Email</td><td>Built in Clay</td><td>System and copy delivered; client team runs it</td><td><span class="chip">Built + handed over</span></td></tr>
+    <tr><td>Kafka / Flink data tooling vendor<br><span class="note">Client, North American financial services, 2026</span></td><td>Four plays aimed at teams running competing Kafka tools. Each message uses four layers: a quote from the account's own public evidence, a why-now bridge, a hypothesis line and a calendar CTA.</td><td>Email + LinkedIn</td><td>Built in Clay, Floqer and Deepline over ~2 months</td><td>Plays, workflows and copy delivered; client team runs it</td><td><span class="chip">Built + handed over</span></td></tr>
+  </table></div>
+  <p class="note">The handed-over builds are the same shape as a Union pilot: I build the plays and the data layer, then your AEs run them.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Cold outreach and demo booking impact: Aios (YC W20/S21)</span>
+  <h2>What the system did to replies and booked meetings</h2>
+  <div class="stats">
+    <div class="stat"><b>46</b><span>meetings booked per month from outbound</span></div>
+    <div class="stat"><b>~1.6x</b><span>weekly meetings, solo (about 10.6) vs a 5+ BDR team baseline of 6 to 7</span></div>
+    <div class="stat"><b>5% → 12%</b><span>reply rate after fixing targeting and data upstream</span></div>
+    <div class="stat"><b>$500K+</b><span>qualified pipeline in 6 months</span></div>
   </div>
-
-  <h2>1. Plays I've run, and the impact</h2>
-  <p class="sub">Results are from the systems of record at the time (HubSpot, Calendly). Where a play is still running, I say so instead of quoting a number.</p>
-
-  <div class="card">
-    <h3>Signal-based outbound that doubled meetings with one person</h3>
-    <div class="meta">Aios Medical / Fella Health (YC) &nbsp; Founding GTM BDR &nbsp; Feb 2025 to Feb 2026</div>
-    <div class="stats">
-      <div class="stat"><div class="n">46</div><div class="l">meetings booked a month, about 12 a week, by me alone</div></div>
-      <div class="stat"><div class="n">6-7</div><div class="l">meetings a week the 5+ BDR team booked before</div></div>
-      <div class="stat"><div class="n">$500K+</div><div class="l">qualified pipeline in 6 months</div></div>
-      <div class="stat"><div class="n">5% → 12%</div><div class="l">reply rate, LinkedIn higher than email</div></div>
+  <div class="two">
+    <div class="panel">
+      <h3>Meetings per week</h3>
+      <svg viewBox="0 0 400 190" role="img" aria-label="Meetings per week: team baseline 6.5, my average 10.6, peak 12">
+        <line x1="110" y1="20" x2="110" y2="170" stroke="var(--line)"/>
+        <!-- scale: 12 meetings = 260px -->
+        <text x="100" y="45" text-anchor="end" class="mut">Team baseline</text>
+        <rect x="110" y="30" width="141" height="26" fill="var(--muted)" opacity=".45"/>
+        <text x="257" y="48">6.5</text>
+        <text x="100" y="95" text-anchor="end" class="mut">My avg</text>
+        <rect x="110" y="80" width="230" height="26" fill="var(--accent)"/>
+        <text x="346" y="98">10.6</text>
+        <text x="100" y="145" text-anchor="end" class="mut">Peak week</text>
+        <rect x="110" y="130" width="260" height="26" fill="var(--accent)" opacity=".55"/>
+        <text x="376" y="148" text-anchor="end" style="fill:var(--bg)">12</text>
+      </svg>
+      <p class="note">Avg = 46 per month ÷ 4.33 weeks. Baseline is the midpoint of 6 to 7 per week across 5+ BDRs.</p>
     </div>
-    <div class="row"><div class="k">Mapping</div><div>Fixed targeting before copy. Accounts mapped on funding, hiring and tech-stack signals, contacts segmented by persona, then enriched. A new vertical was mapped and opened within the first 6 weeks.</div></div>
-    <div class="row"><div class="k">Outreach</div><div>Email and LinkedIn sequences on multi-domain sending infrastructure, 500+ touches a week, with structured tests on copy, segment and targeting.</div></div>
-    <div class="row"><div class="k">Demo booking</div><div>Up to 15 SQLs a month. Meetings went from 6-7 a week for the team to about 12 a week from my system alone.</div></div>
-    <div class="row"><div class="k">Left behind</div><div>The SOPs and playbooks the later hires scaled from.</div></div>
-    <blockquote>"He helped hone our outbound playbook and modernize our tooling within his first month. He helped us penetrate an entirely new vertical within his first 6 weeks while mentoring other team members on outbound sequencing. This helped increase our response, booking, and close rates."<small>Jordan Pellikan, VP Operations at AIOS, my direct manager</small></blockquote>
-  </div>
-
-  <div class="card">
-    <h3>Account mapping for a retained executive search firm</h3>
-    <div class="meta">Madison Wells &nbsp; Fractional GTM Engineer</div>
-    <div class="row"><div class="k">Mapping</div><div>Five hiring signals scored per account: several similar open roles, hiring-velocity spikes, executive departures, funding, and roles stuck open 60+ days. A pre-posting layer catches demand before the job is live (leadership changes, M&amp;A and PE activity, headcount velocity).</div></div>
-    <div class="row"><div class="k">Routing</div><div>A 4-tier account map (current client, past client, strategic target, prospect), with outreach and copy routed by tier and signal.</div></div>
-    <div class="row"><div class="k">Impact</div><div>Business development and sourcing moved off manual LinkedIn-and-spreadsheet research onto one Clay system, and the firm kept me on. No meeting counts to quote for this one.</div></div>
-    <blockquote>"Kavish was able to customize a Clay operating system for us that really helps streamline sourcing, business development and operational workflows."<small>Alex Bell, Managing Director, Madison Wells</small></blockquote>
-  </div>
-
-  <div class="card">
-    <h3>Running an outbound agency, selling and delivering</h3>
-    <div class="meta">x97 Marketing and x97 Media &nbsp; Founder &nbsp; Feb 2021 to Sep 2024</div>
-    <div class="stats">
-      <div class="stat"><div class="n">$500K+</div><div class="l">pipeline generated for SaaS and VC-backed clients</div></div>
-      <div class="stat"><div class="n">$100K+</div><div class="l">contract value I closed myself, prospecting to close</div></div>
+    <div class="panel">
+      <h3>Funnel rates I'd use as the benchmark</h3>
+      <table style="min-width:0">
+        <tr><th>Stage</th><th>Aios</th></tr>
+        <tr><td>Touches / month</td><td class="num">~2,165 (500+/week)</td></tr>
+        <tr><td>Reply rate</td><td class="num">12%</td></tr>
+        <tr><td>Touch → meeting</td><td class="num">~2.1%</td></tr>
+        <tr><td>Meeting → SQL</td><td class="num">up to 33% (up to 15 SQLs)</td></tr>
+      </table>
+      <p class="note">Email plus LinkedIn. LinkedIn replies ran higher than email.</p>
     </div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>Running now, results not in yet</h3>
-    <p>Competitive-displacement plays for a data-infrastructure vendor: four plays aimed at teams already using three rival Kafka tools, built in Clay and Floqer, then rebuilt in Deepline. And an enterprise outbound motion for an AI-security startup, paid only per qualified meeting, targeting companies with evidence of real agent deployment.</p>
-    <p class="note">I'll share numbers on these when the clients have them, not before.</p>
+<section>
+  <span class="eyebrow">Mapping</span>
+  <h2>How an account gets mapped before anyone writes copy</h2>
+  <p class="prose">Most of the lift above came from this layer. When replies were weak, the fix was almost always in targeting and data, not the email. For Union, each account goes through the same six steps and only gets a message once every step has a sourced answer.</p>
+  <div class="flow" aria-label="Mapping steps">
+    <span class="step">1 Signal</span><span class="arr">→</span>
+    <span class="step">2 Property + portfolio</span><span class="arr">→</span>
+    <span class="step">3 Leasing stack read from page code</span><span class="arr">→</span>
+    <span class="step">4 Buyer by role</span><span class="arr">→</span>
+    <span class="step">5 Proof that fits</span><span class="arr">→</span>
+    <span class="step">6 Sequence to demo</span>
   </div>
+  <div class="tbl"><table>
+    <tr><th>Step</th><th>What gets captured</th><th>Example: Lewis Apartments</th></tr>
+    <tr><td>1 Signal</td><td>Lease-up, acquisition, takeover, promotion, new pre-leasing, trade show attendance</td><td>Independence in West Sacramento opened Oct 24, 208 homes</td></tr>
+    <tr><td>2 Property + portfolio</td><td>Units, metro, sister sites, what's planned next</td><td>Dixon open; Folsom, Vacaville, Fairfield, Newark planned</td></tr>
+    <tr><td>3 Leasing stack</td><td>Scripts loaded on the community page: EliseAI, Knock, Funnel, Entrata, office hours, tour booking method</td><td>EliseAI chat + Knock form on one page, tours by phone 9 to 6</td></tr>
+    <tr><td>4 Buyer</td><td>The person who owns that moment (lease-up, takeover, pre-leasing, ops)</td><td>Richard Lewis, President, California Operations</td></tr>
+    <tr><td>5 Proof</td><td>The Union case study that matches the gap</td><td>Mark-Taylor: voicemail 7.3% → Voice AI 18.1% lead-to-tour</td></tr>
+    <tr><td>6 Sequence</td><td>3 emails + LinkedIn, each ending in a small ask, demo on reply</td><td>"I mapped where each door lands. Want the map?"</td></tr>
+  </table></div>
+</section>
 
-  <h2>2. A 30-day pilot: three plays for Union</h2>
-  <p class="sub">Built around the AE territories you're hiring for (Ohio, Florida and Northern California) and the operators on the Union page. Each play has a map, a message, and one number it's judged on.</p>
+<section>
+  <span class="eyebrow">The plays</span>
+  <h2>Six plays I'd run for Union</h2>
+  <div class="tbl"><table>
+    <tr><th>Play</th><th>Signal that triggers it</th><th>Buyer</th><th>The hook</th><th>Status</th></tr>
+    <tr><td>Front doors</td><td>New lease-up with 2+ leasing tools on one page</td><td>President / VP lease-ups</td><td>Map of every way a renter gets in and where each lead lands</td><td><span class="chip live">Built on real account</span></td></tr>
+    <tr><td>Pre-leasing twin</td><td>Community pre-leasing with an open sister in the same metro</td><td>VP pre-leasing / startup ops</td><td>Paired list so renters can tour a finished home today</td><td><span class="chip live">Built on real account</span></td></tr>
+    <tr><td>Takeover handoff</td><td>Acquisition with a named third-party manager</td><td>President of property mgmt</td><td>Day-one checklist for leasing records and open tours</td><td><span class="chip">Ready to run</span></td></tr>
+    <tr><td>State compliance</td><td>California takeover above 15 units</td><td>President of property mgmt</td><td>Drafted rent-reporting election form and offer dates (Civ. Code 1954.07)</td><td><span class="chip live">Built on real account</span></td></tr>
+    <tr><td>Tour clock</td><td>Listing with a time-boxed concession after tour</td><td>CEO / VP ops</td><td>48-hour post-tour follow-up sequence</td><td><span class="chip live">Built on real account</span></td></tr>
+    <tr><td>OPTECH 48h</td><td>Operator met at OPTECH, Nov 16 to 18</td><td>Whoever your team met</td><td>Follow-up carrying their own page audit within 48 hours</td><td><span class="chip">Ready to run</span></td></tr>
+  </table></div>
+  <p class="note">Full copy and sources for the plays built on real accounts: <a href="https://koderkavish.github.io/union/" target="_blank" rel="noopener">koderkavish.github.io/union</a></p>
+</section>
 
-  <div class="card">
-    <h3>Play 1: Lease-up front doors</h3>
-    <div class="row"><div class="k">Map</div><div>Every community that opened or started pre-leasing in the last 90 days in the three territories, from trade press and operator sites. For each one, read the page code for its leasing stack (EliseAI, Knock, Funnel, Entrata and others), its office hours and how tours get booked. Then name the person who owns lease-ups at the operator.</div></div>
-    <div class="row"><div class="k">Message</div><div>Their own page, mapped: every way a renter reaches the community and which tool catches it. Already tested on Lewis's Independence in West Sacramento.</div></div>
-    <div class="row"><div class="k">Judged on</div><div>Demos booked with operators in lease-up.</div></div>
+<section>
+  <span class="eyebrow">Pilot math</span>
+  <h2>What a 4-week pilot should produce</h2>
+  <p class="prose">Benchmarked on Aios rates, with a floor at half those rates since Union is a new ICP for me. Move the sliders to match the volume you'd want. This is a model, not a promise; week 2 data replaces it.</p>
+  <div class="panel">
+    <div class="calc">
+      <label for="plays">Plays in the pilot <output id="playsO">3</output><input id="plays" type="range" min="1" max="6" value="3"></label>
+      <label for="accts">Contacts per play <output id="acctsO">120</output><input id="accts" type="range" min="40" max="300" step="10" value="120"></label>
+      <label for="touch">Touches per contact <output id="touchO">4</output><input id="touch" type="range" min="2" max="6" value="4"></label>
+    </div>
+    <div class="funnel" id="funnel" aria-live="polite"></div>
+    <p class="note">Floor = 1.05% touch-to-meeting and 22% meeting-to-SQL. Benchmark = 2.1% and 33%. Light bar is the floor, dark bar is the benchmark, on a square-root scale so the small stages stay visible.</p>
   </div>
+</section>
 
-  <div class="card">
-    <h3>Play 2: Takeovers and management mergers</h3>
-    <div class="row"><div class="k">Map</div><div>Acquisitions where a third-party manager is named, plus management-company mergers, when renter data moves between tools anyway. Matched to the state rules that change what each lease must offer (for example, California's rent-reporting offer).</div></div>
-    <div class="row"><div class="k">Message</div><div>What the new property owes its residents, drafted for them, and how Union carries it on one record. Already tested on Bidwell Park in Fremont.</div></div>
-    <div class="row"><div class="k">Judged on</div><div>Demos booked with presidents and VPs of property management.</div></div>
-  </div>
+<section>
+  <span class="eyebrow">Pilot shape</span>
+  <h2>Four weeks, reported weekly</h2>
+  <ol class="weeks">
+    <li><b>Week 1</b><span>Signal feed for Ohio, Florida and NorCal. Map 360 accounts. Domains warmed, CRM fields agreed with your AEs.</span></li>
+    <li><b>Week 2</b><span>Launch 3 plays. First read on reply rate by play and by buyer role.</span></li>
+    <li><b>Week 3</b><span>Cut the weakest play, double the strongest. OPTECH 48h follow-up runs.</span></li>
+    <li><b>Week 4</b><span>Demos booked, held and sourced pipeline by play. Recommendation on the role.</span></li>
+  </ol>
+  <p class="note">Weekly report: touches, replies, positive replies, demos booked, demos held, by play and territory.</p>
+</section>
 
-  <div class="card">
-    <h3>Play 3: OPTECH before and after</h3>
-    <div class="row"><div class="k">Map</div><div>The operators in the three territories likely to be at OPTECH (Nov 16-18), each with its page audit already done.</div></div>
-    <div class="row"><div class="k">Message</div><div>Before: a meeting ask that leads with their audit. After: follow-up within 48 hours for everyone your team met, carrying what was discussed.</div></div>
-    <div class="row"><div class="k">Judged on</div><div>Meetings booked at the event, and post-event demos.</div></div>
-  </div>
+<footer>Kavish Lodha, Udaipur, India. <a href="mailto:ikavish09@gmail.com">ikavish09@gmail.com</a>, <a href="https://koderkavish.github.io" target="_blank" rel="noopener">koderkavish.github.io</a></footer>
+</div>
 
-  <h3 style="margin-top:28px">How we'd judge the pilot</h3>
-  <div class="tablewrap">
-  <table>
-    <tr><th>When</th><th>What happens</th><th>What you see</th></tr>
-    <tr><td>Week 1</td><td>Build the maps for all three plays. You approve the ICP, the exclusions (current customers, open deals) and the copy.</td><td>The account maps and the first sequences</td></tr>
-    <tr><td>Weeks 2-4</td><td>Sending across email and LinkedIn, and I adjust copy and segments every week.</td><td>A weekly report: accounts mapped, contacted, reply rate, positive replies, demos booked, demos held</td></tr>
-    <tr><td>Day 30</td><td>Review against the bar we set in week 1.</td><td>Which plays to scale, which to drop, and what a full-time role would own</td></tr>
-  </table>
-  </div>
-  <p class="note" style="margin-top:12px">We set the demo target together in week 1, once we know volumes and your average deal. For reference, my Aios system reached about 12 meetings a week at full volume. That's a past result in a different market, not a promise for this one.</p>
+<script>
+const $=id=>document.getElementById(id);
+function fmt(n){return Math.round(n).toLocaleString()}
+function render(){
+  const p=+$('plays').value,a=+$('accts').value,t=+$('touch').value;
+  $('playsO').textContent=p;$('acctsO').textContent=a;$('touchO').textContent=t;
+  const contacts=p*a,touches=contacts*t;
+  const rows=[
+    ['Contacts',contacts,contacts],
+    ['Touches',touches,touches],
+    ['Replies',touches*0.06,touches*0.12],
+    ['Demos booked',touches*0.0105,touches*0.021],
+    ['SQLs',touches*0.0105*0.22,touches*0.021*0.33]
+  ];
+  const max=touches;
+  $('funnel').innerHTML=rows.map(([l,lo,hi])=>{
+    const range=lo===hi?fmt(hi):fmt(lo)+' to '+fmt(hi);
+    const w=x=>Math.max(1.5,Math.sqrt(x/max)*100);
+    return `<div class="frow"><span>${l}</span><div class="bar"><i class="hi" style="width:${w(hi)}%"></i><i style="width:${w(lo)}%"></i></div><span class="v">${range}</span></div>`;
+  }).join('');
+}
+['plays','accts','touch'].forEach(id=>$(id).addEventListener('input',render));
+render();
+</script>
 
-  <h3 style="margin-top:28px">The decision at day 30</h3>
-  <p>In week 1 we agree on one number: the demos booked by the pilot that would justify opening the role. At day 30 the plays either cleared it or didn't. If they did, the role description writes itself from what worked: which plays, which territories, what volume. If they didn't, you've spent a month, not a hire.</p>
-
-  <h3 style="margin-top:28px">What I'd need from Union</h3>
-  <p>Read access to the CRM, or a list of customers and open deals to exclude. Sending domains, or an OK to set them up. The AE calendars, so demos get booked straight onto them. And one 30-minute review with you each week.</p>
-
-  <p class="note" style="margin-top:28px">I'm based in India, fully remote, and I already work US hours for US clients.</p>
-
-  <a class="cta" href="../"><span>See the plays applied</span>The Union page: 5 operators you could email today</a>
-</main>
 </body>
 </html>
