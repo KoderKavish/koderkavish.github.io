@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en" data-slide="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For 100 Partners</title>
+<meta name="description" content="5 named leads with copy and three things I'd build, prepared for 100 Partners.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!--
+  Slide shell for per-company PVP pages, lifted from site/rawcanvas/index.html so
+  every /for/ page and the Raw Canvas deck read as the same artefact: one slide at
+  a time, keyboard / click / swipe, deep-linkable by hash. Filled by
+  pvp.py render_slides(); edit the shell here, the content in pvps.json.
+-->
+
+<style>
+:root{
+  color-scheme:light dark;
+  --bg:#FCFCFC; --surface:#FFFFFF; --raised:#F0F1F2;
+  --ink:#14181F; --ink2:#4E545E; --ink3:#626771;
+  --rule:#E2E4E8; --rule2:#EDEEF1;
+  --accent:#445C00; --accent-bg:#F4FFCB; --on-accent:#FCFCFC;
+  --hl:#DFFF00; --on-hl:#14181F;
+  --ok:#166534; --no:#B42318;
+  --grid:rgba(0,0,0,.04);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}}
+:root[data-theme=dark]{
+  --bg:#0E1014; --surface:#14181F; --raised:#1B2029;
+  --ink:#F2F4F6; --ink2:#C5C9D4; --ink3:#969BA5;
+  --rule:#2A2F38; --rule2:#1C2129;
+  --accent:#DFFF00; --accent-bg:#1E2405; --on-accent:#14181F;
+  --ok:#4ADE80; --no:#F97066;
+  --grid:rgba(255,255,255,.05);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:stretch}
+.s{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:clamp(76px,9vh,96px) clamp(20px,6vw,88px) clamp(76px,10vh,104px);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .34s ease,transform .34s ease,visibility .34s;
+  display:flex;flex-direction:column}
+.s[data-on]{opacity:1;visibility:visible;transform:none}
+.s::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:52px 52px}
+.wrap{width:100%;max-width:1080px;margin:auto 0}
+.s.mid .wrap{margin:auto 0}
+
+/* ---------- type ---------- */
+.kick{font:600 11px/1 var(--sans);letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.kick b{font-weight:600}
+.kick s{text-decoration:none;color:var(--ink3);font-weight:400;letter-spacing:.8px}
+h1{font:700 clamp(34px,5.4vw,66px)/1.04 var(--sans);letter-spacing:-.025em;
+  margin:0;max-width:22ch;text-wrap:balance}
+h1.xl{font-size:clamp(42px,7.4vw,96px);max-width:16ch}
+h2{font:700 clamp(27px,3.5vw,44px)/1.1 var(--sans);letter-spacing:-.02em;
+  margin:0;max-width:26ch;text-wrap:balance}
+h3{font:600 13px/1 var(--sans);letter-spacing:.7px;text-transform:uppercase;
+  color:var(--ink3);margin:0 0 14px}
+.lede{font:400 clamp(16px,1.55vw,20px)/1.58 var(--sans);color:var(--ink2);
+  max-width:60ch;margin:22px 0 0}
+.lede strong{color:var(--ink);font-weight:600}
+p{margin:14px 0 0;font:400 15.5px/1.62 var(--sans);color:var(--ink2);max-width:62ch}
+p strong{color:var(--ink);font-weight:600}
+.q{font:400 15px/1.6 var(--sans);color:var(--ink2);max-width:66ch;margin:0 0 26px;
+  padding:14px 0 14px 18px;border-left:2px solid var(--rule)}
+.q i{font-style:normal;color:var(--ink3)}
+mark{background:var(--accent-bg);color:var(--ink);padding:1px 5px;border-radius:3px}
+.src{margin-top:auto;padding-top:26px;font:400 11.5px/1.6 var(--mono);
+  color:var(--ink3);max-width:76ch}
+.mono{font-family:var(--mono)}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin:30px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(152px,1fr))}
+.stat{background:var(--surface);padding:18px 20px 16px}
+.stat b{display:block;font:700 clamp(24px,2.9vw,36px)/1 var(--sans);
+  letter-spacing:-.02em;color:var(--ink)}
+.stat b.a{color:var(--accent)}
+.stat span{display:block;margin-top:8px;font:400 11.5px/1.45 var(--sans);color:var(--ink3)}
+
+/* ---------- generic card rows ---------- */
+.rows{display:grid;gap:10px;margin:28px 0 0}
+.row{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.row em{font-style:normal;font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--accent);background:var(--accent-bg);padding:5px 8px;border-radius:4px;
+  white-space:nowrap;margin-top:2px}
+.row p{margin:0;font-size:14.5px}
+.row p b{display:block;color:var(--ink);font-weight:600;font-size:15px;margin-bottom:4px}
+
+/* ---------- interactive: staged build (Q2) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
+.tabs button{font:600 12px/1 var(--sans);letter-spacing:.3px;cursor:pointer;
+  padding:11px 15px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--surface);color:var(--ink2);transition:.18s}
+.tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{margin:18px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:24px 26px;min-height:188px}
+.panel[hidden]{display:none}
+.panel h4{margin:0 0 6px;font:700 20px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
+.panel .spec{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.panel .spec code{font:500 11.5px/1 var(--mono);background:var(--raised);
+  color:var(--ink);padding:7px 10px;border-radius:5px;border:1px solid var(--rule)}
+.panel .why{margin-top:14px;font-size:14.5px}
+
+/* ---------- interactive: volume chart (Q6) ---------- */
+.chart{margin:30px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:22px 24px 16px}
+.chart .ax{display:flex;justify-content:space-between;font:400 11px/1 var(--mono);
+  color:var(--ink3);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:clamp(3px,.7vw,9px);height:150px;
+  padding-bottom:20px}
+.bars button{flex:1;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.bars i{display:block;background:var(--rule);border-radius:3px 3px 0 0;transition:.18s;
+  min-height:3px}
+.bars button:hover i,.bars button[aria-pressed=true] i{background:var(--ink3)}
+.bars button.peak i{background:var(--accent)}
+.bars button.bad i{background:var(--no)}
+.bars button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.bars u{position:absolute;inset:auto 0 -22px;text-decoration:none;
+  font:400 10.5px/1 var(--mono);color:var(--ink3);text-align:center;letter-spacing:-.2px}
+.read{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:9px;overflow:hidden;margin:14px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.read div{background:var(--raised);padding:13px 15px}
+.read div b{display:block;font:700 20px/1 var(--sans);color:var(--ink);letter-spacing:-.015em}
+.read div span{display:block;margin-top:6px;font:400 11px/1.4 var(--sans);color:var(--ink3)}
+
+/* ---------- waterfall (Q3) ---------- */
+.flow{margin:26px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:12px;padding:12px}
+.flow svg{display:block;width:100%;height:auto}
+.code{margin:22px 0 0;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:16px 18px;overflow-x:auto}
+.code pre{margin:0;font:400 12.5px/1.72 var(--mono);color:var(--ink2);white-space:pre}
+.code pre b{color:var(--ink);font-weight:600}
+.code pre s{text-decoration:none;color:var(--ink3)}
+.code pre u{text-decoration:none;color:var(--accent)}
+
+/* ---------- exhibits ---------- */
+.fig{margin:26px 0 0;border:1px solid var(--rule);border-radius:12px;overflow:hidden;
+  background:var(--surface);line-height:0}
+.fig a{display:block;line-height:0}
+.fig img{display:block;width:100%;height:auto}
+.figc{margin:10px 0 0;font:400 12px/1.5 var(--mono);color:var(--ink3)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;gap:22px;margin:28px 0 0;grid-template-columns:1fr 1fr}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:22px 24px}
+.pane h4{margin:0 0 10px;font:700 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink)}
+.pane p{margin:8px 0 0;font-size:14.5px;max-width:none}
+.pane .tag{display:inline-block;margin-bottom:12px;font:600 10.5px/1 var(--mono);
+  letter-spacing:.6px;padding:6px 9px;border-radius:4px}
+.tag.kill{background:var(--accent-bg);color:var(--accent)}
+.tag.loss{background:var(--raised);color:var(--ink3)}
+
+/* ---------- pending (awaiting a fact only the author has) ---------- */
+.todo{margin:28px 0 0;border:1px dashed var(--rule);border-radius:10px;
+  padding:18px 20px;background:var(--raised)}
+.todo b{display:block;font:600 12px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.todo p{margin:0;font-size:14.5px}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;left:0;top:0;height:2px;background:var(--accent);z-index:40;
+  width:0;transition:width .34s ease}
+#chrome{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:14px clamp(20px,6vw,88px);
+  background:linear-gradient(to top,var(--bg) 58%,transparent);
+  font:400 12px/1 var(--mono);color:var(--ink3)}
+#chrome .who{margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#chrome .who b{color:var(--ink2);font-weight:500}
+#chrome button{font:500 12px/1 var(--mono);cursor:pointer;color:var(--ink2);
+  background:var(--surface);border:1px solid var(--rule);border-radius:7px;
+  padding:9px 12px;transition:.16s}
+#chrome button:hover:not(:disabled){border-color:var(--ink3);color:var(--ink)}
+#chrome button:disabled{opacity:.38;cursor:default}
+#count{min-width:62px;text-align:center;font-variant-numeric:tabular-nums}
+/* Readers missed the small arrows in the bottom-right corner, read the cover and
+   left. So every slide is named up top, and every slide ends on a full-width
+   "Next" button where the eye lands after reading. */
+#tabs{position:fixed;left:0;right:0;top:0;z-index:35;display:flex;gap:6px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) clamp(20px,6vw,88px) 10px;overflow-x:auto;scrollbar-width:none;
+  background:linear-gradient(to bottom,var(--bg) 62%,transparent)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;cursor:pointer;font:500 12px/1 var(--mono);color:var(--ink3);
+  background:var(--surface);border:1px solid var(--rule);border-radius:999px;
+  padding:8px 12px;transition:.16s;white-space:nowrap}
+#tabs button em{font-style:normal;opacity:.6;margin-right:6px}
+#tabs button:hover{border-color:var(--ink3);color:var(--ink)}
+#tabs button[aria-current]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.go-next{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;
+  margin:40px 0 0;cursor:pointer;text-align:left;font:600 16px/1.3 var(--sans);color:var(--on-accent);
+  background:var(--accent);border:0;border-radius:10px;padding:16px 20px;transition:.16s}
+.go-next:hover{filter:brightness(.94)}
+.go-next small{display:block;font:500 11px/1 var(--mono);letter-spacing:.6px;
+  text-transform:uppercase;opacity:.7;margin-bottom:6px}
+.go-next b{font-size:22px;line-height:1}
+.go-next.back{background:var(--surface);color:var(--ink);border:1px solid var(--rule)}
+
+/* ---------- index overlay ---------- */
+#idx{position:fixed;inset:0;z-index:50;background:var(--bg);padding:clamp(28px,6vh,64px) clamp(20px,6vw,88px);
+  overflow-y:auto;display:none}
+#idx[data-on]{display:block}
+#idx h3{margin:0 0 22px}
+#idx ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+#idx button{width:100%;text-align:left;cursor:pointer;background:var(--surface);
+  border:1px solid var(--rule);border-radius:10px;padding:14px 16px;transition:.16s;
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline}
+#idx button:hover{border-color:var(--accent);background:var(--raised)}
+#idx button em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+#idx button span{font:600 14.5px/1.35 var(--sans);color:var(--ink)}
+#idx button i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);
+  color:var(--ink3);margin-top:4px}
+
+/* Grid and flex children size to min-content by default, so one <pre> or one
+   unbreakable token inside a track pushes that track wider than the viewport and
+   the whole page scrolls sideways. min-width:0 keeps the overflow inside the
+   element that actually opted into scrolling. This is what made the Q3 service
+   slide 700px wide on a 320px phone. */
+.two>*,.rows>*,.row>*,.stats>*,.read>*,.panel,.pane,.chart,.fig{min-width:0}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .s{padding:clamp(52px,6vh,78px) clamp(20px,5vw,56px) clamp(72px,9vh,96px)}
+}
+@media (max-width:860px){
+  .two{grid-template-columns:1fr}
+  .bars{height:118px}
+  .bars u{display:none}
+  h1{max-width:18ch}
+}
+@media (max-width:620px){
+  .s{padding:68px 20px 92px}
+  .stats{grid-template-columns:1fr 1fr}
+  /* Two up stays readable only if the figure shrinks with the box. 1,955,979 at
+     the desktop 24px floor is wider than a half-column on a small phone. */
+  .stat b{font-size:clamp(18px,5.4vw,36px)}
+  .panel{padding:18px 18px}
+  .row{grid-template-columns:1fr;gap:10px}
+  .row em{justify-self:start}
+  #chrome .who{font-size:11px}
+}
+@media (max-width:460px){
+  /* The chrome bar is the one thing that must never wrap: at this width the
+     name is the only part a reader does not need. */
+  #chrome{gap:9px;padding:12px 16px}
+  #chrome .who{display:none}
+  .s{padding:64px 16px 86px}
+  #tabs{padding:10px 16px 8px}
+  #tabs button span{display:none}
+  #tabs button em{margin:0;opacity:1}
+  .idx ol,#idx ol{grid-template-columns:1fr}
+}
+
+/* Above roughly 1600px the fixed column starts to read as a narrow strip in the
+   middle of the screen, so the measure and the display sizes both step up. */
+@media (min-width:1600px){
+  .wrap{max-width:1240px}
+}
+@media (min-width:1600px) and (min-height:1100px){
+  h1{font-size:clamp(66px,4.4vw,82px)}
+  h1.xl{font-size:clamp(96px,6.6vw,124px)}
+  h2{font-size:clamp(44px,2.9vw,54px)}
+  .lede{font-size:21px}
+  p{font-size:16.5px}
+}
+/* A laptop is short before it is narrow. 1366x768 is still the most common
+   screen a reviewer opens this on, and at the desktop rhythm almost every slide
+   needed scrolling there. Keyed on height so a tall desktop monitor keeps the
+   generous spacing. */
+@media (min-width:861px) and (max-height:1000px){
+  .s{padding-top:clamp(66px,8vh,76px);padding-bottom:clamp(62px,7.6vh,78px)}
+  h1{font-size:clamp(32px,4.3vw,54px)}
+  h1.xl{font-size:clamp(40px,6.2vw,76px)}
+  h2{font-size:clamp(24px,2.9vw,37px)}
+  .lede{font-size:17px;line-height:1.5;margin-top:18px}
+  p{font-size:14.5px;line-height:1.55;margin-top:11px}
+  .q{margin-bottom:20px;padding:11px 0 11px 16px;font-size:14px}
+  .kick{margin-bottom:15px}
+  .stats,.rows,.tabs,.chart,.two,.fig{margin-top:20px}
+  .rows{gap:8px}
+  .row{padding:13px 16px}
+  .stat{padding:14px 17px 13px}
+  .pane{padding:18px 20px}
+  .panel{padding:18px 21px;min-height:0;margin-top:14px}
+  .src{padding-top:18px}
+  h3{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .s{transition:none}#bar{transition:none}
+}
+
+/* ---------- Raw Canvas additions ---------- */
+.steps{counter-reset:st;display:grid;gap:8px;margin:26px 0 0;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.step{counter-increment:st;background:var(--surface);border:1px solid var(--rule);
+  border-radius:10px;padding:14px 16px 15px;position:relative}
+.step::before{content:counter(st,decimal-leading-zero);display:block;
+  font:600 11px/1 var(--mono);color:var(--accent);margin-bottom:9px}
+.step b{display:block;font:600 14.5px/1.35 var(--sans);color:var(--ink);margin-bottom:5px}
+.step p{margin:0;font-size:13.5px;line-height:1.5}
+.step code,.tool{font:500 11px/1 var(--mono);background:var(--raised);color:var(--ink2);
+  padding:4px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;
+  display:inline-block;margin:6px 4px 0 0}
+.step.hot{border-color:var(--accent)}
+.tag.as{background:var(--raised);color:var(--ink3)}
+.tag.off{background:var(--accent-bg);color:var(--accent)}
+
+.board{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;margin:18px 0 0}
+.leads{display:grid;gap:6px;align-content:start}
+.leads button{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;
+  align-items:baseline;background:var(--surface);border:1px solid var(--rule);border-radius:9px;
+  padding:11px 13px;transition:.16s}
+.leads button:hover{border-color:var(--ink3)}
+.leads button[aria-pressed=true]{border-color:var(--accent);background:var(--raised)}
+.leads button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leads em{font-style:normal;font:500 11px/1 var(--mono);color:var(--ink3)}
+.leads span{font:600 14px/1.3 var(--sans);color:var(--ink)}
+.leads i{display:block;font-style:normal;font:400 12px/1.4 var(--sans);color:var(--ink3);margin-top:3px}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;min-width:0}
+.detail h4{margin:0;font:700 19px/1.25 var(--sans);letter-spacing:-.012em;color:var(--ink)}
+.detail .meta{margin:6px 0 0;font:400 12.5px/1.5 var(--mono);color:var(--ink3)}
+.detail .sig{margin:14px 0 0;padding:12px 14px;border-left:2px solid var(--accent);
+  background:var(--raised);border-radius:0 8px 8px 0;font-size:14px;max-width:none}
+.msg{margin:14px 0 0;border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+.msg header{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;background:var(--raised);font:600 11px/1 var(--mono);letter-spacing:.5px;
+  color:var(--ink3);text-transform:uppercase}
+.msg header button{font:500 11px/1 var(--mono);cursor:pointer;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--rule);border-radius:6px;padding:6px 9px;text-transform:none;letter-spacing:0}
+.msg header button:hover{color:var(--ink);border-color:var(--ink3)}
+.msg pre{margin:0;padding:13px 14px;font:400 13.5px/1.6 var(--sans);color:var(--ink);
+  white-space:pre-wrap;word-wrap:break-word}
+.detail .srcs{margin:14px 0 0;font:400 11.5px/1.7 var(--mono);color:var(--ink3);word-break:break-all}
+.detail .srcs a{color:var(--ink2)}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.seg button{font:600 12px/1 var(--sans);cursor:pointer;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.three{display:grid;gap:14px;margin:26px 0 0;grid-template-columns:repeat(3,1fr)}
+.three>*,.steps>*,.board>*,.leads>*{min-width:0}
+@media (max-width:980px){.three{grid-template-columns:1fr}}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font:500 11px/1 var(--mono);background:var(--accent-bg);color:var(--accent);padding:6px 9px;
+  border-radius:4px;text-decoration:none;overflow-wrap:anywhere;line-height:1.35}
+a.chip:hover{text-decoration:underline}
+.detail > article{display:none}.detail > article.on{display:block}
+.pm h3{margin:0}
+.pm .take{font-size:17px;line-height:1.5;color:var(--ink);margin:8px 0 0;max-width:60ch}
+.pm .for{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin:10px 0 0}
+details.srcs{margin:14px 0 0}
+details.srcs summary{cursor:pointer;font:500 11.5px/1.4 var(--mono);color:var(--ink3);list-style:none}
+details.srcs summary::-webkit-details-marker{display:none}
+details.srcs summary::before{content:"+ "}details.srcs[open] summary::before{content:"3  "}
+.detail h5{margin:16px 0 6px;font:600 11px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3)}
+.detail p{max-width:none;font-size:14px;margin:6px 0 0}
+.ev{list-style:none;padding:0;margin:6px 0 0;font:400 11.5px/1.6 var(--mono);color:var(--ink3)}
+.ev li{margin:0 0 4px;overflow-wrap:anywhere}.ev a{color:var(--ink2)}
+.mail{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:10px;padding:16px 18px;margin:18px 0 0}
+.mail .to{font:400 11.5px/1.5 var(--mono);color:var(--ink3);margin-bottom:6px}
+.mail .subj{font-weight:600;color:var(--ink);margin-bottom:4px}
+.mail p{max-width:none;font-size:14.5px;margin:8px 0 0}
+.asset{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.asset-h{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;font:400 11px/1.4 var(--mono);
+  color:var(--ink3);background:var(--raised);padding:8px 12px;border-bottom:1px solid var(--rule)}
+.asset-h span:first-child{color:var(--ink);font-weight:500}
+.asset-note{font:400 11.5px/1.5 var(--sans);color:var(--ink3);padding:7px 12px;margin:0;border-top:1px solid var(--rule);max-width:none}
+.tbl{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);color:var(--ink2)}
+.tbl th{text-align:left;font:600 10.5px/1.3 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);
+  padding:9px 12px;border-bottom:1px solid var(--rule)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--rule2);vertical-align:top;overflow-wrap:anywhere}
+.tbl tr:last-child td{border-bottom:0}.tbl td b{color:var(--ink)}
+.boxed{margin:22px 0 0;border:1px solid var(--rule);border-radius:10px;overflow-x:auto;background:var(--surface)}
+.k{display:inline-block;font:600 10.5px/1 var(--mono);padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k.held{background:var(--accent-bg);color:var(--accent)}.k.killed,.k.kill{background:var(--raised);color:var(--ink3)}
+.k.maybe{background:var(--raised);color:var(--ink2)}
+.fus{display:grid;gap:10px;margin:12px 0 0;grid-template-columns:repeat(3,1fr)}
+.fu{border-left:2px solid var(--rule);padding:2px 0 2px 12px}
+.fu b{display:block;font:600 11px/1 var(--mono);color:var(--ink3);margin-bottom:6px}
+.fu p{font-size:13.5px;margin:0;max-width:none}
+.scores{display:flex;flex-wrap:wrap;gap:6px 14px;margin:16px 0 0;font:400 11px/1.4 var(--mono);color:var(--ink3)}
+.scores b{color:var(--ink)}
+.pane dl{margin:8px 0 0;font-size:13.5px;color:var(--ink2)}
+.pane dt{font:600 10.5px/1 var(--mono);letter-spacing:.5px;text-transform:uppercase;color:var(--ink3);margin-top:12px}
+.pane dd{margin:4px 0 0;line-height:1.5}
+.stat p{margin:8px 0 0;font-size:12.5px;line-height:1.5;max-width:none}
+.fus>*,.boxed,.asset,.mail{min-width:0}
+@media (max-width:860px){.fus{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<nav id="tabs" aria-label="Sections"></nav>
+
+<main id="stage">
+<section class="s mid" data-key="start" data-label="Cover" data-sub="What&#x27;s on this page">
+  <div class="wrap">
+    <p class="kick"><b>For 100 Partners</b> <s>from Kavish Lodha</s></p>
+    <h1 class="xl">5 B2B SaaS companies with new partner programs you could email today.</h1>
+    <p class="lede">Three messages they'd pay to receive, 5 named leads to send them to,
+      and three things I'd build at 100 Partners. Every fact links to its public source.</p>
+    <p class="src">I&#x27;m looking for my next GTM role. My work: <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+  </div>
+</section>
+
+<section class="s" data-key="messages" data-label="Three messages" data-sub="What they&#x27;d pay to receive">
+  <div class="wrap">
+    <p class="kick"><b>01</b> <s>The messages</s></p>
+    <h2>Three messages your B2B SaaS companies with new partner programs would pay to receive.</h2>
+    <div class="board">
+      <div class="leads"><button type="button" aria-pressed="false"><em>01</em><span>Your partner terms beside the programs your partners compare you to<i>For Founder and CEO</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>The comparison pages ranking your category without you<i>For Founder and CEO</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>The creators already teaching your product<i>For Founder and CEO</i></span></button></div>
+      <div class="detail" aria-live="polite"><article class="pm">
+<h3>Your partner terms beside the programs your partners compare you to</h3>
+<p class="take">Your rate, length, discount and bounties next to the programs a creator weighs you against, from their own pages.</p>
+<div class="mail"><div class="to">To: Founder and CEO, Circleback</div>
+<div class="subj">Your partner terms beside Fireflies</div><p>Your partner program on Dub pays 30% of each sale for six months. Krisp, also on Dub, and Fireflies pay the same rate for a full year, so a creator comparing note-takers earns twice as long promoting them.</p><p>I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I put four meeting tools&#x27; partner terms in one table: rate, length, discount and bounties. Want the table?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Partner terms for AI meeting tools, Nov 10, 2026, first 3 of 4</span></div><table class="tbl"><tr><th>Program</th><th>Reward</th><th>Length</th><th>New-user offer</th><th>Source</th></tr><tr><td>Circleback</td><td>30% per sale</td><td>6 months</td><td>none listed</td><td>partners.dub.co/circleback</td></tr><tr><td>Krisp</td><td>30% per sale</td><td>12 months</td><td>none listed</td><td>partners.dub.co/krisp</td></tr><tr><td>Fireflies</td><td>up to 30% recurring</td><td>12 months</td><td>none listed</td><td>fireflies.ai/affiliate</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: in a 30-day Sprint we set terms that win the side-by-side, then pitch 100 dream partners by hand: productivity YouTubers, ops newsletters and consultants who already review note-takers. The target is 10 new active partners a month. Want the shortlist we&#x27;d start with?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Granola pays a flat $20 per lead instead of a revenue share, which pays creators even when a viewer starts on a free plan. A signup bounty beside your 30% would do the same without touching the rate. If now isn&#x27;t the time, I&#x27;ll stop here.</pre></div>
+<details class="srcs"><summary>Sources (5)</summary><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Circleback&#x27;s partner program on Dub was created 2026-08-21 and pays 30% of each sale for 6 months. <a href="https://partners.dub.co/circleback" rel="noopener" target="_blank">partners.dub.co/circleback</a></li><li>[3] Krisp&#x27;s partner program on Dub pays 30% of each sale for 12 months. <a href="https://partners.dub.co/krisp" rel="noopener" target="_blank">partners.dub.co/krisp</a></li><li>[4] Fireflies&#x27; affiliate program pays up to 30% recurring commission per sale for 12 months. <a href="https://fireflies.ai/affiliate" rel="noopener" target="_blank">fireflies.ai/affiliate</a></li><li>[5] Granola&#x27;s Dub listing pays $20 per lead and gives new users their first month free. <a href="https://dub.co/marketplace/granola" rel="noopener" target="_blank">dub.co/marketplace/granola</a></li></ul></details>
+</article><article class="pm">
+<h3>The comparison pages ranking your category without you</h3>
+<p class="take">Recently updated &#x27;alternatives&#x27; pages in your category that leave you out, who wrote each, and the one that ranks you.</p>
+<div class="mail"><div class="to">To: Founder and CEO, Runable</div>
+<div class="subj">Three agent rankings missing Runable</div><p>Layer3 Labs updated its Genspark alternatives ranking on Oct 16. It lists Manus, Lindy and Gamma, but not Runable, and its Manus list and eesel&#x27;s Genspark list skip you too.</p><p>The one page I found that ranks you, Omid Saffari&#x27;s, puts you third and carries your partner link.</p><p>I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I listed each page, who wrote it and what it ranks. Want the list?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: AI agent comparison pages and where Runable stands, Nov 10, 2026, first 3 of 4</span></div><table class="tbl"><tr><th>Page</th><th>Publisher</th><th>Updated</th><th>Ranks</th><th>Runable</th></tr><tr><td>7 Best Genspark Alternatives</td><td>Layer3 Labs (Jonathan West)</td><td>2026-10-16</td><td>Manus, Perplexity, Claude, ChatGPT Work, Gamma, Lindy, OpenManus</td><td>not listed</td></tr><tr><td>7 Best Manus AI Alternatives</td><td>Layer3 Labs (Jonathan West)</td><td>2026-09-28</td><td>OpenManus, Genspark, Claude Cowork, ChatGPT Work, Perplexity, Lindy, Gamma</td><td>not listed</td></tr><tr><td>8 best Genspark AI alternatives</td><td>eesel AI (Kurnia Kharisma)</td><td>2026-07-20</td><td>Manus, ChatGPT, Gemini, Comet, Abacus.AI, Claude, Lindy, Gumloop</td><td>not listed</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: each publisher gets a short pitch with your 25% offer and a ready Runable-vs-Manus section by job, so adding you takes ten minutes. We&#x27;d run the same pitch across 100 dream partners in month one, aiming for 10 active. Want me to draft the Layer3 pitch?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Omid ranks you best for websites and apps. Web design and no-code agencies build exactly that for small businesses, your buyer, and they refer clients who want to run it themselves. A short agency track would reach them. If the timing&#x27;s wrong, I&#x27;ll leave it here.</pre></div>
+<details class="srcs"><summary>Sources (6)</summary><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Layer3 Labs&#x27; &#x27;7 Best Genspark Alternatives Ranked by Job&#x27;, published 2026-09-24 and updated 2026-10-16, ranks Manus, Perplexity, Claude, ChatGPT Work, Gamma, Lindy and OpenManus, and never mentions Runable. <a href="https://www.layer3labs.io/comparisons/genspark-alternatives" rel="noopener" target="_blank">layer3labs.io/comparisons/genspark-alternatives</a></li><li>[3] Layer3 Labs&#x27; &#x27;7 Best Manus AI Alternatives&#x27;, updated 2026-09-28, ranks OpenManus, Genspark, Claude Cowork, ChatGPT Work, Perplexity, Lindy and Gamma, with no mention of Runable. <a href="https://www.layer3labs.io/comparisons/manus-ai-alternatives" rel="noopener" target="_blank">layer3labs.io/comparisons/manus-ai-alternatives</a></li><li>[4] eesel AI&#x27;s &#x27;The 8 best Genspark AI alternatives in 2026&#x27;, published 2026-07-20, lists Manus, ChatGPT, Gemini, Perplexity Comet, Abacus.AI, Claude, Lindy and Gumloop, with no mention of Runable. <a href="https://www.eesel.ai/blog/genspark-ai-alternatives" rel="noopener" target="_blank">eesel.ai/blog/genspark-ai-alternatives</a></li><li>[5] Omid Saffari&#x27;s &#x27;Manus Alternatives in 2026&#x27;, published 2026-10-12, ranks Runable third and links it through a partner link with a commission disclosure. <a href="https://omidsaffari.com/blog/manus-alternatives" rel="noopener" target="_blank">omidsaffari.com/blog/manus-alternatives</a></li><li>[6] Runable&#x27;s partner program on Dub was created 2026-07-30 and pays 25% per sale for 1 year. <a href="https://dub.co/marketplace/runable" rel="noopener" target="_blank">dub.co/marketplace/runable</a></li></ul></details>
+</article><article class="pm">
+<h3>The creators already teaching your product</h3>
+<p class="take">Outside YouTube channels that published tutorials on your product this year, with views, ranked as first partners to recruit.</p>
+<div class="mail"><div class="to">To: Founder and CEO, FLORA</div>
+<div class="subj">Creators already teaching FLORA</div><p>Escapism&#x27;s two FLORA tutorials have passed 28,000 views, and CLAUDIA_AI&#x27;s three have more than 22,000. Neither channel is yours, and both teach the canvas to the creative pros you sell to.</p><p>Your partner program opened in September, so these are the creators to recruit first.</p><p>I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I listed six outside channels with their FLORA videos and views. Want the list?</p></div>
+<div class="asset"><div class="asset-h"><span>Attached: Outside YouTube channels teaching FLORA in 2026 (views on Nov 10, 2026), first 3 of 6</span></div><table class="tbl"><tr><th>Channel</th><th>FLORA videos</th><th>Views</th><th>Latest</th><th>Top video</th></tr><tr><td>Escapism</td><td>2</td><td>28,592</td><td>6 months ago</td><td>FLORA AI For Beginners: How to Build Your First Canvas</td></tr><tr><td>CLAUDIA_AI</td><td>3</td><td>22,865</td><td>5 months ago</td><td>FLORA AI - NEW FEATURES AND BEST FILMMAKING WORKFLOW</td></tr><tr><td>Artturi Reviews</td><td>1</td><td>10,233</td><td>5 months ago</td><td>Flora AI Tutorial for Beginners (Workflows Included)</td></tr></table></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: each channel gets a note on its own best FLORA video, your 30% offer and a first-promo brief for the next tutorial. Contra is a different type, a freelance platform, so it gets a co-marketing pitch rather than a link. Want the first three pitches drafted?</pre></div><div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: your bounty pays $150 for referring a creative partner. These channels already publish tutorials, so a bounty for a first published FLORA tutorial would reward what they already do. If now isn&#x27;t right, I&#x27;ll stop here.</pre></div>
+<details class="srcs"><summary>Sources (10)</summary><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Flora&#x27;s partner program on Dub was created 2026-09-01 and pays 30% per sale for 12 months, with 25% off for new users for 6 months and a $150 bounty for referring a creative partner. <a href="https://partners.dub.co/flora" rel="noopener" target="_blank">partners.dub.co/flora</a></li><li>[3] YouTube video by Escapism: &#x27;FLORA AI For Beginners: How to Build Your First Canvas&#x27;, 20,623 views, published 8 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=gHQfJLSMDYA" rel="noopener" target="_blank">youtube.com/watch?v=gHQfJLSMDYA</a></li><li>[4] YouTube video by Escapism: &#x27;FLORA AI Tutorial: Advanced Features for Creative Professionals&#x27;, 7,969 views, published 6 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=d5ymmNvNJzU" rel="noopener" target="_blank">youtube.com/watch?v=d5ymmNvNJzU</a></li><li>[5] YouTube video by CLAUDIA_AI: &#x27;FLORA AI - NEW FEATURES AND BEST FILMMAKING WORKFLOW&#x27;, 14,890 views, published 7 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=PsMoUCk-4x0" rel="noopener" target="_blank">youtube.com/watch?v=PsMoUCk-4x0</a></li><li>[6] YouTube video by Artturi Reviews: &#x27;Flora AI Tutorial for Beginners (Workflows Included)&#x27;, 10,233 views, published 5 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=Y2brgwlmGl4" rel="noopener" target="_blank">youtube.com/watch?v=Y2brgwlmGl4</a></li><li>[7] YouTube video by Artificial Quotient: &#x27;Flora AI For Beginners: Create Image To Video Workflows In Minutes!&#x27;, 9,709 views, published 10 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=fmXXp6lobi0" rel="noopener" target="_blank">youtube.com/watch?v=fmXXp6lobi0</a></li><li>[8] YouTube video by The AI Filmmaking Advantage: &#x27;I Made a $140 AI Horror Short Film With Claude, Flora AI, Blender + Seedance 2.5 (Full Masterclass)&#x27;, 5,865 views, published 11 days ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=97lwtJ8NESs" rel="noopener" target="_blank">youtube.com/watch?v=97lwtJ8NESs</a></li><li>[9] YouTube video by Contra: &#x27;The AI Tool Powering a $250K Freelance Design Workflow | Flora Tutorial (2026)&#x27;, 2,712 views, published 7 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=Uxi97BdEQ-g" rel="noopener" target="_blank">youtube.com/watch?v=Uxi97BdEQ-g</a></li><li>[10] Escapism&#x27;s two Flora videos total 28,592 views (20,623 + 7,969), more than 28,000; CLAUDIA_AI&#x27;s three total 22,865 (14,890 + 6,180 + 1,795), more than 22,000, in YouTube search on Nov 10, 2026. <a href="https://www.youtube.com/results?search_query=flora+ai+tutorial&amp;sp=EgIIBQ%253D%253D" rel="noopener" target="_blank">youtube.com/results?search_query=flora+ai+tutorial&amp;sp=EgIIBQ%253</a></li></ul></details>
+</article></div>
+    </div>
+    <p class="src">Each one was run on a real, named account. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="leads" data-label="The 5 leads" data-sub="Named, sourced, copy written">
+  <div class="wrap">
+    <p class="kick"><b>02</b> <s>The 5 leads</s></p>
+    <h2>5 leads, each with a reason to email now.</h2>
+    <div class="board">
+      <div class="leads" id="leads"><button type="button" aria-pressed="false"><em>01</em><span>Weber Wong<i>FLORA: Partner program opened on Dub</i></span></button><button type="button" aria-pressed="false"><em>02</em><span>Umesh Kumar<i>Runable: $21M Series A, Susquehanna and Nexus</i></span></button><button type="button" aria-pressed="false"><em>03</em><span>Rahul Sonwalkar<i>Julius AI: Partner program opened on Dub</i></span></button><button type="button" aria-pressed="false"><em>04</em><span>Ali Haghani<i>Circleback: Partner program opened on Dub</i></span></button><button type="button" aria-pressed="false"><em>05</em><span>Flo Crivello<i>Lindy: Launched Lindy Apps</i></span></button></div>
+      <div class="detail" id="detail" aria-live="polite"><article class="lead">
+<h4>Weber Wong</h4>
+<p class="meta">Founder and CEO, FLORA</p>
+<p class="sig"><strong>Why now:</strong> FLORA opened its Dub partner program in September 2026 at 30% for a year, and outside channels already have tens of thousands of views teaching the canvas.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Creators already teaching FLORA</span><button type="button" data-copy>Copy</button></header><pre>Escapism&#x27;s two FLORA tutorials have passed 28,000 views, and CLAUDIA_AI&#x27;s three have more than 22,000. Neither channel is yours, and both teach the canvas to the creative pros you sell to.
+
+Your partner program opened in September, so these are the creators to recruit first.
+
+I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I listed six outside channels with their FLORA videos and views. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: each channel gets a note on its own best FLORA video, your 30% offer and a first-promo brief for the next tutorial. Contra is a different type, a freelance platform, so it gets a co-marketing pitch rather than a link. Want the first three pitches drafted?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: your bounty pays $150 for referring a creative partner. These channels already publish tutorials, so a bounty for a first published FLORA tutorial would reward what they already do. If now isn&#x27;t right, I&#x27;ll stop here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Weber, Escapism&#x27;s two FLORA tutorials have passed 28,000 views and CLAUDIA_AI&#x27;s three more than 22,000. With your partner program opened in September, they&#x27;re the first creators to recruit. I listed six outside channels with views, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Flora&#x27;s partner program on Dub was created 2026-09-01 and pays 30% per sale for 12 months, with 25% off for new users for 6 months and a $150 bounty for referring a creative partner. <a href="https://partners.dub.co/flora" rel="noopener" target="_blank">partners.dub.co/flora</a></li><li>[3] YouTube video by Escapism: &#x27;FLORA AI For Beginners: How to Build Your First Canvas&#x27;, 20,623 views, published 8 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=gHQfJLSMDYA" rel="noopener" target="_blank">youtube.com/watch?v=gHQfJLSMDYA</a></li><li>[4] YouTube video by Escapism: &#x27;FLORA AI Tutorial: Advanced Features for Creative Professionals&#x27;, 7,969 views, published 6 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=d5ymmNvNJzU" rel="noopener" target="_blank">youtube.com/watch?v=d5ymmNvNJzU</a></li><li>[5] YouTube video by CLAUDIA_AI: &#x27;FLORA AI - NEW FEATURES AND BEST FILMMAKING WORKFLOW&#x27;, 14,890 views, published 7 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=PsMoUCk-4x0" rel="noopener" target="_blank">youtube.com/watch?v=PsMoUCk-4x0</a></li><li>[6] YouTube video by Artturi Reviews: &#x27;Flora AI Tutorial for Beginners (Workflows Included)&#x27;, 10,233 views, published 5 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=Y2brgwlmGl4" rel="noopener" target="_blank">youtube.com/watch?v=Y2brgwlmGl4</a></li><li>[7] YouTube video by Artificial Quotient: &#x27;Flora AI For Beginners: Create Image To Video Workflows In Minutes!&#x27;, 9,709 views, published 10 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=fmXXp6lobi0" rel="noopener" target="_blank">youtube.com/watch?v=fmXXp6lobi0</a></li><li>[8] YouTube video by The AI Filmmaking Advantage: &#x27;I Made a $140 AI Horror Short Film With Claude, Flora AI, Blender + Seedance 2.5 (Full Masterclass)&#x27;, 5,865 views, published 11 days ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=97lwtJ8NESs" rel="noopener" target="_blank">youtube.com/watch?v=97lwtJ8NESs</a></li><li>[9] YouTube video by Contra: &#x27;The AI Tool Powering a $250K Freelance Design Workflow | Flora Tutorial (2026)&#x27;, 2,712 views, published 7 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=Uxi97BdEQ-g" rel="noopener" target="_blank">youtube.com/watch?v=Uxi97BdEQ-g</a></li><li>[10] Escapism&#x27;s two Flora videos total 28,592 views (20,623 + 7,969), more than 28,000; CLAUDIA_AI&#x27;s three total 22,865 (14,890 + 6,180 + 1,795), more than 22,000, in YouTube search on Nov 10, 2026. <a href="https://www.youtube.com/results?search_query=flora+ai+tutorial&amp;sp=EgIIBQ%253D%253D" rel="noopener" target="_blank">youtube.com/results?search_query=flora+ai+tutorial&amp;sp=EgIIBQ%253</a></li><li>[11] Flora raised $42M from Redpoint Ventures (TechCrunch, Jan 27, 2026); Weber Wong is CEO and founder. <a href="https://techcrunch.com/2026/01/27/node-based-design-tool-flora-raises-42m-from-redpoint-ventures/" rel="noopener" target="_blank">techcrunch.com/2026/01/27/node-based-design-tool-flora-raises-42</a></li></ul>
+</article><article class="lead">
+<h4>Umesh Kumar</h4>
+<p class="meta">Co-founder and CEO, Runable</p>
+<p class="sig"><strong>Why now:</strong> Runable raised a $21M Series A on Aug 27, 2026, co-led by Susquehanna and Nexus, a month after opening its Dub partner program at 25% for a year.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Three agent rankings missing Runable</span><button type="button" data-copy>Copy</button></header><pre>Layer3 Labs updated its Genspark alternatives ranking on Oct 16. It lists Manus, Lindy and Gamma, but not Runable, and its Manus list and eesel&#x27;s Genspark list skip you too.
+
+The one page I found that ranks you, Omid Saffari&#x27;s, puts you third and carries your partner link.
+
+I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I listed each page, who wrote it and what it ranks. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: each publisher gets a short pitch with your 25% offer and a ready Runable-vs-Manus section by job, so adding you takes ten minutes. We&#x27;d run the same pitch across 100 dream partners in month one, aiming for 10 active. Want me to draft the Layer3 pitch?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Omid ranks you best for websites and apps. Web design and no-code agencies build exactly that for small businesses, your buyer, and they refer clients who want to run it themselves. A short agency track would reach them. If the timing&#x27;s wrong, I&#x27;ll leave it here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Umesh, Layer3 Labs&#x27; Genspark alternatives list (updated Oct 16) ranks Manus, Lindy and Gamma but not Runable, and two more lists skip you. Omid Saffari&#x27;s page ranks you third with your partner link. I listed each page and its author, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Layer3 Labs&#x27; &#x27;7 Best Genspark Alternatives Ranked by Job&#x27;, published 2026-09-24 and updated 2026-10-16, ranks Manus, Perplexity, Claude, ChatGPT Work, Gamma, Lindy and OpenManus, and never mentions Runable. <a href="https://www.layer3labs.io/comparisons/genspark-alternatives" rel="noopener" target="_blank">layer3labs.io/comparisons/genspark-alternatives</a></li><li>[3] Layer3 Labs&#x27; &#x27;7 Best Manus AI Alternatives&#x27;, updated 2026-09-28, ranks OpenManus, Genspark, Claude Cowork, ChatGPT Work, Perplexity, Lindy and Gamma, with no mention of Runable. <a href="https://www.layer3labs.io/comparisons/manus-ai-alternatives" rel="noopener" target="_blank">layer3labs.io/comparisons/manus-ai-alternatives</a></li><li>[4] eesel AI&#x27;s &#x27;The 8 best Genspark AI alternatives in 2026&#x27;, published 2026-07-20, lists Manus, ChatGPT, Gemini, Perplexity Comet, Abacus.AI, Claude, Lindy and Gumloop, with no mention of Runable. <a href="https://www.eesel.ai/blog/genspark-ai-alternatives" rel="noopener" target="_blank">eesel.ai/blog/genspark-ai-alternatives</a></li><li>[5] Omid Saffari&#x27;s &#x27;Manus Alternatives in 2026&#x27;, published 2026-10-12, ranks Runable third and links it through a partner link with a commission disclosure. <a href="https://omidsaffari.com/blog/manus-alternatives" rel="noopener" target="_blank">omidsaffari.com/blog/manus-alternatives</a></li><li>[6] Runable&#x27;s partner program on Dub was created 2026-07-30 and pays 25% per sale for 1 year. <a href="https://dub.co/marketplace/runable" rel="noopener" target="_blank">dub.co/marketplace/runable</a></li><li>[7] Runable raised $21 million in Series A funding co-led by Susquehanna Venture Capital and Nexus Venture Partners, announced Wednesday, Aug 27, 2026; Umesh Kumar is co-founder and CEO. <a href="https://siliconangle.com/2026/08/27/runable-raises-21m-to-realize-small-businesses-growth-vision-using-ai-agents/" rel="noopener" target="_blank">siliconangle.com/2026/08/27/runable-raises-21m-to-realize-small-</a></li></ul>
+</article><article class="lead">
+<h4>Rahul Sonwalkar</h4>
+<p class="meta">Founder, Julius AI</p>
+<p class="sig"><strong>Why now:</strong> Julius opened its Dub partner program on Aug 25, 2026 at 50% for a year, and in the two months since, outside creators posted Julius tutorials with over 60,000 views between them.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Julius tutorials passing 26,000 views</span><button type="button" data-copy>Copy</button></header><pre>In the last two months, Dan - Smart Tutorials and The Metaverse Guy each posted a Julius tutorial that passed 26,000 views. 
+
+You already pay partners 50% for a year, one of the top rates on Dub, so the gap is getting creators like these into the program.
+
+I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I listed five creators with their Julius videos and views. Want the list?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: each creator gets a note on their own Julius video, your 50% offer and a brief for a next tutorial on DeepFinance or slides from data, what their viewers already search. We&#x27;d pitch 100 like them in month one, aiming for 10 active. Want the first three drafted?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Simplilearn published a Julius tutorial four months ago. Education companies like it reach students and analysts at scale, so one partnership there can outweigh ten single creators. If the timing&#x27;s off, I&#x27;ll leave it here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Rahul, Dan - Smart Tutorials and The Metaverse Guy each posted a Julius tutorial in the last two months that passed 26,000 views. At 50% for a year your rate is already top tier, so they&#x27;re the first to recruit. I listed five creators, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Julius&#x27;s partner program on Dub was created 2026-08-25 and pays 50% per sale for 12 months, with 50% off a new user&#x27;s first month. <a href="https://partners.dub.co/julius" rel="noopener" target="_blank">partners.dub.co/julius</a></li><li>[3] YouTube video by Dan - Smart Tutorials: &#x27;How to Use an AI Presentation Maker to Build Slides From Data - Julius AI Tutorial (2026)&#x27;, 26,847 views, published 1 month ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=-7sKq_2JrTA" rel="noopener" target="_blank">youtube.com/watch?v=-7sKq_2JrTA</a></li><li>[4] YouTube video by The Metaverse Guy: &#x27;Julius AI Full Tutorial: Best AI Presentation Maker in 2026?&#x27;, 28,039 views, published 2 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=bVl6er5P0mU" rel="noopener" target="_blank">youtube.com/watch?v=bVl6er5P0mU</a></li><li>[5] YouTube video by Pavan Lalwani: &#x27;Excel to PowerPoint with AI Julius AI Tutorial 2026&#x27;, 12,112 views, published 1 month ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=iSVPzFsnHxU" rel="noopener" target="_blank">youtube.com/watch?v=iSVPzFsnHxU</a></li><li>[6] YouTube video by Build with NS: &#x27;Scout Ep-05 | Can AI Replace a Data Analyst? | Scouting Julius AI&#x27;, 6,582 views, published 8 days ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=0xSNOEQD7ss" rel="noopener" target="_blank">youtube.com/watch?v=0xSNOEQD7ss</a></li><li>[7] YouTube video by Artturi Jalli: &#x27;Best AI Powerpoint Generator of 2026? (Julius AI Review)&#x27;, 3,412 views, published 2 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=KEspdAcdhwU" rel="noopener" target="_blank">youtube.com/watch?v=KEspdAcdhwU</a></li><li>[8] YouTube video by Simplilearn: &#x27;Julius AI For Data Analysis | Julius AI Tutorial | How To Use Julius AI?&#x27;, 6,245 views, published 4 months ago (YouTube search, Nov 10, 2026). <a href="https://www.youtube.com/watch?v=pzf0ZtgX0fs" rel="noopener" target="_blank">youtube.com/watch?v=pzf0ZtgX0fs</a></li><li>[11] Dan - Smart Tutorials&#x27; and The Metaverse Guy&#x27;s Julius tutorials each passed 26,000 views (26,847 and 28,039); with Pavan Lalwani&#x27;s 12,112 the three total 66,998, over 60,000, all posted in the last two months. <a href="https://www.youtube.com/results?search_query=julius+ai+tutorial&amp;sp=EgIIBQ%253D%253D" rel="noopener" target="_blank">youtube.com/results?search_query=julius+ai+tutorial&amp;sp=EgIIBQ%25</a></li><li>[9] Julius was founded by Rahul Sonwalkar and raised a $10M seed (TechCrunch, Jul 28, 2025). <a href="https://techcrunch.com/2025/07/28/ai-data-analyst-startup-julius-nabs-10m-seed-round/" rel="noopener" target="_blank">techcrunch.com/2025/07/28/ai-data-analyst-startup-julius-nabs-10</a></li><li>[10] Julius&#x27;s homepage leads with DeepFinance, slides and Excel analysis. <a href="https://julius.ai" rel="noopener" target="_blank">julius.ai</a></li></ul>
+</article><article class="lead">
+<h4>Ali Haghani</h4>
+<p class="meta">Founder and CEO, Circleback</p>
+<p class="sig"><strong>Why now:</strong> Circleback opened its partner program on Dub on Aug 21, 2026, paying 30% for 6 months, while Krisp and Fireflies pay the same rate for 12.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Your partner terms beside Fireflies</span><button type="button" data-copy>Copy</button></header><pre>Your partner program on Dub pays 30% of each sale for six months. Krisp, also on Dub, and Fireflies pay the same rate for a full year, so a creator comparing note-takers earns twice as long promoting them.
+
+I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I put four meeting tools&#x27; partner terms in one table: rate, length, discount and bounties. Want the table?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: in a 30-day Sprint we set terms that win the side-by-side, then pitch 100 dream partners by hand: productivity YouTubers, ops newsletters and consultants who already review note-takers. The target is 10 new active partners a month. Want the shortlist we&#x27;d start with?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: Granola pays a flat $20 per lead instead of a revenue share, which pays creators even when a viewer starts on a free plan. A signup bounty beside your 30% would do the same without touching the rate. If now isn&#x27;t the time, I&#x27;ll stop here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Ali, Circleback&#x27;s Dub program pays 30% for six months. Krisp and Fireflies pay the same 30% for a year, so creators comparing note-takers earn twice as long on them. I put four tools&#x27; partner terms in one table, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Circleback&#x27;s partner program on Dub was created 2026-08-21 and pays 30% of each sale for 6 months. <a href="https://partners.dub.co/circleback" rel="noopener" target="_blank">partners.dub.co/circleback</a></li><li>[3] Krisp&#x27;s partner program on Dub pays 30% of each sale for 12 months. <a href="https://partners.dub.co/krisp" rel="noopener" target="_blank">partners.dub.co/krisp</a></li><li>[4] Fireflies&#x27; affiliate program pays up to 30% recurring commission per sale for 12 months. <a href="https://fireflies.ai/affiliate" rel="noopener" target="_blank">fireflies.ai/affiliate</a></li><li>[5] Granola&#x27;s Dub listing pays $20 per lead and gives new users their first month free. <a href="https://dub.co/marketplace/granola" rel="noopener" target="_blank">dub.co/marketplace/granola</a></li><li>[6] Ali Haghani is Circleback&#x27;s founder and CEO; the company was founded in 2023, is in YC&#x27;s Winter 2024 batch and has a team of 8. <a href="https://www.ycombinator.com/companies/circleback" rel="noopener" target="_blank">ycombinator.com/companies/circleback</a></li></ul>
+</article><article class="lead">
+<h4>Flo Crivello</h4>
+<p class="meta">Founder and CEO, Lindy</p>
+<p class="sig"><strong>Why now:</strong> Lindy shipped Lindy Apps on Oct 28, 2026, three months after opening its Dub partner program at 20% for a year.</p>
+<div class="msg"><header><span>Email 1, day 0. Subject: Lindy and Runable, one page</span><button type="button" data-copy>Copy</button></header><pre>Omid Saffari&#x27;s Manus alternatives page carries partner links for both Lindy and Runable. He ranks Runable third and Lindy sixth, and Runable pays its partners 25% for a year to your 20%.
+
+I&#x27;m with 100 Partners; we built the partner programs at beehiiv and PGA. I compared the partner terms of seven AI agent tools on Dub: rate, length and bounties. Want the table?</pre></div>
+<div class="msg"><header><span>Email 2, day 3, same thread</span><button type="button" data-copy>Copy</button></header><pre>How we&#x27;d work it: keep your TikTok and LinkedIn bounties, add a higher tier for partners who publish comparisons, and pitch 100 of the reviewers who rank agent tools in month one. The aim is 10 new active partners a month. Want a draft tier sheet?</pre></div>
+<div class="msg"><header><span>Email 3, day 7, same thread</span><button type="button" data-copy>Copy</button></header><pre>A second idea: your homepage sells Lindy for client reporting and account management, which is agency work. Agencies resell outcomes to many clients at once, so a short agency track with Lindy Apps as the hook could outweigh dozens of creators. If now isn&#x27;t right, I&#x27;ll stop here.</pre></div>
+<div class="msg"><header><span>LinkedIn note</span><button type="button" data-copy>Copy</button></header><pre>Flo, Omid Saffari&#x27;s Manus alternatives page has partner links for Lindy and Runable, ranking Runable third and Lindy sixth. Runable pays partners 25% for a year to your 20%. I compared seven agent tools&#x27; Dub terms, if useful.</pre></div>
+<h5>Sources</h5><ul class="ev"><li>[1] 100 Partners (the sender) installs partner programs; tg scaled beehiiv&#x27;s and PGA&#x27;s. Its Sprint reaches out to 100 partners in month one with a goal of 10 new high-quality partners a month. <a href="https://100.partners/sprint/" rel="noopener" target="_blank">100.partners/sprint/</a></li><li>[2] Omid Saffari&#x27;s &#x27;Manus Alternatives in 2026&#x27; (Oct 12, 2026) carries partner links for both Lindy and Runable, and ranks Runable third and Lindy sixth. <a href="https://omidsaffari.com/blog/manus-alternatives" rel="noopener" target="_blank">omidsaffari.com/blog/manus-alternatives</a></li><li>[3] Lindy&#x27;s Dub listing pays 20% per sale for 1 year, with TikTok, LinkedIn and Instagram bounties and creator payouts from $200 to $15,000+. <a href="https://dub.co/marketplace/lindy" rel="noopener" target="_blank">dub.co/marketplace/lindy</a></li><li>[4] Runable&#x27;s Dub listing pays 25% per sale for 1 year. <a href="https://dub.co/marketplace/runable" rel="noopener" target="_blank">dub.co/marketplace/runable</a></li><li>[5] Other AI agent and assistant programs on Dub: Marblism 30% for the customer&#x27;s lifetime, Julius 50% for 1 year, Littlebird up to 30% for 1 year, Viktor up to 20% for 1 year, Chipp 20% for 1 year. <a href="https://dub.co/marketplace/marblism" rel="noopener" target="_blank">dub.co/marketplace/marblism</a></li><li>[6] Lindy&#x27;s partner program on Dub was created 2026-07-15. <a href="https://partners.dub.co/lindy" rel="noopener" target="_blank">partners.dub.co/lindy</a></li><li>[7] Lindy&#x27;s changelog: Lindy Apps launched Oct 28, 2026. Flo Crivello is Lindy&#x27;s founder and CEO. <a href="https://www.lindy.ai/changelog" rel="noopener" target="_blank">lindy.ai/changelog</a></li><li>[8] Flo Crivello is the founder and CEO of Lindy. <a href="https://www.lindy.ai/blog/meet-lindy" rel="noopener" target="_blank">lindy.ai/blog/meet-lindy</a></li><li>[9] Lindy&#x27;s homepage lists agency jobs: account management, client reporting and social media. <a href="https://www.lindy.ai" rel="noopener" target="_blank">lindy.ai</a></li></ul>
+</article></div>
+    </div>
+    <p class="src">Copy is written as 100 Partners's rep. Nothing has been sent to anyone.</p>
+  </div>
+</section>
+
+<section class="s" data-key="build" data-label="Three things I&#x27;d build" data-sub="At 100 Partners">
+  <div class="wrap">
+    <p class="kick"><b>03</b> <s>If I join</s></p>
+    <h2>Three things I'd build at 100 Partners.</h2>
+    <div class="three"><div class="pane"><h4>1. A Dream 100 engine inside every Sprint</h4><p>Day one of each Sprint: crawl the client&#x27;s comparison pages, YouTube tutorials and competitors&#x27; Dub listings, then score a premium 100 by audience fit and recency, like the lists above. Recruiting starts on day three instead of week three.</p></div><div class="pane"><h4>2. A pipeline for 100 Partners itself</h4><p>A weekly watch of new partners.dub.co programs and freshly funded SaaS, each founder arriving with one sourced finding about their own program. It fills the $97 workshop and books Sprint calls, with tg approving every send.</p></div><div class="pane"><h4>3. An activation tracker for the 30-day first promo</h4><p>For each recruited partner, check their public pages and channels for a live mention, flag who hasn&#x27;t promoted by day 30, and draft the nudge. Turns the 5x5 habit and the activation level into a daily queue instead of a spreadsheet.</p></div></div>
+  </div>
+</section>
+
+<section class="s mid" data-key="ask" data-label="The ask" data-sub="A GTM role, or a pilot first">
+  <div class="wrap">
+    <p class="kick"><b>100 Partners</b> <s>Kavish Lodha</s></p>
+    <h1>I&#x27;m looking for my next GTM role. I&#x27;d like to build this at 100 Partners.</h1>
+    <p class="lede">Happy to start with a 1-month pilot. My work, with live numbers:
+      <a href="https://koderkavish.github.io">koderkavish.github.io</a></p>
+    <div class="stats"><div class="stat"><b>46</b><span>meetings booked per month from outbound at Aios</span></div><div class="stat"><b>500K+</b><span>in outbound pipeline (USD) generated at Aios</span></div><div class="stat"><b>100K+</b><span>in revenue (USD) closed as founder of x97media</span></div></div>
+  </div>
+</section>
+</main>
+
+<nav id="chrome">
+  <span class="who"><b>For 100 Partners</b>, from <a href="https://koderkavish.github.io">Kavish Lodha</a></span>
+  <button id="menu" type="button">Index</button>
+  <button id="prev" type="button" aria-label="Previous">&larr;</button>
+  <span id="count">01 / 05</span>
+  <button id="next" type="button" aria-label="Next">&rarr;</button>
+</nav>
+
+<div id="idx" role="dialog" aria-modal="true" aria-label="Slide index">
+  <h3>Index (press <span class="mono">Esc</span> to close)</h3>
+  <ol id="idxlist"></ol>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var slides = Array.prototype.slice.call(document.querySelectorAll(".s"));
+var n = slides.length, at = 0;
+var bar = document.getElementById("bar"), count = document.getElementById("count");
+var prev = document.getElementById("prev"), next = document.getElementById("next");
+var idx = document.getElementById("idx");
+
+function pad(i){ return (i < 9 ? "0" : "") + (i + 1); }
+
+// ---- section tabs up top, and a "Next" button closing every slide
+var tabs = document.getElementById("tabs"), tabBtns = [];
+slides.forEach(function(s, j){
+  var label = s.getAttribute("data-label");
+  var t = document.createElement("button");
+  t.type = "button";
+  t.innerHTML = '<em>' + pad(j) + '</em><span>' + label + '</span>';
+  t.title = label;
+  t.addEventListener("click", function(){ show(j, true); });
+  tabs.appendChild(t); tabBtns.push(t);
+
+  var wrap = s.querySelector(".wrap") || s;
+  var b = document.createElement("button");
+  b.type = "button";
+  if (j < n - 1) {
+    b.className = "go-next";
+    b.innerHTML = '<span><small>Next: ' + pad(j + 1) + ' of ' + n + '</small>' +
+                  slides[j + 1].getAttribute("data-label") + '</span><b>&rarr;</b>';
+    b.addEventListener("click", function(){ show(j + 1, true); });
+  } else {
+    b.className = "go-next back";
+    b.innerHTML = '<span><small>That\'s everything</small>Back to the start</span><b>&uarr;</b>';
+    b.addEventListener("click", function(){ show(0, true); });
+  }
+  wrap.appendChild(b);
+});
+
+function show(i, push){
+  i = Math.max(0, Math.min(n - 1, i));
+  at = i;
+  slides.forEach(function(s, j){
+    if (j === i) s.setAttribute("data-on", "");
+    else s.removeAttribute("data-on");
+  });
+  // The slide is its own scroll container, so a long slide revisited from the
+  // index would otherwise open halfway down where it was left.
+  slides[i].scrollTop = 0;
+  document.documentElement.setAttribute("data-slide", String(i));
+  count.textContent = pad(i) + " / " + n;
+  bar.style.width = (n === 1 ? 100 : (i / (n - 1)) * 100) + "%";
+  prev.disabled = i === 0;
+  next.disabled = i === n - 1;
+  var key = slides[i].getAttribute("data-key");
+  if (push && key) history.replaceState(null, "", "#" + key);
+  tabBtns.forEach(function(t, j){
+    if (j === i) { t.setAttribute("aria-current", "step"); t.scrollIntoView({block:"nearest", inline:"nearest"}); }
+    else t.removeAttribute("aria-current");
+  });
+}
+
+function go(d){ show(at + d, true); }
+
+// ---- index overlay
+var list = document.getElementById("idxlist");
+slides.forEach(function(s, j){
+  var li = document.createElement("li");
+  var b  = document.createElement("button");
+  b.type = "button";
+  b.innerHTML = '<em>' + pad(j) + '</em><span>' + s.getAttribute("data-label") +
+                '<i>' + (s.getAttribute("data-sub") || "") + '</i></span>';
+  b.addEventListener("click", function(){ closeIdx(); show(j, true); });
+  li.appendChild(b); list.appendChild(li);
+});
+function openIdx(){ idx.setAttribute("data-on",""); }
+function closeIdx(){ idx.removeAttribute("data-on"); }
+document.getElementById("menu").addEventListener("click", function(){
+  idx.hasAttribute("data-on") ? closeIdx() : openIdx();
+});
+
+prev.addEventListener("click", function(){ go(-1); });
+next.addEventListener("click", function(){ go(1); });
+
+// ---- keyboard
+document.addEventListener("keydown", function(e){
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key;
+  if (k === "Escape"){ closeIdx(); return; }
+  if (k === "i" || k === "I"){ e.preventDefault(); idx.hasAttribute("data-on") ? closeIdx() : openIdx(); return; }
+  if (idx.hasAttribute("data-on")) return;
+  if (k === "ArrowRight" || k === "PageDown" || k === " "){ e.preventDefault(); go(1); }
+  else if (k === "ArrowLeft" || k === "PageUp"){ e.preventDefault(); go(-1); }
+  else if (k === "Home"){ e.preventDefault(); show(0, true); }
+  else if (k === "End"){ e.preventDefault(); show(n - 1, true); }
+});
+
+// ---- swipe. Slides scroll vertically, so only a clearly horizontal drag counts.
+var sx = 0, sy = 0, tracking = false;
+document.addEventListener("touchstart", function(e){
+  if (e.touches.length !== 1) { tracking = false; return; }
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+}, {passive:true});
+document.addEventListener("touchend", function(e){
+  if (!tracking) return;
+  tracking = false;
+  var t = e.changedTouches[0];
+  var dx = t.clientX - sx, dy = t.clientY - sy;
+  if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// ---- open on the hash, so one answer can be linked on its own
+var want = (location.hash || "").replace("#","");
+var start = 0;
+if (want) slides.forEach(function(s, j){ if (s.getAttribute("data-key") === want) start = j; });
+show(start, false);
+
+
+
+// ---- lead board: the cards are rendered server-side; this only toggles them.
+(function(){
+  // Each .board is a list of buttons and a detail pane of articles: the lead
+  // board, and on lean pages the three messages too.
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function(board){
+    var btns = Array.prototype.slice.call(board.querySelectorAll('.leads button'));
+    var cards = Array.prototype.slice.call(board.querySelectorAll('.detail > article'));
+    if (!btns.length || !cards.length) return;
+    var d = board.querySelector('.detail');
+    function pick(i, scroll){
+      cards.forEach(function(c, k){ c.classList.toggle('on', k === i); });
+      btns.forEach(function(b, k){ b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      if (scroll && window.innerWidth < 860 && d) d.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    btns.forEach(function(b, k){ b.addEventListener('click', function(){ pick(k, true); }); });
+    pick(0, false);
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]'); if (!b) return;
+    var t = b.closest('.msg').querySelector('pre').innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1400); },
+      function(){ b.textContent = 'Select and copy'; });
+  });
+})();
+
+})();
+</script>
+</body>
+</html>
